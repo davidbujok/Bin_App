@@ -40,16 +40,27 @@ public class Sanitize {
             }
         }
         ArrayList<String> furtherClearOfStreetNames = new ArrayList<>();
+        ArrayList<String> furtherClearOfStreetNamesX = new ArrayList<>();
         for (String notCorrect: notCorrectStreets) {  //Bonnington road lane
             Set<String> streetsFiltered = streets.keySet() //Bonnington road EH*
                     .stream()
                     .filter(s -> (s.contains(notCorrect)))
                     .collect(Collectors.toSet());
+            Set<String> streetsFilteredNot = streets.keySet() //Bonnington road EH*
+                    .stream()
+                    .filter(s -> (!s.contains(notCorrect)))
+                    .collect(Collectors.toSet());
             streetsFiltered.toArray();
             furtherClearOfStreetNames.addAll(streetsFiltered);
+            furtherClearOfStreetNamesX.addAll(streetsFilteredNot);
         }
-//        System.out.println(furtherClearOfStreetNames);
-//        System.out.println(furtherClearOfStreetNames.size());
+        System.out.println(furtherClearOfStreetNames);
+        System.out.println(furtherClearOfStreetNames.size());
+        System.out.println("not correct streets: " + notCorrectStreets.size());
+        System.out.println("correct streets: " + correctStreets.size());
+        System.out.println("all streets: " + streets.size());
+        System.out.println(furtherClearOfStreetNamesX);
+        System.out.println(furtherClearOfStreetNamesX.size());
 
 //        System.out.println(notCorrectStreets.size());
 //        Pattern pattern = Pattern.compile("^Bonnington Road[ws-]");
@@ -59,8 +70,6 @@ public class Sanitize {
 
         scanScrapper.close();
         scanScrapperCorrectStreets.close();
-
-        System.out.println(correctStreets);
     }
 }
 
