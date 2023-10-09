@@ -5,6 +5,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Sanitize {
 
@@ -29,12 +31,36 @@ public class Sanitize {
             String correctData = scanScrapperCorrectStreets.nextLine();
             String[] correctSplitData = correctData.split(" ");
             correctSplitData = Arrays.copyOf(correctSplitData, correctSplitData.length-2);
-            correctStreets.add(String.join(" ",correctSplitData));
+            correctStreets.add(String.join(" ",correctSplitData).trim());
         }
+
+        for (String address: correctStreets) {
+            if (!streets.containsKey(address)) {
+                notCorrectStreets.add(address);
+            }
+        }
+        ArrayList<String> furtherClearOfStreetNames = new ArrayList<>();
+        for (String notCorrect: notCorrectStreets) {  //Bonnington road lane
+            Set<String> streetsFiltered = streets.keySet() //Bonnington road EH*
+                    .stream()
+                    .filter(s -> (s.contains(notCorrect)))
+                    .collect(Collectors.toSet());
+            streetsFiltered.toArray();
+            furtherClearOfStreetNames.addAll(streetsFiltered);
+        }
+//        System.out.println(furtherClearOfStreetNames);
+//        System.out.println(furtherClearOfStreetNames.size());
+
+//        System.out.println(notCorrectStreets.size());
+//        Pattern pattern = Pattern.compile("^Bonnington Road[ws-]");
+//        System.out.println(pattern);
+//        System.out.println(streets.containsKey("Bonnington Road EH6"));
+
 
         scanScrapper.close();
         scanScrapperCorrectStreets.close();
 
+        System.out.println(correctStreets);
     }
 }
 
