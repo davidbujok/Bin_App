@@ -1,6 +1,6 @@
 package com.bin_app.types;
 
-public enum RecylcingAndWaste {
+public enum RecyclingAndWaste {
     MONDAY("monday"),
     TUESDAY1("tuesday-1"),
     TUESDAY1A("tuesday-1a"),
@@ -15,13 +15,19 @@ public enum RecylcingAndWaste {
     FRIDAY1A("friday-1a"),
     FRIDAY2("friday-2");
 
-    private String calendar;
+    private final String calendar;
+    private final int occurrence;
 
-    RecylcingAndWaste(String calendar) {
+    RecyclingAndWaste(String calendar) {
         this.calendar = calendar;
+        this.occurrence = 7;
     }
 
     public String getCalendar() {
         return calendar;
+    }
+
+    public int getOccurrence() {
+        return occurrence;
     }
 }

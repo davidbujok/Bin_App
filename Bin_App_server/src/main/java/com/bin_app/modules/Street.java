@@ -2,7 +2,7 @@ package com.bin_app.modules;
 
 import com.bin_app.types.FoodWaste;
 import com.bin_app.types.GardenWaste;
-import com.bin_app.types.RecylcingAndWaste;
+import com.bin_app.types.RecyclingAndWaste;
 
 import javax.persistence.*;
 
