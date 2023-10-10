@@ -1,20 +1,15 @@
 package com.bin_app.scraper;
-
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Sanitize {
-
     public static void main(String[] args) throws FileNotFoundException {
 
-        HashMap<String, String> streets = new HashMap<>();
-        ArrayList<String> correctStreets = new ArrayList<>();
-        ArrayList<String> notCorrectStreets = new ArrayList<>();
+        HashMap<String, Details> scrapedCouncilStreets = new HashMap<>();
+        ArrayList<String> allEdinburghStreets = new ArrayList<>();
+        ArrayList<String> notMatchingStreets = new ArrayList<>();
 
         // George
 //        File fileS = new File("/Users/user/final_project/Bin_App/scraper/bin_pickup_days.tsv");
@@ -24,61 +19,43 @@ public class Sanitize {
         // Lewis
 //        File fileS = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
 //        File fileStreetsWithCorrectNames = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
-
         
-        File fileS = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
-        File fileStreetsWithCorrectNames = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
+        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
-        Scanner scanScrapper = new Scanner(fileS);
-        Scanner scanScrapperCorrectStreets = new Scanner(fileStreetsWithCorrectNames);
-        while (scanScrapper.hasNextLine()) {
-            String data = scanScrapper.nextLine();
-            String[] splitData = data.split("\t");
-            streets.put(splitData[0], splitData[2]);
+        Scanner scanScraper = new Scanner(fileScrapedCouncilStreets);
+        Scanner scanAllEdinburghStreets = new Scanner(fileAllEdinburghStreets);
+        HashMap<String, String> allEdinburghStreetsWithPostcodes = new HashMap<>();
+        while (scanScraper.hasNextLine()) {
+            String currentStreet = scanScraper.nextLine().toLowerCase();
+            String[] currentStreetSplitString = currentStreet.split("\t");
+            scrapedCouncilStreets.put(currentStreetSplitString[0], new Details(currentStreetSplitString[2]));
+            scrapedCouncilStreets.get(currentStreetSplitString[0]).setFullUrl(currentStreetSplitString[1]);
         }
-        while (scanScrapperCorrectStreets.hasNextLine()) {
-            String correctData = scanScrapperCorrectStreets.nextLine();
-            String[] correctSplitData = correctData.split(" ");
-            correctSplitData = Arrays.copyOf(correctSplitData, correctSplitData.length-2);
-            correctStreets.add(String.join(" ",correctSplitData).trim());
+        scanScraper.close();
+        while (scanAllEdinburghStreets.hasNextLine()) {
+            String currentEdinburghStreet = scanAllEdinburghStreets.nextLine().toLowerCase();
+            String[] correctEdinburghStreetSplitString = currentEdinburghStreet.split(" ");
+            List<String> convertArrayToArrayList = new ArrayList<>(Arrays.asList(correctEdinburghStreetSplitString));
+            String postCode2 = convertArrayToArrayList.remove(convertArrayToArrayList.size()-1);
+            String postCode1 = convertArrayToArrayList.remove(convertArrayToArrayList.size()-1);
+            correctEdinburghStreetSplitString = Arrays.copyOf(correctEdinburghStreetSplitString, correctEdinburghStreetSplitString.length-2);
+            allEdinburghStreetsWithPostcodes.put(String.join(" ", correctEdinburghStreetSplitString).trim(), postCode1 + postCode2);
+            allEdinburghStreets.add(String.join(" ",correctEdinburghStreetSplitString).trim());
         }
+        scanAllEdinburghStreets.close();
+        allEdinburghStreets.remove(0);
 
-        for (String address: correctStreets) {
-            if (!streets.containsKey(address)) {
-                notCorrectStreets.add(address);
-            }
-        }
-        ArrayList<String> furtherClearOfStreetNames = new ArrayList<>();
-        ArrayList<String> furtherClearOfStreetNamesX = new ArrayList<>();
-        for (String notCorrect: notCorrectStreets) {  //Bonnington road lane
-            Set<String> streetsFiltered = streets.keySet() //Bonnington road EH*
-                    .stream()
-                    .filter(s -> (s.contains(notCorrect)))
-                    .collect(Collectors.toSet());
-            Set<String> streetsFilteredNot = streets.keySet() //Bonnington road EH*
-                    .stream()
-                    .filter(s -> (!s.contains(notCorrect)))
-                    .collect(Collectors.toSet());
-            streetsFiltered.toArray();
-            furtherClearOfStreetNames.addAll(streetsFiltered);
-            furtherClearOfStreetNamesX.addAll(streetsFilteredNot);
-        }
-        System.out.println(furtherClearOfStreetNames);
-        System.out.println(furtherClearOfStreetNames.size());
-        System.out.println("not correct streets: " + notCorrectStreets.size());
-        System.out.println("correct streets: " + correctStreets.size());
-        System.out.println("all streets: " + streets.size());
-        System.out.println(furtherClearOfStreetNamesX);
-        System.out.println(furtherClearOfStreetNamesX.size());
+        scrapedCouncilStreets.forEach((key, value) -> {
+             if (allEdinburghStreetsWithPostcodes.containsKey(key)) {
+                 String postCode = allEdinburghStreetsWithPostcodes.get(key);
+                 value.setPostcode(postCode);
+                }
+            });
 
-//        System.out.println(notCorrectStreets.size());
-//        Pattern pattern = Pattern.compile("^Bonnington Road[ws-]");
-//        System.out.println(pattern);
-//        System.out.println(streets.containsKey("Bonnington Road EH6"));
+        List<String> streetNamesScraper = scrapedCouncilStreets.keySet().stream().sorted().toList();
+        List<String> streetNamesEdiData = allEdinburghStreets.stream().sorted().toList();
 
-
-        scanScrapper.close();
-        scanScrapperCorrectStreets.close();
     }
 }
 
