@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 @Profile("!test")
-@Component
+//@Component
 public class DataLoader implements ApplicationRunner {
 
 
@@ -38,6 +38,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        streetRepository.deleteAll();
+        collectionDatesRepository.deleteAll();
 
 //        Sanitize getData = new Sanitize();
 //        HashMap<String, Details> getData1 = getData.getAllData();
