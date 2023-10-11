@@ -33,41 +33,50 @@ function App(): JSX.Element {
 
     const [streets, setStreets] = useState<Array<IStreet>>();
     const [input,setInput] = useState<string>();
+    const [fetchData,setFetchData] = useState<Boolean>(false);
 
-    useEffect(()=>{
-      fetch("http://10.0.2.2:8080/streets") 
-      .then((response) => response.json()) 
-      .then((data : Array<IStreet>) => { 
-          // Use the data from the server here 
-          setStreets(data); 
-      }) 
-      .catch((error) => { 
-          // Handle any errors that occur 
-          console.error(error); 
-      }); 
-    },[])
-
+    if((input&& input.length > 3)){
+      if(fetchData === false){
+        fetch("http://10.0.2.2:8080/streets") 
+        .then((response) => response.json()) 
+        .then((data : Array<IStreet>) => { 
+            setStreets(data); 
+            setFetchData(true)
+        }) 
+        .catch((error) => { 
+            console.error(error); 
+        }); 
+        }
+      else if(input.length<=3){
+        setFetchData(false)
+       }
+      }
 
   if (streets != null){
-
-
-  return(
-  <SafeAreaView style={styles.container}>
-    <Text>{streets[0].name}</Text>
-  <Text>test text</Text>
-  <Text>{input}</Text>
-  <TextInput onChangeText={setInput} style={styles.input}/>
-  <TouchableOpacity style={styles.smallButton}>
-    <Text style={{color:'white'}}>Click me</Text>
-  </TouchableOpacity>
-  
-  
-  
-  </SafeAreaView>
-  )
-  } else{
     return(
-    <Text>Loading...</Text>)
+    <SafeAreaView style={styles.container}>
+    <Text>{streets[0].name}</Text>
+    <Text>test text</Text>
+    <Text>{input}</Text>
+    <TextInput onChangeText={setInput} value={input} style={styles.input}/>
+    <TouchableOpacity style={styles.smallButton}>
+      <Text style={{color:'white'}}>Click me</Text>
+    </TouchableOpacity>
+    
+    
+    
+    </SafeAreaView>
+    )
+    } 
+  else {
+    return(
+      <>
+    <Text>Loading...</Text>
+    <TextInput onChangeText={setInput} value={input} style={styles.input}/>
+    <Button title='click' onPress={()=> setFetchData(true)}></Button>
+    </>
+    )
+
   }
   }
 
