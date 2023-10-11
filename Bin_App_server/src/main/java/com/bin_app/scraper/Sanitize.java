@@ -28,17 +28,17 @@ public class Sanitize {
         ArrayList<String> allEdinburghStreets = new ArrayList<>();
         ArrayList<String> notMatchingStreets = new ArrayList<>();
 
-        // George
-//        File fileScrapedCouncilStreets = new File("/Users/user/final_project/Bin_App/scraper/bin_pickup_days.tsv");
-//        File fileAllEdinburghStreets = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+//         George
+        File fileScrapedCouncilStreets = new File("/Users/user/final_project/Bin_App/scraper/bin_pickup_days.tsv");
+        File fileAllEdinburghStreets = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
 
         // Lewis
 //        File fileScrapedCouncilStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
 //        File fileAllEdinburghStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
-        
-        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
-        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+//
+//        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
+//        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
         Scanner scanScraper = new Scanner(fileScrapedCouncilStreets);
         Scanner scanAllEdinburghStreets = new Scanner(fileAllEdinburghStreets);

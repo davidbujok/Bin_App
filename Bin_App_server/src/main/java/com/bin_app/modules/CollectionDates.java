@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ public class CollectionDates {
 
     private String name;
 
-    private String colour;
+    private String binType;
 
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -46,9 +45,9 @@ public class CollectionDates {
     )
     private List<Street> streets;
 
-    public CollectionDates(String name, String colour, Date date) {
+    public CollectionDates(String name, String binType, Date date) {
         this.name = name;
-        this.colour = colour;
+        this.binType = binType;
         this.date = date;
         this.streets = new ArrayList<>();
     }
@@ -64,8 +63,8 @@ public class CollectionDates {
         this.name = name;
     }
 
-    public String getColour() {
-        return colour;
+    public String getBinType() {
+        return binType;
     }
 
     public Date getDate() {
