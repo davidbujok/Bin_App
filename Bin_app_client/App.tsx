@@ -1,11 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import React from 'react';
+
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -15,6 +10,11 @@ import {
   Text,
   useColorScheme,
   View,
+  Platform,
+  TextInput,
+  Button,
+  Touchable,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -24,96 +24,67 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { IStreet } from './styles/interfaces';
+import { styles } from './styles/stylesSheet';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+    const [streets, setStreets] = useState<Array<IStreet>>();
+    const [input,setInput] = useState<string>();
+    const [fetchData,setFetchData] = useState<Boolean>(false);
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="wow">
+    if((input&& input.length > 3)){
+      if(fetchData === false){
+        fetch("http://10.0.2.2:8080/streets") 
+        .then((response) => response.json()) 
+        .then((data : Array<IStreet>) => { 
+            setStreets(data); 
+            setFetchData(true)
+        }) 
+        .catch((error) => { 
+            console.error(error); 
+        }); 
+        }
+      else if(input.length<=3){
+        setFetchData(false)
+       }
+      }
 
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="Bins are the best">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+  if (streets != null){
+    return(
+    <SafeAreaView style={styles.container}>
+    <Text>{streets[0].name}</Text>
+    <Text>test text</Text>
+    <Text>{input}</Text>
+    <TextInput onChangeText={setInput} value={input} style={styles.input}/>
+    <TouchableOpacity style={styles.smallButton}>
+      <Text style={{color:'white'}}>Click me</Text>
+    </TouchableOpacity>
+    
+    
+    
     </SafeAreaView>
-  );
-}
+    )
+    } 
+  else {
+    return(
+      <>
+    <Text>Loading...</Text>
+    <TextInput onChangeText={setInput} value={input} style={styles.input}/>
+    <Button title='click' onPress={()=> setFetchData(true)}></Button>
+    </>
+    )
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  }
+  }
+
+
+
+  
+
+
+
 
 export default App;
