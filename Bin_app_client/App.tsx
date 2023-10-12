@@ -24,29 +24,79 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {IStreet} from './styles/interfaces';
+import {IStreet,IDate} from './styles/interfaces';
 import {styles} from './styles/stylesSheet';
 
-function App(): JSX.Element {
+
+  function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<IStreet>>();
+  const [dates,setDates] = useState<Array<IDate>>(); 
   const [input, setInput] = useState<string>();
-  const [fetchData, setFetchData] = useState<Boolean>(false);
+  // const [fetchData, setFetchData] = useState<Boolean>(false);
   const [location, setLocation]  = useState<GeoPosition | Boolean>(false);
 
-  if (input && input.length > 3) {
-    if (fetchData === false) {
-      fetch('http://10.0.2.2:8080/streets')
+ 
+
+ const handleFetchByStreet = (streetName:string) => {
+  const date:Date = new Date;
+
+
+  const getYear: number = date.getFullYear();
+  let year: string= getYear.toString()
+  
+  let getMonth: number = date.getMonth()+1;
+  let month:string = "";
+
+  let getDay: number = date.getDate();
+  let day: string = "";
+ 
+  
+
+  if(getMonth<10){
+    month = "0" + getMonth.toString();
+  }else{
+    month = getMonth.toString();
+  }
+
+  if(getDay<10){
+    day = "0" + getDay.toString();
+  }else{
+    day = getDay.toString();
+  }
+
+
+
+  const dateInstance: string = year + month + day;
+  console.log(dateInstance)
+
+  fetch(`http://10.0.2.2:8080/collectionDates?street=${streetName}&date=${dateInstance}`)
         .then(response => response.json())
-        .then((data: Array<IStreet>) => {
-          setStreets(data);
-          setFetchData(true);
+        .then((data: Array<IDate>) => {
+          console.log(data)
+          setDates(data);
+          console.log(dates)
+          // {dates!=null && console.log(dates.map((date)=> date.date))}
         })
         .catch(error => {
           console.error(error);
         });
-    } else if (input.length <= 3) {
-      setFetchData(false);
-    }
+
+    
+
+    
+ } // End of handleFetch By Street
+
+
+
+  if (input && input.length > 1) {
+      fetch(`http://10.0.2.2:8080/streets?name=${input}`)
+        .then(response => response.json())
+        .then((data: Array<IStreet>) => {
+          setStreets(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
   }
 
   const requestLocationPermission = async () => {
@@ -95,13 +145,19 @@ function App(): JSX.Element {
   if (streets != null) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text>{streets[0].name}</Text>
-        <Text>test text</Text>
-        <Text>{input}</Text>
+        <ScrollView>
+        {streets.map((street)=>{
+            return <Text key={street.id} onPress={()=> handleFetchByStreet(street.name)}>
+              {street.name}</Text>
+        })}
         <TextInput onChangeText={setInput} value={input} style={styles.input} />
         <TouchableOpacity style={styles.smallButton}>
           <Text style={{color: 'white'}}>Click me</Text>
         </TouchableOpacity>
+        {dates!= null && dates.map((date)=>
+          <Text key={date.id}>{date.date} {date.binType}</Text>
+        )}
+        </ScrollView>
       </SafeAreaView>
     );
   } else {
@@ -113,10 +169,8 @@ function App(): JSX.Element {
           style={{marginTop: 10, padding: 10, borderRadius: 10, width: '40%'}}>
           <Button title="Get Location" onPress={getLocation} />
         </View>
-        <Text>sdasdasd: </Text>
         <Text>Longitude: </Text>
         <TextInput onChangeText={setInput} value={input} style={styles.input} />
-        <Button title="click" onPress={() => setFetchData(true)}></Button>
       </SafeAreaView>
       </>
     );

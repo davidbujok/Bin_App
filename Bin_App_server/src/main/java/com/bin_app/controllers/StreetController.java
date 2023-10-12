@@ -24,18 +24,17 @@ public class StreetController  {
     public ResponseEntity<List<Street>> getAllStreets(
             @RequestParam(name="date", required = false) String date,
             @RequestParam(name = "name", required = false) String streetName) {
-        if(date == null && streetName == null) {
-            return new ResponseEntity<>(streetRepository.findAll(), HttpStatus.OK);
-        }
-        else if (date != null && streetName != null ) {
+
+        if (date != null && streetName != null ) {
             int year = Integer.parseInt(date.substring(0,4));
             int month = Integer.parseInt(date.substring(4,6));
             int day = Integer.parseInt(date.substring(6,8));
             Date newDate = new Date(year-1900,month-1,day);
             return new ResponseEntity<>(streetRepository.find10Streets(streetName, newDate), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(streetRepository.findByNameContains(streetName), HttpStatus.OK);
+        }else if(streetName!= null) {
+            return new ResponseEntity<>(streetRepository.findMax10Streets(streetName), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(streetRepository.findAll(), HttpStatus.OK);
         }
     }
 
