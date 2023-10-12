@@ -32,7 +32,7 @@ public class StreetController  {
             Date newDate = new Date(year-1900,month-1,day);
             return new ResponseEntity<>(streetRepository.find10Streets(streetName, newDate), HttpStatus.OK);
         }else if(streetName!= null) {
-            return new ResponseEntity<>(streetRepository.findByNameContains(streetName), HttpStatus.OK);
+            return new ResponseEntity<>(streetRepository.findMax10Streets(streetName), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(streetRepository.findAll(), HttpStatus.OK);
         }

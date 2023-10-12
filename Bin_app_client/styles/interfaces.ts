@@ -8,7 +8,7 @@ export interface IStreet {
 
   export interface IDate{
     id:number,
-    bin_type:string,
-    date:Date,
+    binType:string,
+    date:string,
     name:string,
   }

@@ -19,7 +19,11 @@ public interface StreetRepository extends JpaRepository<Street, Long> {
         return findByNameContainsAndCollectionDatesDateGreaterThan(streetName, date, PageRequest.of(0,10));
     }
 
+    List<Street> findByNameContains(String streetName, PageRequest of);
 
+    default List<Street> findMax10Streets(String streetName) {
+        return findByNameContains(streetName, PageRequest.of(0,10));
+    }
     ;
-    List<Street> findByNameContains(String streetName);
+//    List<Street> findByNameContains(String streetName);
 }
