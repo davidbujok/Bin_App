@@ -27,15 +27,44 @@ import {
 import {IStreet} from './styles/interfaces';
 import {styles} from './styles/stylesSheet';
 
-function App(): JSX.Element {
+
+  function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<IStreet>>();
   const [input, setInput] = useState<string>();
   const [fetchData, setFetchData] = useState<Boolean>(false);
   const [location, setLocation]  = useState<GeoPosition | Boolean>(false);
 
+  const date:Date = new Date;
+
+//   const year: string = date.getFullYear.toString();
+//   let getMonth: number = date.getMonth();
+//   let month:string = "";
+//   let getDay: number = date.getDay();
+//   let day: string = "";
+
+
+// if(getMonth<10){
+//   month = "0" + getMonth.toString();
+// }else{
+//   month = getMonth.toString();
+// }
+
+// if(getDay<10){
+//   day = "0" + getDay.toString();
+// }else{
+//   day = getDay.toString();
+// }
+
+let year = "2023"
+let month = "10"
+let day = "25"
+
+
+ const dateInstance: string = year + month + day;
+
   if (input && input.length > 3) {
-    if (fetchData === false) {
-      fetch('http://10.0.2.2:8080/streets')
+    // if (fetchData === false) {
+      fetch(`http://10.0.2.2:8080/streets?name=${input}`)
         .then(response => response.json())
         .then((data: Array<IStreet>) => {
           setStreets(data);
@@ -44,9 +73,9 @@ function App(): JSX.Element {
         .catch(error => {
           console.error(error);
         });
-    } else if (input.length <= 3) {
-      setFetchData(false);
-    }
+    // } else if (input.length <= 3) {
+      // setFetchData(false);
+    // }
   }
 
   const requestLocationPermission = async () => {
@@ -95,8 +124,10 @@ function App(): JSX.Element {
   if (streets != null) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text>{streets[0].name}</Text>
-        <Text>test text</Text>
+        {streets.map((street)=>{
+            return <Text>
+              {street.name}</Text>
+        })}
         <Text>{input}</Text>
         <TextInput onChangeText={setInput} value={input} style={styles.input} />
         <TouchableOpacity style={styles.smallButton}>
