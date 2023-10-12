@@ -16,7 +16,7 @@ public interface StreetRepository extends JpaRepository<Street, Long> {
     List<Street> findByNameContainsAndCollectionDatesDateGreaterThan(String streetName, Date date, PageRequest of);
 
     default List<Street> find10Streets(String streetName, Date date) {
-        return findByNameContainsAndCollectionDatesDateGreaterThan(streetName, date, PageRequest.of(0,20));
+        return findByNameContainsAndCollectionDatesDateGreaterThan(streetName, date, PageRequest.of(0,10));
     }
 
 
