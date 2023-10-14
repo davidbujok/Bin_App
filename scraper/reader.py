@@ -2,18 +2,20 @@ import pandas as pd
 import numpy as np
 from pprint import  pprint
 
-bins = pd.read_csv('bin_pickup_days.tsv', sep="\t")
+bins = pd.read_csv('garden_pickup_days.csv', sep="\t")
 
 addresses = bins["address"]
 site = bins["site"]
+calendar=bins["calendar"]
 calendar_id = bins ["calendar_id"]
 
 addresses = addresses.values
 site = site.values
 calendar_id = calendar_id.values
+calendar = calendar.values
 
 
-
+print(len(addresses))
 data_dict = {}
 i=0
 same_dict = {}
@@ -38,4 +40,4 @@ for item in same_dict:
 
 print("duplicated same data: ",count)
 
-pprint(data_dict) 
+pprint(len(data_dict)) 
