@@ -3,7 +3,7 @@ import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { useEffect } from 'react';
 
-Geocoder.init('AIzaSyC_n78a_OOtzJrLiOroKfqMjnGVTkfteeY');
+Geocoder.init('API');
 
   useEffect(() => {
     // Geocoder.from(55.949531514154025, -3.0976942469294793)
