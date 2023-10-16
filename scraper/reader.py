@@ -39,7 +39,7 @@ for g_address in g_addresses:
         same += 1
         pass
 
-    data_dict[g_address] = g_addresses[i]+"\t"+g_site[i]+"\t"+g_calendar[i]+"\t"+g_calendar_id[i]+"\n"
+    data_dict[g_address] = g_addresses[i]+"\t"+g_site[i]+"\t"+g_calendar[i]+"\t"+g_calendar_id[i]
     # data_dict[g_address] = calendar[i]
     i += 1
 
@@ -98,12 +98,26 @@ getDifferentKeys = []
 #     k = k[0]
 # pprint(data_dict_2[])
 
+# with open("garden_data.tsv", "w") as file:
+#     file.write("address    site    calendar calendar_id\n")
+#     for key in data_dict:
+#         if key.strip().lower() in data_dict_2:
+#             file.wl(data_dict[key]+"\n")
+#             getSimilarKeys.append(key)
+#         else:
+#             getDifferentKeys.append(key)
+#         i+=1
+
+
+
+
 file = open("garden_bins_matching.tsv","a")
+file.write("address"+"\t"+"site"+"\t"+"calendar"+"\t"+"calendar_id"+"\n")
 i=0
 print(len(data_dict))
 for key in data_dict:
     if key.strip().lower() in data_dict_2:
-        file.write(data_dict[key])
+        file.write(data_dict[key]+"\n")
 
         getSimilarKeys.append(key)
     else:
