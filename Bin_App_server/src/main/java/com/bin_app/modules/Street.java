@@ -16,12 +16,11 @@ public class Street {
 
     private String name;
     private String postcode;
-    private String recyclingAndWaste;
-    private String url;
+    private String recyclingAndWasteId;
+    private String gardenWasteId;
+    private String recyclingAndWasteUrl;
+    private String gardenWasteUrl;
 
-//    private FoodWaste foodWaste;
-//
-//    private GardenWaste gardenWaste;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,11 +50,13 @@ public class Street {
 
     private List<CollectionDates> collectionDates;
 
-    public Street(String name, String postcode, String recyclingAndWaste, String url) {
+    public Street(String name, String postcode, String recyclingAndWasteId, String recyclingAndWasteUrl) {
         this.name = name;
         this.postcode = postcode;
-        this.recyclingAndWaste = recyclingAndWaste;
-        this.url = url;
+        this.recyclingAndWasteId = recyclingAndWasteId;
+        this.gardenWasteId = "";
+        this.recyclingAndWasteUrl = recyclingAndWasteUrl;
+        this.gardenWasteUrl = "";
         this.collectionDates = new ArrayList<>();
     }
 
@@ -75,28 +76,41 @@ public class Street {
         return name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getRecyclingAndWasteUrl() {
+        return recyclingAndWasteUrl;
     }
 
     public String getPostcode() {
         return postcode;
     }
 
-    public String getRecyclingAndWaste() {
-        return recyclingAndWaste;
+    public String getRecyclingAndWasteId() {
+        return recyclingAndWasteId;
     }
 
-    public void setRecyclingAndWaste(String recyclingAndWaste) {
-        this.recyclingAndWaste = recyclingAndWaste;
+    public void setRecyclingAndWasteId(String recyclingAndWaste) {
+        this.recyclingAndWasteId = recyclingAndWaste;
     }
-    //    public FoodWaste getFoodWaste() {
-//        return foodWaste;
-//    }
-//
-//    public GardenWaste getGardenWaste() {
-//        return gardenWaste;
-//    }
+
+    public void setGardenWasteId(String gardenWasteId) {
+        this.gardenWasteId = gardenWasteId;
+    }
+
+    public void setGardenWasteUrl(String gardenWasteUrl) {
+        this.gardenWasteUrl = gardenWasteUrl;
+    }
+
+    public String getGardenWasteId() {
+        return gardenWasteId;
+    }
+
+    public String getGardenWasteUrl() {
+        return gardenWasteUrl;
+    }
+
+    public List<CollectionDates> getCollectionDates() {
+        return collectionDates;
+    }
 
     public Long getId() {
         return id;

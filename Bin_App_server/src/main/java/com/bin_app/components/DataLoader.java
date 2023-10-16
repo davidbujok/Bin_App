@@ -5,6 +5,8 @@ import com.bin_app.modules.Street;
 import com.bin_app.repositories.CollectionDatesRepository;
 import com.bin_app.repositories.StreetRepository;
 import com.bin_app.scraper.Details;
+import com.bin_app.scraper.GardenDetails;
+import com.bin_app.scraper.GardenWasteSanitizer;
 import com.bin_app.scraper.Sanitize;
 import com.bin_app.types.RecyclingAndWaste;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Profile("!test")
-//@Component
+@Component
 public class DataLoader implements ApplicationRunner {
 
 
@@ -134,8 +136,20 @@ public class DataLoader implements ApplicationRunner {
         HashMap<String, Details> getAllStreetData = getStreetData.getAllData();
         List<CollectionDates> allDatesFromDatabase = collectionDatesRepository.findAll();
 
+        GardenWasteSanitizer getGardenWasteDetails = new GardenWasteSanitizer();
+        HashMap<String, GardenDetails> getAllGardenWasteDetails = getGardenWasteDetails.getAllGardenData();
+
+
         getAllStreetData.forEach((key, value) -> {
             Street street = new Street(key, value.getPostcode(), value.getRecycling(), value.getUrl());
+
+            getAllGardenWasteDetails.forEach((k, v) -> {
+               if(k.contains(key)) {
+                   street.setGardenWasteId(v.getGardenWasteId());
+                   street.setGardenWasteUrl(v.getGardenWasteUrl());
+               }
+           });
+
 
             for (CollectionDates date: allDatesFromDatabase) {
                 if (value.getRecycling().equals(date.getName())) {
@@ -143,6 +157,9 @@ public class DataLoader implements ApplicationRunner {
                 }
             }
             streetRepository.save(street);
+
+
+
         }) ;
 
     }
