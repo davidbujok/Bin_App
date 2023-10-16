@@ -12,7 +12,9 @@ import java.util.List;
 @Table(name = "collection_dates")
 public class CollectionDates {
 
-    private String name;
+    private String recyclingCalendar;
+
+    private String gardenCalendar;
 
     private String binType;
 
@@ -45,8 +47,9 @@ public class CollectionDates {
     )
     private List<Street> streets;
 
-    public CollectionDates(String name, String binType, Date date) {
-        this.name = name;
+    public CollectionDates(String recyclingCalendar, String gardenCalendar, String binType, Date date) {
+        this.recyclingCalendar = recyclingCalendar;
+        this.gardenCalendar = gardenCalendar;
         this.binType = binType;
         this.date = date;
         this.streets = new ArrayList<>();
@@ -55,16 +58,18 @@ public class CollectionDates {
     public CollectionDates() {
     }
 
-    public String getName() {
-        return name;
+    public String getRecyclingCalendar() {
+        return recyclingCalendar;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getBinType() {
         return binType;
+    }
+
+
+    public String getGardenCalendar() {
+        return gardenCalendar;
     }
 
     public Date getDate() {

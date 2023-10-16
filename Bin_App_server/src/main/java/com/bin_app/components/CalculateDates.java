@@ -8,10 +8,9 @@ import java.util.HashMap;
 public class CalculateDates {
 
 
-    public static HashMap<Date, String> calculateDates(int year, int month, int date, String option1, String option2) {
+    public static HashMap<Date, String> calculateRecyclingDates(int year, int month, int date, String option1, String option2) {
 
     Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 0);
 
         calendar.set(year, month, date);
 
@@ -35,4 +34,27 @@ public class CalculateDates {
 
         return datesWithBinColours;
     }
+
+    public static HashMap<Date, String> calculateGardenDates(int year, int month, int date) {
+
+        Calendar calendar = Calendar.getInstance();
+
+
+        calendar.set(year, month, date);
+
+//        int weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
+
+        ArrayList<Calendar> dates = new ArrayList<>();
+
+        HashMap<Date, String> datesWithBinColours = new HashMap<>();
+        datesWithBinColours.put(calendar.getTime(), "garden");
+
+        for(int i = 0; i < 20 ; i ++){
+            calendar.add(Calendar.DATE, 14);
+            dates.add(calendar);
+                datesWithBinColours.put(calendar.getTime(), "garden");
+
+    }
+        return datesWithBinColours;
+}
 }
