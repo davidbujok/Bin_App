@@ -137,18 +137,18 @@ public class DataLoader implements ApplicationRunner {
         List<CollectionDates> allDatesFromDatabase = collectionDatesRepository.findAll();
 
         GardenWasteSanitizer getGardenWasteDetails = new GardenWasteSanitizer();
-        HashMap<String, String> getAllGardenWasteDetails = getGardenWasteDetails.getAllGardenData();
+        HashMap<String, GardenDetails> getAllGardenWasteDetails = getGardenWasteDetails.getAllGardenData();
 
 
         getAllStreetData.forEach((key, value) -> {
             Street street = new Street(key, value.getPostcode(), value.getRecycling(), value.getUrl());
 
-//            getAllGardenWasteDetails.forEach((k, v) -> {
-//               if(key.equals(k)) {
-//                   street.setGardenWasteId(v.getGardenWasteId());
-//                   street.setGardenWasteUrl(v.getGardenWasteUrl());
-//               }
-//           });
+            getAllGardenWasteDetails.forEach((k, v) -> {
+               if(k.contains(key)) {
+                   street.setGardenWasteId(v.getGardenWasteId());
+                   street.setGardenWasteUrl(v.getGardenWasteUrl());
+               }
+           });
 
 
             for (CollectionDates date: allDatesFromDatabase) {
