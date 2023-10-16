@@ -44,7 +44,7 @@ public class Street {
                             name = "collection_date_id",
                             nullable = false,
                             updatable = false
-                    )
+                    ),
             }
     )
 
@@ -54,9 +54,9 @@ public class Street {
         this.name = name;
         this.postcode = postcode;
         this.recyclingAndWasteId = recyclingAndWasteId;
-        this.gardenWasteId = "";
+        this.gardenWasteId = null;
         this.recyclingAndWasteUrl = recyclingAndWasteUrl;
-        this.gardenWasteUrl = "";
+        this.gardenWasteUrl = null;
         this.collectionDates = new ArrayList<>();
     }
 
@@ -83,6 +83,8 @@ public class Street {
     public String getPostcode() {
         return postcode;
     }
+
+
 
     public String getRecyclingAndWasteId() {
         return recyclingAndWasteId;

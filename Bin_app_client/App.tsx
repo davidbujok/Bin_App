@@ -38,6 +38,7 @@ import {
   search,
   styles,
 } from './styles/stylesSheet';
+import {api} from './api-keys/api-keys';
 
 function App(): JSX.Element {
   // const [fetchData, setFetchData] = useState<Boolean>(false);
@@ -50,7 +51,7 @@ function App(): JSX.Element {
 
   // GEOLOCATION
   // MY API don't forget to delete because you will go bankrupt!
-  Geocoder.init('your api key goes here');
+  Geocoder.init(api);
 
   useEffect(() => {
     // Geocoder.from(55.949531514154025, -3.0976942469294793)
@@ -152,9 +153,7 @@ function App(): JSX.Element {
     )
       .then(response => response.json())
       .then((data: Array<IDate>) => {
-        console.log(data);
         setDates(data);
-        console.log(dates);
         // {dates!=null && console.log(dates.map((date)=> date.date))}
       })
       .catch(error => {
@@ -167,43 +166,13 @@ function App(): JSX.Element {
       .then(response => response.json())
       .then((data: Array<IStreet>) => {
         setStreets(data);
+        setPage(2)
       })
       .catch(error => {
         console.error(error);
       });
   }
 
-  // if (streets != null) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <ScrollView>
-  //         {streets.map(street => {
-  //           return (
-  //             <Text
-  //               key={street.id}
-  //               onPress={() => handleFetchByStreet(street.name)}>
-  //               {street.name}
-  //             </Text>
-  //           );
-  //         })}
-  //         <TextInput
-  //           onChangeText={setInput}
-  //           value={input}
-  //           style={styles.input}
-  //         />
-  //         <TouchableOpacity style={styles.smallButton}>
-  //           <Text style={{color: 'white'}}>Click me</Text>
-  //         </TouchableOpacity>
-  //         {dates != null &&
-  //           dates.map(date => (
-  //             <Text key={date.id}>
-  //               {date.date} {date.binType}
-  //             </Text>
-  //           ))}
-  //       </ScrollView>
-  //     </SafeAreaView>
-  //   );
-  // } else {
   const renderSwitch = (page: number) => {
     switch (page) {
       case 1:
@@ -236,6 +205,36 @@ function App(): JSX.Element {
             </View>
             </>
         );
+        case 2:
+          return (
+        <>
+        <View style={styles.container}>
+            {streets && streets.map(street => {
+              return (
+                <Text
+                  key={street.id}
+                  onPress={() => handleFetchByStreet(street.name)}>
+                  {street.name}
+                </Text>
+              );
+            })}
+            <TextInput
+              onChangeText={setInput}
+              value={input}
+              style={styles.input}
+            />
+            <TouchableOpacity style={styles.smallButton}>
+              <Text style={{color: 'white'}}>Click me</Text>
+            </TouchableOpacity>
+            {dates != null &&
+              dates.map(date => (
+                <Text key={date.id}>
+                  {date.date} {date.binType}
+                </Text>
+              ))}
+              </View>
+         </>
+          )
     }
   }
   
