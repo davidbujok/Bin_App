@@ -39,7 +39,7 @@ function BaseContainer({navbar,search,setInput,input,getLocation,renderSwitch,pa
             <Text style={styles.icon}>📍</Text>
             </Pressable>
             </View>
-      <Text>{renderSwitch(page)};</Text>
+      <Text>{renderSwitch(page)}</Text>
       </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'flex-end', gap: 3, paddingTop: 35}}>
