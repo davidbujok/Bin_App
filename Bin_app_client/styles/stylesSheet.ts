@@ -57,6 +57,11 @@ export const styles = StyleSheet.create({
   textColor: {
     color: 'white',
   },
+  streetsList:{
+    display:'flex',
+    justifyContent:'center',
+    gap:5,
+  }
 });
 
 export const navbar = StyleSheet.create({

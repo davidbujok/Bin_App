@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -19,26 +18,17 @@ import {
 } from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import {IStreet, IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {
-  buttonStyle,
-  colourPalette,
-  colourPaletteBackground,
   heroText,
-  main,
   navbar,
   search,
-  styles,
 } from './styles/stylesSheet';
 import {api} from './api-keys/api-keys';
+import HomeContainer from './Containers/HomeContainer';
+import SearchingContainer from './Containers/SearchingContainer';
+import BaseContainer from './Containers/BaseContainer';
 
 function App(): JSX.Element {
   // const [fetchData, setFetchData] = useState<Boolean>(false);
@@ -154,86 +144,48 @@ function App(): JSX.Element {
       .then(response => response.json())
       .then((data: Array<IDate>) => {
         setDates(data);
-        // {dates!=null && console.log(dates.map((date)=> date.date))}
+        // console.log("Street Data: ",data)
       })
       .catch(error => {
         console.error(error);
       });
   }; // End of handleFetch By Street
 
-  if (input && input.length > 1) {
-    fetch(`http://10.0.2.2:8080/streets?name=${input}`)
-      .then(response => response.json())
-      .then((data: Array<IStreet>) => {
-        setStreets(data);
-        setPage(2)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
+
+  useEffect(()=>{
+    if (input && input.length > 1) {
+      fetch(`http://10.0.2.2:8080/streets?name=${input}`)
+        .then(response => response.json())
+        .then((data: Array<IStreet>) => {
+          setStreets(data);
+          console.log("Streets: ",data)
+          setPage(2)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }else{
+    }
+  },[input])
+
+
+  
 
   const renderSwitch = (page: number) => {
     switch (page) {
       case 1:
         return (
-            <>
-            <View style={search.container}>
-            <TextInput
-            onChangeText={setInput}
-            value={input}
-            style={search.input}
-            />
-            <Pressable style={[styles.button]} onPress={getLocation}>
-            <Text style={styles.icon}>📍</Text>
-            </Pressable>
-            </View>
-            <View style={{alignSelf: 'center', paddingTop: 40}}>
-            <Text style={[heroText.hero, heroText.mid, colourPalette.green]}>Save</Text>
-            <Text style={[heroText.hero, heroText.light, colourPalette.green]}>the</Text>
-            <Text style={[heroText.hero, heroText.bold, colourPalette.green]}>Planet.</Text>
-            <Text style={[heroText.joinText, heroText.mid, colourPalette.blue]}>and</Text>
-            <View style={{flexDirection: 'row'}}>
-            <Text style={[heroText.letter, heroText.bold, colourPalette.red]}>R</Text>
-            <Text style={[ heroText.letter, heroText.bold, colourPalette.brown, ]}>e</Text>
-            <Text style={[ heroText.letter, heroText.bold, colourPalette.blue, ]}>c</Text>
-            <Text style={[ heroText.letter, heroText.bold, colourPalette.green, ]}>y</Text>
-            <Text style={[heroText.letter, heroText.bold, colourPalette.red]}>c</Text> 
-            <Text style={[ heroText.letter, heroText.bold, colourPalette.brown, ]}>l</Text>
-            <Text style={[ heroText.letter, heroText.bold, colourPalette.blue, ]}>e</Text>
-            </View>
-            </View>
-            </>
+          <HomeContainer 
+            heroText={heroText} />
         );
-        case 2:
-          return (
-        <>
-        <View style={styles.container}>
-            {streets && streets.map(street => {
-              return (
-                <Text
-                  key={street.id}
-                  onPress={() => handleFetchByStreet(street.name)}>
-                  {street.name}
-                </Text>
-              );
-            })}
-            <TextInput
-              onChangeText={setInput}
-              value={input}
-              style={styles.input}
-            />
-            <TouchableOpacity style={styles.smallButton}>
-              <Text style={{color: 'white'}}>Click me</Text>
-            </TouchableOpacity>
-            {dates != null &&
-              dates.map(date => (
-                <Text key={date.id}>
-                  {date.date} {date.binType}
-                </Text>
-              ))}
-              </View>
-         </>
+      case 2:
+        return (
+          <SearchingContainer 
+            streets={streets}
+            handleFetchByStreet={handleFetchByStreet}
+            dates={dates}
+          />
+        
           )
     }
   }
@@ -241,35 +193,17 @@ function App(): JSX.Element {
   return (
       <>
       <SafeAreaView>
-      <View style={main.container}>
-      <View style={navbar.container}>
-      <View style={{flexDirection: 'column', gap: 5}}>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.blue, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.green, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.brown, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.red, ]}></View>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-      <Text style={[navbar.logo, colourPalette.green]}>W</Text>
-      <Text style={[navbar.logo, colourPalette.black]}>hat </Text>
-      <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
-      <Text style={[navbar.logo, colourPalette.black]}>in</Text>
-      </View>
-      </View>
-      <View style={{display: 'flex', alignSelf: 'center',  marginTop: 35}}>
-      <Text>{renderSwitch(page)};</Text>
-      </View>
-      </View>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end', gap: 3, paddingTop: 35}}>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.blue, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.green, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.red, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.brown, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.blue, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.green, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.red, ]}></View>
-      <View style={[ navbar.logoBlocks, colourPaletteBackground.brown, ]}></View>
-      </View>
+        <BaseContainer 
+          navbar={navbar}
+          search={search}
+          setInput={setInput}
+          input={input}
+          getLocation={getLocation} 
+          renderSwitch={renderSwitch}
+          setPage={setPage}
+          page={page}
+          setDates={setDates}
+        />
       </SafeAreaView> 
       </>
       )
