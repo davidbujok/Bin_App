@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     display:'flex',
     justifyContent:'center',
     gap:5,
-  }
+  },
 });
 
 export const navbar = StyleSheet.create({

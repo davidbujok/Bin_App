@@ -29,6 +29,7 @@ import {api} from './api-keys/api-keys';
 import HomeContainer from './Containers/HomeContainer';
 import SearchingContainer from './Containers/SearchingContainer';
 import BaseContainer from './Containers/BaseContainer';
+import Carousel from './Containers/SwipeableContainer';
 
 function App(): JSX.Element {
   // const [fetchData, setFetchData] = useState<Boolean>(false);
@@ -149,6 +150,7 @@ function App(): JSX.Element {
       .catch(error => {
         console.error(error);
       });
+      setPage(3)
   }; // End of handleFetch By Street
 
 
@@ -158,7 +160,6 @@ function App(): JSX.Element {
         .then(response => response.json())
         .then((data: Array<IStreet>) => {
           setStreets(data);
-          console.log("Streets: ",data)
           setPage(2)
         })
         .catch(error => {
@@ -187,6 +188,12 @@ function App(): JSX.Element {
           />
         
           )
+      case 3:
+        return (
+        <>
+        <Carousel dates={dates}/>
+        </>
+        )
     }
   }
   
