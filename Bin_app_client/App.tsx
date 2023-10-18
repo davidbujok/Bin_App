@@ -9,6 +9,8 @@ import HomeContainer from './Containers/HomeContainer';
 import SearchingContainer from './Containers/SearchingContainer';
 import BaseContainer from './Containers/BaseContainer';
 import Carousel from './Containers/SwipeableContainer';
+import PushNotification from 'react-native-push-notification';
+
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<IStreet>>();
@@ -22,6 +24,23 @@ function App(): JSX.Element {
 
   Geocoder.init(api);
 
+  console.log(PushNotification.channelExists("Date-Notification",(exist)=>console.log("Channel Exist: ",exist)))
+
+
+  useEffect(()=>{
+    PushNotification.createChannel(
+      {
+        channelId: 'Date-Notification', 
+        channelName: 'Date-Notification channel', 
+        vibrate: true, 
+      },
+      (created) => 
+      console.log(`createChannel returned '${created}'`) 
+    ); 
+    // checkApplicationPermission();
+  },[])
+
+  
   useEffect(() => {
       if (location) {
       Geocoder.from( location['coords']['latitude'], location['coords']['longitude'])
@@ -128,7 +147,6 @@ function App(): JSX.Element {
             }  
           }
         setDates(data);
-        // console.log("Street Data: ",data)
       })
       .catch(error => {
         console.error(error);
@@ -177,6 +195,30 @@ function App(): JSX.Element {
         );
     }
   };
+
+
+
+  
+    // const checkApplicationPermission = async () => {
+    //   if (Platform.OS === 'android') {
+    //     try {
+    //       await PermissionsAndroid.request(
+    //         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+    //       );
+    //     } catch (error) {
+    //     }
+    //   }
+    // }
+  
+  //  Permision Button
+  //   <View>
+  //   <TouchableOpacity
+  //     onPress={() => {
+  //       checkApplicationPermission();
+  //     }}>
+  //     <Text>Notifications Permission</Text>
+  //   </TouchableOpacity>
+  // </View>
 
   return (
     <>

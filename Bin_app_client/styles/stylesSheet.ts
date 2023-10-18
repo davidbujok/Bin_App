@@ -42,13 +42,19 @@ export const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, // if this device is android, set padding to top otherwise don't, this is because SafeAreaView doesn't work on Android?
   },
   smallButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#1c6fc4',
     width: 100,
     padding: 10,
     alignItems: 'center',
+    borderRadius: 10,
+    marginTop:40,
+    
   },
   textColor: {
     color: 'white',
+    fontWeight: 'bold',
+    fontSize:15
+
   },
   streetsList:{
     display:'flex',

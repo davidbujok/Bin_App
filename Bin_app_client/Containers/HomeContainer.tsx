@@ -4,6 +4,9 @@ import { styles,colourPalette } from '../styles/stylesSheet'
 
 
 function HomeContainer({heroText}) {
+
+  
+
   return (
     <>
     <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
