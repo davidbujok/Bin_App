@@ -24,7 +24,6 @@ function App(): JSX.Element {
 
   Geocoder.init(api);
 
-  console.log(PushNotification.channelExists("Date-Notification",(exist)=>console.log("Channel Exist: ",exist)))
 
 
   useEffect(()=>{
@@ -37,7 +36,6 @@ function App(): JSX.Element {
       (created) => 
       console.log(`createChannel returned '${created}'`) 
     ); 
-    // checkApplicationPermission();
   },[])
 
   
@@ -133,7 +131,6 @@ function App(): JSX.Element {
     }
 
     const dateInstance: string = year + month + day;
-    console.log(dateInstance);
 
     fetch(
       `http://10.0.2.2:8080/collectionDates?street=${streetName}&date=${dateInstance}`,

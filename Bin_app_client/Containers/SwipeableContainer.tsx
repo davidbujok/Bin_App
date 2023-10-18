@@ -9,9 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { styles } from '../styles/stylesSheet';
-import { IDate } from '../styles/interfaces';
-import PushNotification from 'react-native-push-notification';
-import checkApplicationPermission from './PermissionContainer';
+import { handleNotification } from '../Components/NotificationFunctionality';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -120,28 +118,6 @@ const Carousel = ({dates, streetName}) => {
   };
   // console.log(dates)
 
-  const handleNotification = async (date: IDate) =>{
-    await checkApplicationPermission()
-    console.log(`${date.binType}`)
-    PushNotification.localNotification({
-      channelId:"Date-Notification",
-      title: "date.binType",
-      message: `Date :`
-    })
-    const splitedDate = date.date.split("-")
-    
-    let year = splitedDate[0]
-    let month = splitedDate[1]
-    let day = splitedDate[2]
-
-    PushNotification.localNotificationSchedule({
-      channelId: "Date-Notification",
-      title: `Notification for ${date.date}`,
-      message: `Your bin collection type for ${date.date} is ${date.binType}`,
-      date: new Date(Date.now() + 10 * 1000),
-      allowWhileIdle:true
-    })
-  }
     
   
 
