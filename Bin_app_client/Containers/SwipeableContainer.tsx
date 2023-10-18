@@ -130,9 +130,14 @@ const Carousel = ({dates, streetName}) => {
     })
     const splitedDate = date.date.split("-")
     
-    let year = splitedDate[0]
-    let month = splitedDate[1]
-    let day = splitedDate[2]
+    let getYear = splitedDate[0]
+    let getMonth = splitedDate[1]
+    let getDay = splitedDate[2]
+
+    const year:number = Number(getYear)
+    const month:number = Number(getMonth)
+    const day:number = Number(getDay)
+    console.log(typeof year, typeof month, typeof day)
 
     PushNotification.localNotificationSchedule({
       channelId: "Date-Notification",
