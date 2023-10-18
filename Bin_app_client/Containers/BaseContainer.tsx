@@ -1,8 +1,17 @@
 import React from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Keyboard, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { styles, colourPalette, colourPaletteBackground, main } from '../styles/stylesSheet'
 
-function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwitch, page, setPage, setDates }) {
+function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwitch, page, setPage, setDates, setAddress, setLocation, setNewFormat }) {
+
+  const clearInputs = () => {
+    setAddress({})
+    setLocation(false)
+    setNewFormat(undefined)
+    setInput(null)
+    setPage(1)
+    Keyboard.dismiss()
+    }
 
   return (
     <View style={{flex:1}}>
@@ -15,10 +24,12 @@ function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwi
             <View style={[navbar.logoBlocks, colourPaletteBackground.red,]}></View>
           </View>
           <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={clearInputs}>
             <Text style={[navbar.logo, colourPalette.green]}>W</Text>
             <Text style={[navbar.logo, colourPalette.black]}>hat </Text>
             <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
             <Text style={[navbar.logo, colourPalette.black]}>in</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ display: 'flex', alignSelf: 'center', marginTop: -20 }}>
