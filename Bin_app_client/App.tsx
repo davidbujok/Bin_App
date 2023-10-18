@@ -1,30 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Platform,
-  TextInput,
-  Button,
-  Touchable,
-  PermissionsAndroid,
-  TouchableOpacity,
-  LogBox,
-  Pressable,
-} from 'react-native';
+import {SafeAreaView, PermissionsAndroid} from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
-
 import {IStreet, IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
-import {
-  heroText,
-  navbar,
-  search,
-} from './styles/stylesSheet';
+import {heroText, navbar, search} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys';
 import HomeContainer from './Containers/HomeContainer';
 import SearchingContainer from './Containers/SearchingContainer';
@@ -32,13 +11,13 @@ import BaseContainer from './Containers/BaseContainer';
 import Carousel from './Containers/SwipeableContainer';
 
 function App(): JSX.Element {
-  // const [fetchData, setFetchData] = useState<Boolean>(false);
   const [streets, setStreets] = useState<Array<IStreet>>();
   const [dates, setDates] = useState<Array<IDate>>();
   const [input, setInput] = useState<string>();
   const [location, setLocation] = useState<GeoPosition | Boolean>(false);
   const [address, setAddress] = useState({});
   const [page, setPage] = useState<number>(1);
+  const [newFormat, setNewFormat] = useState<string | undefined>();
 
   // GEOLOCATION
   // MY API don't forget to delete because you will go bankrupt!
@@ -46,22 +25,25 @@ function App(): JSX.Element {
 
   useEffect(() => {
     // Geocoder.from(55.949531514154025, -3.0976942469294793)
-    if (location) {
-      Geocoder.from(
-        location['coords']['latitude'],
-        location['coords']['longitude'],
-      )
-        .then(json => {
+      if (location) {
+      Geocoder.from( location['coords']['latitude'], location['coords']['longitude'])
+      .then(json => {
           let addressComponent = json.results;
           setAddress(addressComponent[0].formatted_address.valueOf());
-        })
-        .then(console.log(address))
-        .catch(error => console.warn(error));
-    }
-  }, [location]);
+          setNewFormat(addressComponent[0].formatted_address.valueOf().split(" ", 3).slice(1,3).join(" ").toLowerCase().replace(/,/g, ''))
+      })
+      .catch(error => console.warn(error));
+      }}, [location]);
   // console.log(address['0']['address_components'][0]['long_name']);
   // console.log(address['0']['address_components'][1]['long_name']);
   // console.table(address);
+  useEffect(()=> {
+      if (address != undefined && newFormat != undefined) {
+      console.log(address)
+      console.log(newFormat)
+      setInput(newFormat)
+      }
+    }, [address, newFormat])
 
   const requestLocationPermission = async () => {
     try {
@@ -91,17 +73,16 @@ function App(): JSX.Element {
   const getLocation = () => {
     const result = requestLocationPermission();
     result.then(res => {
-      console.log('res is:', res);
+      // console.log('res is:', res);
       if (res) {
         Geolocation.getCurrentPosition(
           position => {
-            console.log(position);
+            // console.log(position);
             setLocation(position);
-            console.log(position['coords']['latitude']);
-            console.log(position['coords']['longitude']);
+            // console.log(position['coords']['latitude']);
+            // console.log(position['coords']['longitude']);
           },
           error => {
-            // See error code charts below.
             console.log(error.code, error.message);
             setLocation(false);
           },
@@ -150,70 +131,67 @@ function App(): JSX.Element {
       .catch(error => {
         console.error(error);
       });
-      setPage(3)
+    setPage(3);
+    setAddress({})
+    setLocation(false)
+    setNewFormat(undefined)
   }; // End of handleFetch By Street
 
-
-  useEffect(()=>{
+  useEffect(() => {
     if (input && input.length > 1) {
       fetch(`http://10.0.2.2:8080/streets?name=${input}`)
         .then(response => response.json())
         .then((data: Array<IStreet>) => {
           setStreets(data);
-          setPage(2)
+          setPage(2);
         })
         .catch(error => {
           console.error(error);
         });
-    }else{
+    } 
+    if (input?.length == 0) {
+      setPage(1);
     }
-  },[input])
-
-
-  
+  }, [input]);
 
   const renderSwitch = (page: number) => {
     switch (page) {
       case 1:
-        return (
-          <HomeContainer 
-            heroText={heroText} />
-        );
+        return <HomeContainer heroText={heroText} />;
       case 2:
         return (
-          <SearchingContainer 
+          <SearchingContainer
             streets={streets}
             handleFetchByStreet={handleFetchByStreet}
             dates={dates}
           />
-        
-          )
+        );
       case 3:
         return (
-        <>
-        <Carousel dates={dates}/>
-        </>
-        )
+          <>
+            <Carousel dates={dates} />
+          </>
+        );
     }
-  }
-  
+  };
+
   return (
-      <>
-      <SafeAreaView>
-        <BaseContainer 
+    <>
+      <SafeAreaView style={{flex: 1}}>
+        <BaseContainer
           navbar={navbar}
           search={search}
           setInput={setInput}
           input={input}
-          getLocation={getLocation} 
+          getLocation={getLocation}
           renderSwitch={renderSwitch}
           setPage={setPage}
           page={page}
           setDates={setDates}
         />
-      </SafeAreaView> 
-      </>
-      )
+      </SafeAreaView>
+    </>
+  );
 }
-  
+
 export default App;

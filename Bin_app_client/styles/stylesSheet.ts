@@ -1,13 +1,7 @@
 import {
-  SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
   Platform,
-  TextInput,
 } from 'react-native';
 type Color = {
   blue: '#1c6fc4';
@@ -32,7 +26,6 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
-    // backgroundColor: '#6aa62e',
   },
   icon: {
     fontSize: 40,
@@ -59,6 +52,7 @@ export const styles = StyleSheet.create({
   },
   streetsList:{
     display:'flex',
+    padding: 30,
     justifyContent:'center',
     gap:5,
   },
@@ -109,6 +103,7 @@ export const search = StyleSheet.create({
 export const main = StyleSheet.create({
   container: {
     display: 'flex',
+    flex: 1
   },
 });
 
