@@ -44,14 +44,14 @@ public class Sanitize {
         Scanner scanAllEdinburghStreets = new Scanner(fileAllEdinburghStreets);
         HashMap<String, String> allEdinburghStreetsWithPostcodes = new HashMap<>();
         while (scanScraper.hasNextLine()) {
-            String currentStreet = scanScraper.nextLine().toLowerCase();
+            String currentStreet = scanScraper.nextLine().toLowerCase().replace("&", ",");
             String[] currentStreetSplitString = currentStreet.split("\t");
             scrapedCouncilStreets.put(currentStreetSplitString[0], new Details(currentStreetSplitString[2]));
             scrapedCouncilStreets.get(currentStreetSplitString[0]).setFullUrl(currentStreetSplitString[1]);
         }
         scanScraper.close();
         while (scanAllEdinburghStreets.hasNextLine()) {
-            String currentEdinburghStreet = scanAllEdinburghStreets.nextLine().toLowerCase();
+            String currentEdinburghStreet = scanAllEdinburghStreets.nextLine().toLowerCase().replace("&", ",");
             String[] correctEdinburghStreetSplitString = currentEdinburghStreet.split(" ");
             List<String> convertArrayToArrayList = new ArrayList<>(Arrays.asList(correctEdinburghStreetSplitString));
             String postCode2 = convertArrayToArrayList.remove(convertArrayToArrayList.size()-1);

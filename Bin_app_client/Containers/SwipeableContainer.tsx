@@ -11,19 +11,9 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const Carousel = ({dates}) => {
+const Carousel = ({dates, streetName}) => {
   const [firstBinType, setFirstBinType] = useState<String>('');
   const [secondBinType, setSecondBinType] = useState<String>('');
-
-  // const binTypes = {
-  //   recycling: require('/static/images/mixedbin.png'),
-  //   glass: require('../static/images/mixedbin.png'),
-  //   garden: require('/static/images/mixedbin.png'),
-  //   waste: require('/static/images/mixedbin.png'),
-  //   recyclingBox: require('/static/images/mixedbin.png'),
-  //   recylingGlass: require('/static/images/mixedbin.png'),
-  //   wasteGlass: require('/static/images/mixedbin.png'),
-  // };
   const mixedbin = require('../static/images/mixedbin.png');
   const glass = require('../static/images/bluebin.png');
   console.log(SCREEN_WIDTH);
@@ -66,17 +56,45 @@ const Carousel = ({dates}) => {
             </View>
             </>
             )
-      case ("waste glass"):
+      case (("recycling garden") || ("garden recycling")):
         return (
             <>
-            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Garden & Glass</Text>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling & Garden</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+            )
+      case (("waste garden")):
+      case (("garden waste")):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General & Garden</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+            )
+      case ("glass garden" || "garden glass"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Glass & Garden</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+            )
+      case ("waste glass" || "glass waste"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General & Glass</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
             <Image style={image.imageSize} source={glass}></Image>
             <Image style={image.imageSize} source={mixedbin}></Image>
             </View>
             </>
           )
-      case ("recycling glass"):
+      case ("recycling glass" || "glass recycling"):
         return (
             <>
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling & Glass</Text>
@@ -97,6 +115,7 @@ const Carousel = ({dates}) => {
             )
   }
   };
+  console.log(dates)
 
   return (
     <ScrollView
@@ -106,10 +125,12 @@ const Carousel = ({dates}) => {
       {dates &&
         dates.map(date => (
           <View
+            key={date.id}
             style={{
               width: SCREEN_WIDTH,
               alignItems: 'center', 
             }}>
+            <Text>{streetName}</Text>
             <Text style={{fontSize: 24, fontWeight: '300'}}>Collection on</Text>
             <Text style={{fontSize: 30, fontWeight: '500', color: "#291D29"}}>{date.date}</Text>
             {renderSwitch(date.binType)}

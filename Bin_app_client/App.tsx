@@ -18,25 +18,21 @@ function App(): JSX.Element {
   const [address, setAddress] = useState({});
   const [page, setPage] = useState<number>(1);
   const [newFormat, setNewFormat] = useState<string | undefined>();
+  const [streetName, setStreetName] = useState<string>();
 
-  // GEOLOCATION
-  // MY API don't forget to delete because you will go bankrupt!
   Geocoder.init(api);
 
   useEffect(() => {
-    // Geocoder.from(55.949531514154025, -3.0976942469294793)
       if (location) {
       Geocoder.from( location['coords']['latitude'], location['coords']['longitude'])
       .then(json => {
           let addressComponent = json.results;
           setAddress(addressComponent[0].formatted_address.valueOf());
           setNewFormat(addressComponent[0].formatted_address.valueOf().split(" ", 3).slice(1,3).join(" ").toLowerCase().replace(/,/g, ''))
-      })
+          })
       .catch(error => console.warn(error));
       }}, [location]);
-  // console.log(address['0']['address_components'][0]['long_name']);
-  // console.log(address['0']['address_components'][1]['long_name']);
-  // console.table(address);
+
   useEffect(()=> {
       if (address != undefined && newFormat != undefined) {
       console.log(address)
@@ -125,6 +121,12 @@ function App(): JSX.Element {
     )
       .then(response => response.json())
       .then((data: Array<IDate>) => {
+        for (let i = 0; i < data.length -1; i ++ ){
+            if (data[i].date == data[i + 1].date) {
+                data[i].binType += " " + data[i + 1].binType
+                data.splice(i + 1, 1)
+            }  
+          }
         setDates(data);
         // console.log("Street Data: ",data)
       })
@@ -164,13 +166,13 @@ function App(): JSX.Element {
           <SearchingContainer
             streets={streets}
             handleFetchByStreet={handleFetchByStreet}
-            dates={dates}
+            setStreetName={setStreetName}
           />
         );
       case 3:
         return (
           <>
-            <Carousel dates={dates} />
+            <Carousel dates={dates} streetName={streetName} />
           </>
         );
     }
