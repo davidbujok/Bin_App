@@ -6,17 +6,20 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
+import { styles } from '../styles/stylesSheet';
+import { IDate } from '../styles/interfaces';
+import PushNotification from 'react-native-push-notification';
+import checkApplicationPermission from './PermissionContainer';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Carousel = ({dates, streetName}) => {
-  const [firstBinType, setFirstBinType] = useState<String>('');
-  const [secondBinType, setSecondBinType] = useState<String>('');
   const mixedbin = require('../static/images/mixedbin.png');
   const glass = require('../static/images/bluebin.png');
-  console.log(SCREEN_WIDTH);
+  // console.log(SCREEN_WIDTH);
 
   const renderSwitch = (binType: string) => {
     switch (binType) {
@@ -115,7 +118,32 @@ const Carousel = ({dates, streetName}) => {
             )
   }
   };
-  console.log(dates)
+  // console.log(dates)
+
+  const handleNotification = async (date: IDate) =>{
+    await checkApplicationPermission()
+    console.log(`${date.binType}`)
+    PushNotification.localNotification({
+      channelId:"Date-Notification",
+      title: "date.binType",
+      message: `Date :`
+    })
+    const splitedDate = date.date.split("-")
+    
+    let year = splitedDate[0]
+    let month = splitedDate[1]
+    let day = splitedDate[2]
+
+    PushNotification.localNotificationSchedule({
+      channelId: "Date-Notification",
+      title: `Notification for ${date.date}`,
+      message: `Your bin collection type for ${date.date} is ${date.binType}`,
+      date: new Date(Date.now() + 10 * 1000),
+      allowWhileIdle:true
+    })
+  }
+    
+  
 
   return (
     <ScrollView
@@ -134,6 +162,10 @@ const Carousel = ({dates, streetName}) => {
             <Text style={{fontSize: 24, fontWeight: '300'}}>Collection on</Text>
             <Text style={{fontSize: 30, fontWeight: '500', color: "#291D29"}}>{date.date}</Text>
             {renderSwitch(date.binType)}
+            <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
+              <Text style={styles.textColor}>Click me</Text>
+            </TouchableOpacity>
+           
           </View>
         ))}
     </ScrollView>
