@@ -1,11 +1,12 @@
 import React from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Keyboard, Pressable, Text, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, View } from 'react-native'
 import { styles,colourPalette } from '../styles/stylesSheet'
 
 
 function HomeContainer({heroText}) {
   return (
     <>
+    <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <View style={{alignSelf: 'center', paddingTop: 40}}>
             <Text style={[heroText.hero, heroText.mid, colourPalette.green]}>Save</Text>
             <Text style={[heroText.hero, heroText.light, colourPalette.green]}>the</Text>
@@ -21,6 +22,7 @@ function HomeContainer({heroText}) {
             <Text style={[ heroText.letter, heroText.bold, colourPalette.blue, ]}>e</Text>
             </View>
             </View>
+    </TouchableWithoutFeedback>
     </>
   )
 }

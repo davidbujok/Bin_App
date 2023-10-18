@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, PermissionsAndroid} from 'react-native';
+import {SafeAreaView, PermissionsAndroid, Keyboard} from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IStreet, IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
@@ -135,6 +135,7 @@ function App(): JSX.Element {
     setAddress({})
     setLocation(false)
     setNewFormat(undefined)
+    Keyboard.dismiss()
   }; // End of handleFetch By Street
 
   useEffect(() => {
@@ -179,6 +180,9 @@ function App(): JSX.Element {
     <>
       <SafeAreaView style={{flex: 1}}>
         <BaseContainer
+          setAddress={setAddress}
+          setLocation={setLocation}
+          setNewFormat={setNewFormat}
           navbar={navbar}
           search={search}
           setInput={setInput}
