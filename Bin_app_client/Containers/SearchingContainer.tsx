@@ -10,7 +10,8 @@ function SearchingContainer({streets,handleFetchByStreet,dates}) {
     <View style={styles.streetsList}>
     {streets && streets.map((street: IStreet) => {
       return (
-        <Text
+        <Text 
+          style={{fontSize: 21, fontWeight: '600', color: '#291D29'}}
           key={street.id}
           onPress={() => handleFetchByStreet(street.name)}>
           {street.name}
@@ -18,18 +19,18 @@ function SearchingContainer({streets,handleFetchByStreet,dates}) {
       );
     })}
    
-    <TouchableOpacity style={styles.smallButton}>
-      <Text style={{color: 'white'}}>--------------</Text>
-    </TouchableOpacity>
-    {dates != null &&
-      dates.map((date: IDate) => (
-        <Text key={date.id}>
-          {date.date} {date.binType}
-        </Text>
-      ))}
   </View>
   </>
   )
 }
 
 export default SearchingContainer
+// <TouchableOpacity style={styles.smallButton}>
+// <Text style={{color: 'white'}}>--------------</Text>
+// </TouchableOpacity>
+// {dates != null &&
+//   dates.map((date: IDate) => (
+//         <Text key={date.id}>
+//         {date.date} {date.binType}
+//         </Text>
+//         ))}

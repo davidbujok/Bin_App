@@ -1,40 +1,106 @@
 import React, {useState} from 'react';
 import {
   View,
-  FlatList,
   Dimensions,
   Text,
   Image,
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import {styles} from '../styles/stylesSheet';
-import {requestLocationPermission} from './PermissionContainer';
-import {GestureHandlerRouteView} from 'react-native-gesture-handler';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Carousel = ({dates}) => {
   const [firstBinType, setFirstBinType] = useState<String>('');
   const [secondBinType, setSecondBinType] = useState<String>('');
-  const binTypes = {
-    recycling: '../static/images/mixedbin.png',
-    glass: '/static/images/mixedbin.png',
-    garden: '/static/images/mixedbin.png',
-    waste: '/static/images/mixedbin.png',
-    'recycling box': '/static/images/mixedbin.png',
-    'recyling glass': '/static/images/mixedbin.png',
-    'waste glass': '/static/images/mixedbin.png',
-  };
+
+  // const binTypes = {
+  //   recycling: require('/static/images/mixedbin.png'),
+  //   glass: require('../static/images/mixedbin.png'),
+  //   garden: require('/static/images/mixedbin.png'),
+  //   waste: require('/static/images/mixedbin.png'),
+  //   recyclingBox: require('/static/images/mixedbin.png'),
+  //   recylingGlass: require('/static/images/mixedbin.png'),
+  //   wasteGlass: require('/static/images/mixedbin.png'),
+  // };
   const mixedbin = require('../static/images/mixedbin.png');
+  const glass = require('../static/images/bluebin.png');
   console.log(SCREEN_WIDTH);
 
-  const getImage = binType => {
-    const x = binTypes[binType];
+  const renderSwitch = (binType: string) => {
+    switch (binType) {
+      case ("waste"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General Waste</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={glass}></Image>
+            </View>
+            </>
+            )
+      case ("glass"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Glass</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={glass}></Image>
+            </View>
+            </>
+            )
+      case ("garden"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Garden Waste</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={glass}></Image>
+            </View>
+            </>
+            )
+      case ("recycling"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+            )
+      case ("waste glass"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Garden & Glass</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={glass}></Image>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+          )
+      case ("recycling glass"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling & Glass</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={glass}></Image>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+          )
+      case ("recycling box"):
+        return (
+            <>
+            <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling Box</Text>
+            <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
+            <Image style={image.imageSize} source={mixedbin}></Image>
+            </View>
+            </>
+            )
+  }
   };
 
   return (
     <ScrollView
+      style={{paddingTop: 20}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
       {dates &&
@@ -42,12 +108,11 @@ const Carousel = ({dates}) => {
           <View
             style={{
               width: SCREEN_WIDTH,
-              alignItems: 'center',
+              alignItems: 'center', 
             }}>
-            <Text>{date.binType}</Text>
-            <Text>Your next bin is on</Text>
-            <Text>{date.date}</Text>
-            <Image style={image.imageSize} source={mixedbin}></Image>
+            <Text style={{fontSize: 24, fontWeight: '300'}}>Collection on</Text>
+            <Text style={{fontSize: 30, fontWeight: '500', color: "#291D29"}}>{date.date}</Text>
+            {renderSwitch(date.binType)}
           </View>
         ))}
     </ScrollView>

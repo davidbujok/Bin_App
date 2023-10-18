@@ -5,7 +5,7 @@ import { styles, colourPalette, colourPaletteBackground, main } from '../styles/
 function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwitch, page, setPage, setDates }) {
 
   return (
-    <>
+    <View style={{flex:1}}>
       <View style={main.container}>
         <View style={navbar.container}>
           <View style={{ flexDirection: 'column', gap: 5 }}>
@@ -28,9 +28,10 @@ function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwi
                 setPage(1)
                 setInput("")
                 setDates(null)
-              }}>Back</Text>
+              }}></Text>
             </Pressable>
-            <TextInput
+              <TextInput
+              placeholder='search street name'
               onChangeText={setInput}
               value={input}
               style={search.input}
@@ -52,7 +53,7 @@ function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwi
         <View style={[navbar.logoBlocks, colourPaletteBackground.red,]}></View>
         <View style={[navbar.logoBlocks, colourPaletteBackground.brown,]}></View>
       </View>
-    </>
+      </View>
   )
 }
 
