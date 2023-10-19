@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { styles } from '../styles/stylesSheet';
 import { handleNotification } from '../Components/NotificationFunctionality';
+import { IDate } from '../styles/interfaces';
 
 
 
@@ -18,7 +19,6 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Carousel = ({dates, streetName}) => {
   const mixedbin = require('../static/images/mixedbin.png');
   const glass = require('../static/images/bluebin.png');
-  // console.log(SCREEN_WIDTH);
 
   const renderSwitch = (binType: string) => {
     switch (binType) {
@@ -133,7 +133,7 @@ return (
     snapToInterval={SCREEN_WIDTH}
   >
     {dates &&
-      dates.map((date) => {
+      dates.map((date: IDate) => {
         const splitDate = date.date.split("-");
         const date1 = new Date()
         date1.setFullYear(parseInt(splitDate[0]), parseInt(splitDate[1]) - 1, parseInt(splitDate[2]))
@@ -154,20 +154,7 @@ return (
             <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
               <Text style={styles.buttonTextColor}>Add Reminder</Text>
             </TouchableOpacity>
-            {/* <DatePicker
-              modal
-              open={open}
-              date={date}
-              onConfirm={(date) => {
-                setOpen(false)
-                setDate(date)
-              }}
-              onCancel={() => {
-                setOpen(false)
-              }}
-      /> */}
           </View>
-
         );
       })}
   </ScrollView>

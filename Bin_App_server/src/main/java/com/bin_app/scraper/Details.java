@@ -1,7 +1,4 @@
 package com.bin_app.scraper;
-
-import java.util.HashMap;
-
 public class Details {
 
     private String postcode;
