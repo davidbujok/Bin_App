@@ -12,6 +12,7 @@ import { styles } from '../styles/stylesSheet';
 import { handleNotification } from '../Components/NotificationFunctionality';
 
 
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Carousel = ({dates, streetName}) => {
@@ -151,9 +152,22 @@ return (
             </Text>
             {renderSwitch(date.binType)}
             <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
-              <Text style={styles.buttonTextColor}>Click me</Text>
+              <Text style={styles.buttonTextColor}>Add Reminder</Text>
             </TouchableOpacity>
+            {/* <DatePicker
+              modal
+              open={open}
+              date={date}
+              onConfirm={(date) => {
+                setOpen(false)
+                setDate(date)
+              }}
+              onCancel={() => {
+                setOpen(false)
+              }}
+      /> */}
           </View>
+
         );
       })}
   </ScrollView>

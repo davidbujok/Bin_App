@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
   },
   smallButton: {
     backgroundColor: '#1c6fc4',
-    width: 100,
+    width: 130,
     padding: 10,
     alignItems: 'center',
     borderRadius: 10,
@@ -57,7 +57,8 @@ export const styles = StyleSheet.create({
   buttonTextColor: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize:15
+    fontSize:15,
+    textAlign: "center"
 
   },
   streetsList:{
