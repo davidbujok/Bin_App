@@ -18,6 +18,10 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  streetName : {
+    fontWeight: "bold",
+    fontSize: 25,
+  },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -50,7 +54,7 @@ export const styles = StyleSheet.create({
     marginTop:40,
     
   },
-  textColor: {
+  buttonTextColor: {
     color: 'white',
     fontWeight: 'bold',
     fontSize:15
@@ -62,6 +66,10 @@ export const styles = StyleSheet.create({
     justifyContent:'center',
     gap:5,
   },
+  dateText: {
+    fontSize: 20,
+    color: "#291D29"
+  }
 });
 
 export const navbar = StyleSheet.create({

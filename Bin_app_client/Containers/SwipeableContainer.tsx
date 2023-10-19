@@ -116,36 +116,48 @@ const Carousel = ({dates, streetName}) => {
             )
   }
   };
-  // console.log(dates)
 
-    
-  
 
-  return (
-    <ScrollView
-      style={{paddingTop: 20}}
-      horizontal
-      snapToInterval={SCREEN_WIDTH}>
-      {dates &&
-        dates.map(date => (
+
+  const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  const months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"]
+  const [date1, setDate1] = useState(new Date())
+
+
+
+return (
+  <ScrollView
+    style={{ paddingTop: 20 }}
+    horizontal
+    snapToInterval={SCREEN_WIDTH}
+  >
+    {dates &&
+      dates.map((date) => {
+        const splitDate = date.date.split("-");
+        const date1 = new Date()
+        date1.setFullYear(parseInt(splitDate[0]), parseInt(splitDate[1]) - 1, parseInt(splitDate[2]))
+        return (
           <View
             key={date.id}
             style={{
               width: SCREEN_WIDTH,
-              alignItems: 'center', 
-            }}>
-            <Text>{streetName}</Text>
-            <Text style={{fontSize: 24, fontWeight: '300'}}>Collection on</Text>
-            <Text style={{fontSize: 30, fontWeight: '500', color: "#291D29"}}>{date.date}</Text>
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.streetName}>{streetName.toUpperCase()}</Text>
+            <Text style={{ fontSize: 24, fontWeight: "400" }}>Collection on</Text>
+            <Text style={{ fontSize: 30, fontWeight: "500", color: "#291D29" }}>
+              {weekdays[date1.getDay()]} {date1.getDate()} {months[date1.getMonth()]}
+            </Text>
             {renderSwitch(date.binType)}
             <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
-              <Text style={styles.textColor}>Click me</Text>
+              <Text style={styles.buttonTextColor}>Click me</Text>
             </TouchableOpacity>
-           
           </View>
-        ))}
-    </ScrollView>
-  );
+        );
+      })}
+  </ScrollView>
+);
 };
 
 export default Carousel;

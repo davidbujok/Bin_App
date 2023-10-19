@@ -5,10 +5,10 @@ import {IStreet, IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys';
-import HomeContainer from './Containers/HomeContainer';
-import SearchingContainer from './Containers/SearchingContainer';
-import BaseContainer from './Containers/BaseContainer';
-import Carousel from './Containers/SwipeableContainer';
+import HomeContainer from './containers/HomeContainer';
+import SearchingContainer from './containers/SearchingContainer';
+import BaseContainer from './containers/BaseContainer';
+import Carousel from './containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 
 
