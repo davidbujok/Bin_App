@@ -19,6 +19,8 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Carousel = ({dates, streetName}) => {
   const mixedbin = require('../static/images/mixedbin.png');
   const glass = require('../static/images/bluebin.png');
+  const waste = require('../static/images/general.png')
+  const garden = require('../static/images/garden.png')
 
   const renderSwitch = (binType: string) => {
     switch (binType) {
@@ -27,7 +29,7 @@ const Carousel = ({dates, streetName}) => {
             <>
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General Waste</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
-            <Image style={image.imageSize} source={glass}></Image>
+            <Image style={image.imageSize} source={waste}></Image>
             </View>
             </>
             )
@@ -45,7 +47,7 @@ const Carousel = ({dates, streetName}) => {
             <>
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Garden Waste</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
-            <Image style={image.imageSize} source={glass}></Image>
+            <Image style={image.imageSize} source={garden}></Image>
             </View>
             </>
             )
@@ -64,6 +66,7 @@ const Carousel = ({dates, streetName}) => {
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Recycling & Garden</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
             <Image style={image.imageSize} source={mixedbin}></Image>
+            <Image style={image.imageSize} source={garden}></Image>
             </View>
             </>
             )
@@ -73,7 +76,8 @@ const Carousel = ({dates, streetName}) => {
             <>
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General & Garden</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
-            <Image style={image.imageSize} source={mixedbin}></Image>
+            <Image style={image.imageSize} source={garden}></Image>
+            <Image style={image.imageSize} source={waste}></Image>
             </View>
             </>
             )
@@ -82,7 +86,8 @@ const Carousel = ({dates, streetName}) => {
             <>
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>Glass & Garden</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
-            <Image style={image.imageSize} source={mixedbin}></Image>
+            <Image style={image.imageSize} source={garden}></Image>
+            <Image style={image.imageSize} source={glass}></Image>
             </View>
             </>
             )
@@ -92,7 +97,7 @@ const Carousel = ({dates, streetName}) => {
             <Text style={{fontSize: 34, fontWeight: '600', color: "#291D29"}}>General & Glass</Text>
             <View style={{flexDirection: "row", gap: -40, paddingTop: 25}}>
             <Image style={image.imageSize} source={glass}></Image>
-            <Image style={image.imageSize} source={mixedbin}></Image>
+            <Image style={image.imageSize} source={waste}></Image>
             </View>
             </>
           )
