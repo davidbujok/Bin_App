@@ -1,5 +1,5 @@
 import PushNotification from "react-native-push-notification"
-import checkApplicationPermission from "../Containers/NotificationPermission"
+import checkApplicationPermission from "../containers/NotificationPermission"
 import { IDate } from "../styles/interfaces"
 
 export const handleNotification = async (date: IDate) =>{
@@ -7,8 +7,8 @@ export const handleNotification = async (date: IDate) =>{
     // console.log(`${date.binType}`)
     PushNotification.localNotification({
       channelId:"Date-Notification",
-      title: "date.binType",
-      message: `Date :`
+      title: "Notifcation added",
+      message: `Congratulations, you have set up a reminder for your bin on :${date.date} `
     })
     const splitedDate = date.date.split("-")
     
@@ -24,7 +24,7 @@ export const handleNotification = async (date: IDate) =>{
 
 
     //Actual Variable (Need hour - minute variable)
-    // const setNotification = new Date(year,month-1,day,hour,minute)
+    // const setNotification = new Date(year,month-1,day -1 ,hour,minute)
 
 
     // Presentation Date Time
