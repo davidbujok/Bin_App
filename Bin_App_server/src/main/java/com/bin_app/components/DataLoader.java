@@ -180,10 +180,6 @@ public class DataLoader implements ApplicationRunner {
             collectionDatesRepository.save(date);
         });
 
-
-
-
-
         Sanitize getStreetData = new Sanitize();
         HashMap<String, Details> getAllStreetData = getStreetData.getAllData();
         List<CollectionDates> allDatesFromDatabase = collectionDatesRepository.findAll();
@@ -212,10 +208,6 @@ public class DataLoader implements ApplicationRunner {
                 }
             }
             streetRepository.save(street);
-
-
-
         }) ;
-
     }
 }

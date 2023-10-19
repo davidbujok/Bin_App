@@ -86,14 +86,10 @@ function App(): JSX.Element {
   const getLocation = () => {
     const result = requestLocationPermission();
     result.then(res => {
-      // console.log('res is:', res);
       if (res) {
         Geolocation.getCurrentPosition(
           position => {
-            // console.log(position);
             setLocation(position);
-            // console.log(position['coords']['latitude']);
-            // console.log(position['coords']['longitude']);
           },
           error => {
             console.log(error.code, error.message);
@@ -103,8 +99,7 @@ function App(): JSX.Element {
         );
       }
     });
-  };
-  // STOP GEOLOCATION
+  };   // STOP GEOLOCATION
 
   const handleFetchByStreet = (streetName: string) => {
     const date: Date = new Date();
@@ -192,30 +187,6 @@ function App(): JSX.Element {
         );
     }
   };
-
-
-
-  
-    // const checkApplicationPermission = async () => {
-    //   if (Platform.OS === 'android') {
-    //     try {
-    //       await PermissionsAndroid.request(
-    //         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-    //       );
-    //     } catch (error) {
-    //     }
-    //   }
-    // }
-  
-  //  Permision Button
-  //   <View>
-  //   <TouchableOpacity
-  //     onPress={() => {
-  //       checkApplicationPermission();
-  //     }}>
-  //     <Text>Notifications Permission</Text>
-  //   </TouchableOpacity>
-  // </View>
 
   return (
     <>

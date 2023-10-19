@@ -42,8 +42,6 @@ public class CalculateDates {
 
         calendar.set(year, month, date);
 
-//        int weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
-
         ArrayList<Calendar> dates = new ArrayList<>();
 
         HashMap<Date, String> datesWithBinColours = new HashMap<>();

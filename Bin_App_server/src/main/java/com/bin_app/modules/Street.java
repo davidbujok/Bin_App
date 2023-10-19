@@ -1,8 +1,4 @@
 package com.bin_app.modules;
-
-import com.bin_app.types.FoodWaste;
-import com.bin_app.types.GardenWaste;
-import com.bin_app.types.RecyclingAndWaste;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 
@@ -83,8 +79,6 @@ public class Street {
     public String getPostcode() {
         return postcode;
     }
-
-
 
     public String getRecyclingAndWasteId() {
         return recyclingAndWasteId;

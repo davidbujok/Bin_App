@@ -13,14 +13,13 @@ import java.util.regex.Pattern;
 
 public class Test {
     public static void main(String[] args) throws Exception {
-//        Sanitize getStreetData = new Sanitize();
         Sanitize getStreetData = new Sanitize();
         HashMap<String, Details> getAllStreetData = getStreetData.getAllData();
         ArrayList<String> oddOrEven = new ArrayList<>();
         ArrayList<String> odd = new ArrayList<>();
         ArrayList<String> even = new ArrayList<>();
         ArrayList<String> neitherOddOrEvent = new ArrayList<>();
-        ArrayList<String> thisIsWired = new ArrayList<>();
+        ArrayList<String> thisIsWeird = new ArrayList<>();
 
 
         getAllStreetData.forEach((key, value) -> {
@@ -34,9 +33,6 @@ public class Test {
             if (key.contains("even") && !key.contains("odd")) {
                 even.add(key);
             }
-
-
-
             if (!odd.contains(key) && !even.contains(key)) {
                 neitherOddOrEvent.add(key);
             }
@@ -47,33 +43,12 @@ public class Test {
         System.out.println("Odd entries " + odd.size());
         System.out.println("Even list: " + even.stream().sorted().toList());
         System.out.println("Even entries " + even.size());
-//        System.out.println("Neither list: " + neitherOddOrEvent);
-//        System.out.println("Neither size: " + neitherOddOrEvent.size());
         neitherOddOrEvent.forEach((key) -> {
             if (key.matches(".*(odd|even|Odd|Even).*")) {
-                thisIsWired.add(key);
+                thisIsWeird.add(key);
             }
         });
-        System.out.println("Wired list" + thisIsWired.stream().sorted().toList());
-        System.out.println("Wired size: " + thisIsWired.size());
-
-//        ArrayList<String> oddStreets = new ArrayList<>();
-//        // Remove streets that contains word odd sucha as Brodd Road
-//        odd.forEach((key) -> {
-//            if (key.matches(".*[1-9].*")) {
-//                System.out.println(key);
-//                Pattern pattern = Pattern.compile("\\d+"); // Matches one or more digits
-//                Matcher matcher = pattern.matcher(key);
-//                Integer streetNumbers[] = new Integer[4];
-//                while (matcher.find()) {
-//                    String streetNumber = matcher.group();
-//                    streetNumbers.add(Integer.parseInt(streetNumber));
-//                    streetNumbers[0]
-//                }
-//                }
-//            });
+        System.out.println("Wired list" + thisIsWeird.stream().sorted().toList());
+        System.out.println("Wired size: " + thisIsWeird.size());
         };
-
-
-
     }

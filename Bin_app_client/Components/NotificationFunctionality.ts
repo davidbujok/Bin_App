@@ -4,11 +4,10 @@ import { IDate } from "../styles/interfaces"
 
 export const handleNotification = async (date: IDate) =>{
     await checkApplicationPermission()
-    // console.log(`${date.binType}`)
     PushNotification.localNotification({
       channelId:"Date-Notification",
-      title: "Notifcation added",
-      message: `Congratulations, you have set up a reminder for your bin on :${date.date} `
+      title: "Reminder Set",
+      message: `Congratulations, you have set up a reminder for your bin on ${date.date} `
     })
     const splitedDate = date.date.split("-")
     
@@ -29,15 +28,15 @@ export const handleNotification = async (date: IDate) =>{
 
     // Presentation Date Time
     // Need month - 1 because Date month starts from 0 , minutes shouldn't have 0 in front
-    const notificationDate = new Date(year,month-1,18,19,1)
+    // const notificationDate = new Date(year,month-1,19,9,52)
+    const notificationDate = new Date(Date.now()+30 * 1000)
     console.log("Notification set for: ", notificationDate)
    
 
     PushNotification.localNotificationSchedule({
       channelId: "Date-Notification",
-      title: `Notification for ${date.date}`,
-      message: `Your bin collection type for ${date.date} is ${date.binType}`,
-      // date: new Date(Date.now() + 10 * 1000),
+      title: `Don't forget to put your bin out`,
+      message: `Your ${date.binType} collection is on ${date.date}`,
       date:notificationDate,
       allowWhileIdle:true
     })
