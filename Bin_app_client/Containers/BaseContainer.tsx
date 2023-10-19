@@ -26,7 +26,7 @@ function BaseContainer({ navbar, search, setInput, input, getLocation, renderSwi
           <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={clearInputs}>
             <Text style={[navbar.logo, colourPalette.green]}>W</Text>
-            <Text style={[navbar.logo, colourPalette.black]}>hat </Text>
+            <Text style={[navbar.logo, colourPalette.black]}>hich </Text>
             <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
             <Text style={[navbar.logo, colourPalette.black]}>in</Text>
             </TouchableOpacity>
