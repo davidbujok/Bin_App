@@ -1,13 +1,9 @@
 import {
   PermissionsAndroid,
   Platform,
-  Text,
-  TouchableOpacity,
-  View,
 } from 'react-native';
-import React from 'react';
 
-const NotificationPermission = () => {
+
   const checkApplicationPermission = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -19,16 +15,4 @@ const NotificationPermission = () => {
     }
   };
 
-  return (
-    <View>
-      <TouchableOpacity
-        onPress={() => {
-          checkApplicationPermission();
-        }}>
-        <Text>NotificationPermission</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-export default NotificationPermission;
+export default checkApplicationPermission;
