@@ -127,14 +127,15 @@ const Carousel = ({dates, streetName}) => {
 
   const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   const months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"]
-  const [pickedDate,setPickedDate] = useState(new Date())
+  
   const [open, setOpen] = useState(false)
 
-  console.log("Picked date day : ",pickedDate.getDate())
+  const [calendarDate,setCalendarDate] = useState<IDate | null>(null)
   
 
-  const handlePickedDateNotification = async () => {
-    await setOpen(true)
+  const handlePickedDateNotification = (calendarDateObject:IDate) => {
+    setCalendarDate(calendarDateObject)
+    setOpen(true)
   }
 
 return (
@@ -143,15 +144,11 @@ return (
     horizontal
     snapToInterval={SCREEN_WIDTH}
   > 
-    {/* <View>
-        {clicked == true && <DatePicker date={pickedDate} onDateChange={setPickedDate}/>
-      }
-        <TouchableOpacity>
-        <Text onPress={()=> setClicked(true)}>Clikc</Text>
-        </TouchableOpacity>
-        </View> */}
         <View>
-        <DateTimePicker setPickedDate={setPickedDate} open={open} setOpen={setOpen}/>
+        <DateTimePicker 
+                        open={open} 
+                        setOpen={setOpen} 
+                        calendarDate={calendarDate}/>
         </View>
     {dates &&
       dates.map((date: IDate) => {
@@ -172,7 +169,7 @@ return (
               {weekdays[date1.getDay()]} {date1.getDate()} {months[date1.getMonth()]}
             </Text>
             {renderSwitch(date.binType)}
-            <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date,pickedDate)}>
+            <TouchableOpacity style={styles.smallButton} onPress={() => handlePickedDateNotification(date)}>
               <Text style={styles.buttonTextColor}>Add Reminder</Text>
             </TouchableOpacity>
 

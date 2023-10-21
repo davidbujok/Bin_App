@@ -7,33 +7,24 @@ export const handleNotification = async (date: IDate,pickedDate: Date) =>{
   console.log("Hours",pickedDate.getHours(),"minutes: ",pickedDate.getMinutes())
 
     await checkApplicationPermission()
-    PushNotification.localNotification({
-      channelId:"Date-Notification",
-      title: "Reminder Set",
-      message: `Congratulations, you have set up a reminder for your bin on ${date.date} `
-    })
-    const splitedDate = date.date.split("-")
-    
-    let getYear = splitedDate[0]
-    let getMonth = splitedDate[1]
-    let getDay = splitedDate[2]
-
-    // const year:number = Number(getYear)
-    // const month:number = Number(getMonth)
-    // const day:number = Number(getDay)
-    // console.log(typeof year, typeof month, typeof day)
-    // console.log(`Year: ${year}, Month: ${month}, Day: ${day}`)
-
 
     const year:number = pickedDate.getFullYear()
     const month:number = pickedDate.getMonth()
     const day: number = pickedDate.getDate()
-    const hour:number = pickedDate.getHours()-1
+    const hour:number = pickedDate.getHours()
     const minute:number = pickedDate.getMinutes()
 
 
     //Actual Variable (Need hour - minute variable)
     const setNotification =new Date(year,month,day,hour,minute)
+
+
+    PushNotification.localNotification({
+      channelId:"Date-Notification",
+      title: "Reminder Set",
+      message: `Congratulations, you have set up a reminder for your bin on ${date.date} `
+    })
+
 
     console.log("SET NOTIFICATION FOR :",setNotification)
     console.log("year :",year )
