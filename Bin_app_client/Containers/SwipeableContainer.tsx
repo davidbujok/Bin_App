@@ -11,6 +11,7 @@ import {
 import { styles } from '../styles/stylesSheet';
 import { handleNotification } from '../Components/NotificationFunctionality';
 import { IDate } from '../styles/interfaces';
+import DateTimePicker from '../Components/DateTimePicker';
 
 
 
@@ -21,6 +22,7 @@ const Carousel = ({dates, streetName}) => {
   const glass = require('../static/images/bluebin.png');
   const waste = require('../static/images/general.png')
   const garden = require('../static/images/garden.png')
+
 
   const renderSwitch = (binType: string) => {
     switch (binType) {
@@ -123,20 +125,34 @@ const Carousel = ({dates, streetName}) => {
   }
   };
 
-
-
   const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   const months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"]
-  const [date1, setDate1] = useState(new Date())
+  const [pickedDate,setPickedDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
 
+  console.log("Picked date day : ",pickedDate.getDate())
+  
 
+  const handlePickedDateNotification = async () => {
+    await setOpen(true)
+  }
 
 return (
   <ScrollView
     style={{ paddingTop: 20 }}
     horizontal
     snapToInterval={SCREEN_WIDTH}
-  >
+  > 
+    {/* <View>
+        {clicked == true && <DatePicker date={pickedDate} onDateChange={setPickedDate}/>
+      }
+        <TouchableOpacity>
+        <Text onPress={()=> setClicked(true)}>Clikc</Text>
+        </TouchableOpacity>
+        </View> */}
+        <View>
+        <DateTimePicker setPickedDate={setPickedDate} open={open} setOpen={setOpen}/>
+        </View>
     {dates &&
       dates.map((date: IDate) => {
         const splitDate = date.date.split("-");
@@ -156,13 +172,15 @@ return (
               {weekdays[date1.getDay()]} {date1.getDate()} {months[date1.getMonth()]}
             </Text>
             {renderSwitch(date.binType)}
-            <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
+            <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date,pickedDate)}>
               <Text style={styles.buttonTextColor}>Add Reminder</Text>
             </TouchableOpacity>
+
           </View>
         );
       })}
-  </ScrollView>
+      
+        </ScrollView>
 );
 };
 
