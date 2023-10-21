@@ -8,14 +8,13 @@ import java.util.HashMap;
 public class CalculateDates {
 
 
-    public static HashMap<Date, String> calculateRecyclingDates(int year, int month, int date, String option1, String option2) {
+    public static HashMap<Date, String> calculateRecyclingDates( int month, int date, String option1, String option2) {
 
     Calendar calendar = Calendar.getInstance();
-
-        calendar.set(year, month, date);
-
+    String[] splitDate = Calendar.getInstance().getTime().toString().split(" ");
+    String year = splitDate[splitDate.length -1];
+    calendar.set(Integer.parseInt(year), month, date);
     ArrayList<Calendar> dates = new ArrayList<>();
-
     Boolean colour = false;
 
     HashMap<Date, String> datesWithBinColours = new HashMap<>();
@@ -35,15 +34,13 @@ public class CalculateDates {
         return datesWithBinColours;
     }
 
-    public static HashMap<Date, String> calculateGardenDates(int year, int month, int date) {
+    public static HashMap<Date, String> calculateGardenDates( int month, int date) {
 
         Calendar calendar = Calendar.getInstance();
-
-
-        calendar.set(year, month, date);
-
+        String[] splitDate = Calendar.getInstance().getTime().toString().split(" ");
+        String year = splitDate[splitDate.length -1];
+        calendar.set(Integer.parseInt(year), month, date);
         ArrayList<Calendar> dates = new ArrayList<>();
-
         HashMap<Date, String> datesWithBinColours = new HashMap<>();
         datesWithBinColours.put(calendar.getTime(), "garden");
 
@@ -51,7 +48,6 @@ public class CalculateDates {
             calendar.add(Calendar.DATE, 14);
             dates.add(calendar);
                 datesWithBinColours.put(calendar.getTime(), "garden");
-
     }
         return datesWithBinColours;
 }

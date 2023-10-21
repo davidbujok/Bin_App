@@ -45,7 +45,8 @@ function App(): JSX.Element {
       .then(json => {
           let addressComponent = json.results;
           setAddress(addressComponent[0].formatted_address.valueOf());
-          setNewFormat(addressComponent[0].formatted_address.valueOf().split(" ", 3).slice(1,3).join(" ").toLowerCase().replace(/,/g, ''))
+          setNewFormat(addressComponent[0].formatted_address.valueOf()
+          .split(" ", 3).slice(1,3).join(" ").toLowerCase().replace(/,/g, ''))
           })
       .catch(error => console.warn(error));
       }}, [location]);
