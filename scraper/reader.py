@@ -136,16 +136,17 @@ pprint(len(getSimilarKeys))
 from fuzzywuzzy import fuzz
 
 notSimilarKeysList = []
-threshold = 0.01  # Adjust this threshold as needed
+threshold = 5  # Adjust this threshold as needed
 
-# for key in data_dict:
-#     key_lower = key.strip().lower()
-#     notSimilarKeys = [k for k in data_dict_2 if fuzz.ratio(key_lower, k.strip().lower()) <= threshold]
+for key in data_dict:
+    key_lower = key.strip().lower()
+    notSimilarKeys = [k for k in data_dict_2 if fuzz.ratio(key_lower, k.strip().lower()) <= threshold]
 
-#     if  notSimilarKeys:
-#         notSimilarKeysList.append(key)
+    if  notSimilarKeys:
+        notSimilarKeysList.append(key)
 
+# print('Similar keys between the 2 dictionaries by 5% similarity: ', len(getSimilarKeysList))
 # print(getSimilarKeys)
-# print("\n Not similar keys between the 2 dictionaries by 5% similarity: ",len(notSimilarKeysList))
-# pprint(notSimilarKeysList)
+print("\n Not similar keys between the 2 dictionaries by 5% similarity: ",len(notSimilarKeysList))
+pprint(notSimilarKeysList)
 

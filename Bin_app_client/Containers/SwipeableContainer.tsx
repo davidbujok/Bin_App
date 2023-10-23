@@ -11,6 +11,7 @@ import {
 import { styles } from '../styles/stylesSheet';
 import { handleNotification } from '../Components/NotificationFunctionality';
 import { IDate } from '../styles/interfaces';
+import DateTimePicker from '../Components/DateTimePicker';
 
 
 
@@ -21,6 +22,7 @@ const Carousel = ({dates, streetName}) => {
   const glass = require('../static/images/bluebin.png');
   const waste = require('../static/images/general.png')
   const garden = require('../static/images/garden.png')
+
 
   const renderSwitch = (binType: string) => {
     switch (binType) {
@@ -123,20 +125,31 @@ const Carousel = ({dates, streetName}) => {
   }
   };
 
-
-
   const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   const months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"]
-  const [date1, setDate1] = useState(new Date())
+  
+  const [open, setOpen] = useState(false)
 
+  const [calendarDate,setCalendarDate] = useState<IDate | null>(null)
+  
 
+  const handlePickedDateNotification = (calendarDateObject:IDate) => {
+    setCalendarDate(calendarDateObject)
+    setOpen(true)
+  }
 
 return (
   <ScrollView
     style={{ paddingTop: 20 }}
     horizontal
     snapToInterval={SCREEN_WIDTH}
-  >
+  > 
+        <View>
+        <DateTimePicker 
+                        open={open} 
+                        setOpen={setOpen} 
+                        calendarDate={calendarDate}/>
+        </View>
     {dates &&
       dates.map((date: IDate) => {
         const splitDate = date.date.split("-");
@@ -156,13 +169,15 @@ return (
               {weekdays[date1.getDay()]} {date1.getDate()} {months[date1.getMonth()]}
             </Text>
             {renderSwitch(date.binType)}
-            <TouchableOpacity style={styles.smallButton} onPress={() => handleNotification(date)}>
+            <TouchableOpacity style={styles.smallButton} onPress={() => handlePickedDateNotification(date)}>
               <Text style={styles.buttonTextColor}>Add Reminder</Text>
             </TouchableOpacity>
+
           </View>
         );
       })}
-  </ScrollView>
+      
+        </ScrollView>
 );
 };
 
