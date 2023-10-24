@@ -25,6 +25,6 @@ package com.bin_app.scraper;public class GardenDetails {
     }
 
     public void setFullUrl(String url) {
-        setGardenWasteUrl("https://www.edinburgh.gov.uk/directory-record/" + url);
+        setGardenWasteUrl(url);
     }
 }
