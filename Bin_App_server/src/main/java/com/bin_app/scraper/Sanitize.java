@@ -29,26 +29,42 @@ public class Sanitize {
         ArrayList<String> notMatchingStreets = new ArrayList<>();
 
 //         George
-        File fileScrapedCouncilStreets = new File("/Users/user/final_project/Bin_App/scraper/bin_pickup_days.tsv");
-        File fileAllEdinburghStreets = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+//          File calendarLinksTsv = new File("/Users/user/final_project/Bin_App/scraper/calendar_links.tsv");
+//        File fileScrapedCouncilStreets = new File("/Users/user/final_project/Bin_App/scraper/bin_pickup_days.tsv");
+//        File fileAllEdinburghStreets = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
 
-            // Lewis
-//          File fileScrapedCouncilStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
-//          File fileAllEdinburghStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
-////
+//             Lewis
+          File calendarLinksTsv = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
+          File fileScrapedCouncilStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
+          File fileAllEdinburghStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+//
+
+        //File calendarLinksTsv = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
 //        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
 //        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
         Scanner scanScraper = new Scanner(fileScrapedCouncilStreets);
         Scanner scanAllEdinburghStreets = new Scanner(fileAllEdinburghStreets);
+        Scanner scanCalendarLinks = new Scanner(calendarLinksTsv);
+
+        HashMap<String, String> calendarLinks = new HashMap<>();
+        while(scanCalendarLinks.hasNextLine()){
+            String currentCalendar = scanCalendarLinks.nextLine();
+            String [] calendarSplit = currentCalendar.split("\t");
+            calendarLinks.put(calendarSplit[0],calendarSplit[1]);
+        }
+
         HashMap<String, String> allEdinburghStreetsWithPostcodes = new HashMap<>();
         while (scanScraper.hasNextLine()) {
             String currentStreet = scanScraper.nextLine().toLowerCase().replace("&", ",");
             String[] currentStreetSplitString = currentStreet.split("\t");
             scrapedCouncilStreets.put(currentStreetSplitString[0], new Details(currentStreetSplitString[2]));
-            scrapedCouncilStreets.get(currentStreetSplitString[0]).setFullUrl(currentStreetSplitString[1]);
+            scrapedCouncilStreets.forEach((k,v) -> {
+                v.setUrl(calendarLinks.get(v.getRecycling()));
+            });
         }
+
         scanScraper.close();
         while (scanAllEdinburghStreets.hasNextLine()) {
             String currentEdinburghStreet = scanAllEdinburghStreets.nextLine().toLowerCase().replace("&", ",");
