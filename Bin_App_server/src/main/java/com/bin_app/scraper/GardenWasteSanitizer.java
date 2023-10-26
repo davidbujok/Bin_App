@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class GardenWasteSanitizer {
     public HashMap<String, GardenDetails> getAllGardenData() throws FileNotFoundException {
 //      File fileScrapedCouncilStreetsGarden = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/garden_bins_matching.tsv");
-//        File fileScrapedCouncilStreetsGarden = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/garden_bins_matching.tsv");
-      File fileScrapedCouncilStreetsGarden = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/garden_bins_matching.tsv");
+        File fileScrapedCouncilStreetsGarden = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/garden_bins_matching.tsv");
+//      File fileScrapedCouncilStreetsGarden = new File("/Users/user/final_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/garden_bins_matching.tsv");
 
 
         Scanner scanScraper = new Scanner(fileScrapedCouncilStreetsGarden);
