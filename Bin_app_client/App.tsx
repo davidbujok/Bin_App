@@ -13,7 +13,7 @@ import PushNotification from 'react-native-push-notification';
 
 
 function App(): JSX.Element {
-  const [streets, setStreets] = useState<Array<IStreet>>();
+  const [streets, setStreets] = useState<Array<String>>();
   const [dates, setDates] = useState<Array<IDate>>();
   const [input, setInput] = useState<string>();
   const [location, setLocation] = useState<GeoPosition | Boolean>(false);
@@ -155,7 +155,7 @@ function App(): JSX.Element {
     if (input && input.length > 1) {
       fetch(`http://10.0.2.2:8080/streets?name=${input}`)
         .then(response => response.json())
-        .then((data: Array<IStreet>) => {
+        .then((data: Array<String>) => {
           setStreets(data);
           setPage(2);
         })
