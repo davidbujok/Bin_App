@@ -35,14 +35,14 @@ public class Sanitize {
 
 
 //             Lewis
-          File calendarLinksTsv = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
-          File fileScrapedCouncilStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
-          File fileAllEdinburghStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+//          File calendarLinksTsv = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
+//          File fileScrapedCouncilStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper/bin_pickup_days.tsv");
+ //         File fileAllEdinburghStreets = new File("/Users/lewis/ALL_NOTES/capstone_project/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 //
 
-        //File calendarLinksTsv = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
-//        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
-//        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
+        File calendarLinksTsv = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/calendar_links.tsv");
+        File fileScrapedCouncilStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/bin_pickup_days.tsv");
+        File fileAllEdinburghStreets = new File("/Users/davidbujok/repos/Bin_App/Bin_App_server/src/main/java/com/bin_app/scraper/streets.tsv");
 
         Scanner scanScraper = new Scanner(fileScrapedCouncilStreets);
         Scanner scanAllEdinburghStreets = new Scanner(fileAllEdinburghStreets);
@@ -85,6 +85,8 @@ public class Sanitize {
                  value.setPostcode(postCode);
                 }
             });
+
+        System.out.println(allEdinburghStreets);
 
         return scrapedCouncilStreets;
 
