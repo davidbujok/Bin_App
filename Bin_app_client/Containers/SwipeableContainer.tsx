@@ -143,6 +143,8 @@ return (
     style={{ paddingTop: 20 }}
     horizontal
     snapToInterval={SCREEN_WIDTH}
+    pagingEnabled={ true }
+    decelerationRate={0.2}
   > 
         <View>
         <DateTimePicker 
@@ -185,7 +187,7 @@ export default Carousel;
 
 const image = StyleSheet.create({
   imageSize: {
-    height: SCREEN_HEIGHT * 0.35,
-    width: SCREEN_WIDTH * 0.45,
+    height: SCREEN_HEIGHT * 0.30,
+    width: SCREEN_WIDTH * 0.40,
   },
 });

@@ -14,7 +14,7 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
         <Text 
           style={{fontSize: 21, fontWeight: '600', color: '#291D29'}}
           key={index}
-          onPress={() => { handleFetchByStreet(street), setStreetName(street)}}>
+          onPress={() => { handleFetchByStreet(street), setStreetName(street), console.log(street)}}>
           {street}
         </Text>
       );

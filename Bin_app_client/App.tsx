@@ -129,7 +129,7 @@ function App(): JSX.Element {
     const dateInstance: string = year + month + day;
 
     fetch(
-      `http://10.0.2.2:8080/collectionDates?street=${streetName}&date=${dateInstance}`,
+      `http://18.130.227.117:8080/collectionDates?street=${streetName}&date=${dateInstance}`,
     )
       .then(response => response.json())
       .then((data: Array<IDate>) => {
@@ -153,7 +153,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (input && input.length > 1) {
-      fetch(`http://10.0.2.2:8080/streets?name=${input}`)
+      fetch(`http://18.130.227.117:8080/streets?name=${input.toLowerCase()}`)
         .then(response => response.json())
         .then((data: Array<String>) => {
           setStreets(data);

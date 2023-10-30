@@ -2,7 +2,13 @@ import {
   StatusBar,
   StyleSheet,
   Platform,
+  Dimensions,
 } from 'react-native';
+
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
 type Color = {
   blue: '#1c6fc4';
   red: '#f14135';
@@ -20,7 +26,7 @@ export const styles = StyleSheet.create({
   },
   streetName : {
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: windowWidth * 0.055,
   },
   button: {
     alignItems: 'center',
