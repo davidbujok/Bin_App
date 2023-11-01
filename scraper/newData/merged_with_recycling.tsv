@@ -2429,7 +2429,7 @@ newhaven main street	 wednesday-1	 tuesday-1
 newhaven road	 wednesday-1	 friday-1
 newington road	 wednesday-1	 wednesday-2
 newlands park	 wednesday-1	 thursday-1
-newliston road inner lodge j & milrig b & south lodge e	None	 tuesday-1
+newliston road 0 inner lodge j & milrig b & south lodge e	None	 tuesday-1
 newmains farm lane	 thursday-1	 thursday-1
 newmains road	 thursday-1	 thursday-1
 newmills avenue	 wednesday-1	 wednesday-1
@@ -4421,6 +4421,7 @@ woolmet place	 friday-1	None
 yarrow place	 thursday-2	None
 young street	 wednesday-1	None
 young street north lane	 wednesday-1	None
+address site calendar_id	 calendar_id	None
 duddingston road west 29 - 41 and 24 -92	 friday-2	None
 ferry road 3 - 243 and 28 - 530	 tuesday-2	None
 gilmour road 1 - 10	 tuesday-2	None
