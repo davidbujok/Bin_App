@@ -33,10 +33,10 @@ for streetGarden in streetsGardenNames:
         index = np.where(streetsRecyclingNames == streetRecyclingClean)[0][0]
         calendar_id_recycling = streetsRecyclingCalId[index]
         # index = streetsGardenNames.index(street)
-        all_data_dict[streetRecyclingClean] = {"recycling_id": calendar_id_recycling, "garden_id": calendar_id_garden}
+        all_data_dict[streetRecyclingClean] = {"recycling_id": calendar_id_recycling.strip(), "garden_id": calendar_id_garden.strip()}
         count_not_none+=1
     else:
-        all_data_dict[streetRecyclingClean] = {"recycling_id": "None", "garden_id": calendar_id_garden}
+        all_data_dict[streetRecyclingClean] = {"recycling_id": "None", "garden_id": calendar_id_garden.strip()}
     i += 1
 
 print((count_not_none))
@@ -67,7 +67,7 @@ for streetRecycling in streetsRecyclingNames:
     calendar_id_recycling = streetsRecyclingCalId[r]
     streetRecyclingClean = streetRecycling.lower().strip()
     if streetRecyclingClean not in mergedNames:
-        all_data_dict[streetRecyclingClean] = {"recycling_id": calendar_id_recycling, "garden_id": "None"}
+        all_data_dict[streetRecyclingClean] = {"recycling_id": calendar_id_recycling.strip(), "garden_id": "None"}
         count_recycling_alone+=1
     r+=1
 
@@ -105,7 +105,7 @@ for currentNameOfStreet in all_data_dict:
         index = np.where(foodWasteNames == currentNameOfStreet)[0][0]
         food_waste_id = foodWasteId[index]
         # getting the street key , creating new key "food_id" and assing the index item of street
-        all_data_dict[currentNameOfStreet]["food_id"] = foodWasteId[index]
+        all_data_dict[currentNameOfStreet]["food_id"] = foodWasteId[index].strip()
         test_counter +=1
     else:
         # Otherwise assign None
@@ -138,7 +138,7 @@ for foodWasteStreet in foodWasteNames:
         all_data_dict[streetFoodClear] = {
             "recycling_id" : "None",
             "garden_id": "None",
-            "food_id" : calendar_id_food
+            "food_id" : calendar_id_food.strip()
         }
     l+=1
 
