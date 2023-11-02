@@ -27,15 +27,19 @@ function App(): JSX.Element {
   const [page, setPage] = useState<number>(1);
   const [newFormat, setNewFormat] = useState<string | undefined>();
   const [streetName, setStreetName] = useState<string>();
-  const [allStreetsJson, setAllStreetsJson] = useState<Object>();
+  const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
+  const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
 
   Geocoder.init(api);
 
   useEffect(() => {
     const allStreetsLoaded = require('./assets/merged_with_recycling.json');
-    // console.log('allStreetsLoaded');
-    // console.log(Object.keys(allStreetsLoaded));
     setAllStreetsJson(allStreetsLoaded);
+  }, []);
+
+  useEffect(() => {
+    const allCalendarMeaningsLoaded = require('./assets/days_of_first_pickup_january_2023.json');
+    setCalendarMeanings(allCalendarMeaningsLoaded);
   }, []);
 
   useEffect(() => {
@@ -74,9 +78,9 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (address != undefined && newFormat != undefined) {
-      console.log('address');
-      console.log(address);
-      console.log(newFormat);
+      //   console.log('address');
+      //   console.log(address);
+      //   console.log(newFormat);
       setInput(newFormat);
     }
   }, [address, newFormat]);
@@ -126,48 +130,89 @@ function App(): JSX.Element {
     });
   }; // STOP GEOLOCATION
 
+  const dateFromDay = (year, day) => {
+    const startOfYear = new Date(year, 0); // initialize a date in `year-01-01`
+    const dayInYear = new Date(startOfYear.setDate(day)); // add the number of days
+    return dayInYear;
+  };
+
+  const iDateFromData = (
+    january23Day,
+    binType,
+    binTypeIndex, //this can be done better?
+    streetName = 'do we need this?',
+    whichFortnight = 0,
+  ) => {
+    const dayOfYear = january23Day + 14 * whichFortnight;
+    const idOfPinPickup = dayOfYear + 1000 * binTypeIndex;
+    const dateFormatted = dateFromDay(2023, dayOfYear).toISOString();
+    // TODO: change to binTypes['packaging', 'glass'] for simpler parsing in pager
+    const dateToReturn: IDate = {
+      id: idOfPinPickup,
+      binType: binType,
+      date: dateFormatted,
+      name: streetName,
+    };
+    return dateToReturn;
+    //   {
+    //     id: 2222,
+    //     binType: 'packaging',
+    //     date: '23-12-23',
+    //     name: 'willowbrae rd',
+    //   }
+  };
+
   const handleFetchByStreet = (streetName: string) => {
-    const date: Date = new Date();
+    // TODO: here add garden waste
+    //eg tuesday-1
+    const recyclingCalendarIds = allStreetsJson[streetName];
+    //    {"food_id": "Thursday", "garden_id": "wednesday-1", "recycling_id": "thursday-1"}
+    //  for now let's just grab recycling
+    const recyclingCalendarId = recyclingCalendarIds.recycling_id;
+    // console.log('streetName');
+    // console.log(streetName);
+    // console.log(recyclingCalendarIds);
+    //  {"food_id": "Thursday", "garden_id": "wednesday-2", "recycling_id": "thursday-1"}
+    // console.log(recyclingCalendarId);
+    // "thursday-1"
+    const daysForThatStreet = calendarMeanings[recyclingCalendarId];
+    // console.log('daysForThatStreet');
+    //eg {"waste": "6", "recycling": "13","glass": "13"},
+    console.log(daysForThatStreet);
+    const iDatesByDay: {[key: string]: IDate} = {};
+    const fortnight = 0; //in case we'll do the firtnighting here
+    // ['waste', 'recycling', 'glass'] is Object.keys(daysForThatStreet)
 
-    const getYear: number = date.getFullYear();
-    let year: string = getYear.toString();
-
-    let getMonth: number = date.getMonth() + 1;
-    let month: string = '';
-
-    let getDay: number = date.getDate();
-    let day: string = '';
-
-    if (getMonth < 10) {
-      month = '0' + getMonth.toString();
-    } else {
-      month = getMonth.toString();
-    }
-
-    if (getDay < 10) {
-      day = '0' + getDay.toString();
-    } else {
-      day = getDay.toString();
-    }
-
-    const dateInstance: string = year + month + day;
-
-    fetch(
-      `http://10.0.2.2:8080/collectionDates?street=${streetName}&date=${dateInstance}`,
-    )
-      .then(response => response.json())
-      .then((data: Array<IDate>) => {
-        for (let i = 0; i < data.length - 1; i++) {
-          if (data[i].date == data[i + 1].date) {
-            data[i].binType += ' ' + data[i + 1].binType;
-            data.splice(i + 1, 1);
+    // TODO: once there is garden waste etc, add it here to firstDates
+    if (daysForThatStreet) {
+      Object.keys(daysForThatStreet).forEach((binType, binTypeIndex) => {
+        const dayNumber = parseInt(daysForThatStreet[binType]);
+        if (dayNumber) {
+          const newIDate = iDateFromData(
+            dayNumber,
+            binType,
+            binTypeIndex, //must be a better way. maybe create id here?
+            'banana stteet', //not needed?
+            fortnight,
+          );
+          console.log('Object.keys(iDatesByDay) 1');
+          console.log(binType, Object.keys(iDatesByDay));
+          if (dayNumber in iDatesByDay) {
+            console.log('new!', newIDate.binType, iDatesByDay);
+            iDatesByDay[`${dayNumber}`].binType = `${
+              iDatesByDay[`${dayNumber}`].binType
+            } ${newIDate.binType}`;
+          } else {
+            iDatesByDay[`${dayNumber}`] = newIDate;
           }
+          console.log('iDatesByDay');
+          console.log(iDatesByDay);
+          console.log('Object.keys(iDatesByDay) 2');
+          console.log(binType, Object.keys(iDatesByDay));
         }
-        setDates(data);
-      })
-      .catch(error => {
-        console.error(error);
       });
+      setDates(Object.values(iDatesByDay));
+    }
     setPage(3);
     setAddress({});
     setLocation(false);

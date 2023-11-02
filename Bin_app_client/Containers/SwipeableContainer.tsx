@@ -142,30 +142,6 @@ const Carousel = ({dates, streetName}) => {
     }
   };
 
-  const weekdays = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
   const [open, setOpen] = useState(false);
 
   const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
@@ -189,13 +165,7 @@ const Carousel = ({dates, streetName}) => {
       </View>
       {dates &&
         dates.map((date: IDate) => {
-          const splitDate = date.date.split('-');
-          const date1 = new Date();
-          date1.setFullYear(
-            parseInt(splitDate[0]),
-            parseInt(splitDate[1]) - 1,
-            parseInt(splitDate[2]),
-          );
+          const dateObject: Date = new Date(date.date);
           return (
             <View
               key={date.id}
@@ -208,8 +178,12 @@ const Carousel = ({dates, streetName}) => {
                 Collection on
               </Text>
               <Text style={{fontSize: 30, fontWeight: '500', color: '#291D29'}}>
-                {weekdays[date1.getDay()]} {date1.getDate()}{' '}
-                {months[date1.getMonth()]}
+                {dateObject.toLocaleString('default', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}{' '}
               </Text>
               {renderSwitch(date.binType)}
               <TouchableOpacity
