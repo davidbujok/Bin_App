@@ -82,6 +82,13 @@ for key in all_data_dict:
     file.write(output)
 file.close()
 
+import json
+
+with open('merged_with_recycling.json','w') as jsonfile:
+    json.dump(all_data_dict,jsonfile)
+
+jsonfile.close()
+
 
 
 print(len(all_data_dict))
