@@ -82,7 +82,7 @@ To learn more about React Native, take a look at the following resources:
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 
-# extra steps?
+# extra steps to get you going??
 
 npm install @react-navigation/drawer
 npm install react-native-geolocation-service
@@ -94,3 +94,5 @@ npm install @react-native-community/push-notification-ios
 npx pod-install ios
 bundle install
 npm start
+
+<!-- and then when asked, choose 'i' -->
