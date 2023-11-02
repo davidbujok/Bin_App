@@ -1,0 +1,67 @@
+{
+	"thursday-1a": {
+		"waste": "12",
+		"recycling": "5",
+		"glass": "12"
+	},
+	"friday-2": {
+		"waste": "6",
+		"recycling": "13",
+		"glass": "13"
+	},
+	"tuesday-2": {
+		"waste": "3",
+		"recycling": "10",
+		"glass": "10"
+	},
+	"friday-1": {
+		"waste": "13",
+		"recycling": "6",
+		"glass": "6"
+	},
+	"wednesday-2": {
+		"waste": "4",
+		"recycling": "11",
+		"glass": "11"
+	},
+	"thursday-1": {
+		"waste": "12",
+		"recycling": "5",
+		"glass": "5"
+	},
+	"tuesday-1": {
+		"waste": "10",
+		"recycling": "3",
+		"glass": "3"
+	},
+	"wednesday-1a": {
+		"waste": "11",
+		"recycling": "4",
+		"glass": "11"
+	},
+	"friday-1a": {
+		"waste": "13",
+		"recycling": "6",
+		"glass": "13"
+	},
+	"thursday-2": {
+		"waste": "5",
+		"recycling": "12",
+		"glass": "12"
+	},
+	"wednesday-1": {
+		"waste": "11",
+		"recycling": "4",
+		"glass": "4"
+	},
+	"tuesday-1a": {
+		"waste": "10",
+		"recycling": "3",
+		"glass": "10"
+	},
+	"monday": {
+		"waste": "null",
+		"recycling": "2",
+		"glass": "9"
+	}
+}
