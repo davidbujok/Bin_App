@@ -78,9 +78,6 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (address != undefined && newFormat != undefined) {
-      //   console.log('address');
-      //   console.log(address);
-      //   console.log(newFormat);
       setInput(newFormat);
     }
   }, [address, newFormat]);
@@ -144,14 +141,16 @@ function App(): JSX.Element {
     whichFortnight = 0,
   ) => {
     const dayOfYear = january23Day + 14 * whichFortnight;
-    const idOfPinPickup = dayOfYear + 1000 * binTypeIndex;
-    const dateFormatted = dateFromDay(2023, dayOfYear).toISOString();
+    const dateObject = dateFromDay(2023, dayOfYear);
+    const idOfPinPickup = dateObject.getTime(); //epoch time is the unique id
+    const dateFormatted = dateObject.toISOString();
     // TODO: change to binTypes['packaging', 'glass'] for simpler parsing in pager
     const dateToReturn: IDate = {
       id: idOfPinPickup,
       binType: binType,
       date: dateFormatted,
       name: streetName,
+      dateObject: dateObject,
     };
     return dateToReturn;
     //   {
@@ -178,7 +177,7 @@ function App(): JSX.Element {
     const daysForThatStreet = calendarMeanings[recyclingCalendarId];
     // console.log('daysForThatStreet');
     //eg {"waste": "6", "recycling": "13","glass": "13"},
-    console.log(daysForThatStreet);
+    // console.log(daysForThatStreet);
     const iDatesByDay: {[key: string]: IDate} = {};
     const fortnight = 0; //in case we'll do the firtnighting here
     // ['waste', 'recycling', 'glass'] is Object.keys(daysForThatStreet)
@@ -192,11 +191,9 @@ function App(): JSX.Element {
             dayNumber,
             binType,
             binTypeIndex, //must be a better way. maybe create id here?
-            'banana stteet', //not needed?
+            streetName, //not needed?
             fortnight,
           );
-          console.log('Object.keys(iDatesByDay) 1');
-          console.log(binType, Object.keys(iDatesByDay));
           if (dayNumber in iDatesByDay) {
             console.log('new!', newIDate.binType, iDatesByDay);
             iDatesByDay[`${dayNumber}`].binType = `${
@@ -205,10 +202,6 @@ function App(): JSX.Element {
           } else {
             iDatesByDay[`${dayNumber}`] = newIDate;
           }
-          console.log('iDatesByDay');
-          console.log(iDatesByDay);
-          console.log('Object.keys(iDatesByDay) 2');
-          console.log(binType, Object.keys(iDatesByDay));
         }
       });
       setDates(Object.values(iDatesByDay));
@@ -226,9 +219,9 @@ function App(): JSX.Element {
         street => street.includes(input.toLowerCase()),
         [],
       );
-      console.log(justRelevantStreets.length);
-      console.log(justRelevantStreets);
-      console.log(Object.keys(allStreetsJson)[0] === 'abbey street');
+      //   console.log(justRelevantStreets.length);
+      //   console.log(justRelevantStreets);
+      //   console.log(Object.keys(allStreetsJson)[0] === 'abbey street');
 
       setStreets(justRelevantStreets);
       setPage(2);
