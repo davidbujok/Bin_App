@@ -1,4 +1,4 @@
-import {PermissionsAndroid} from 'react-native/types';
+import {PermissionsAndroid} from 'react-native';
 
 export const requestLocationPermission = async () => {
   try {
@@ -19,7 +19,8 @@ export const requestLocationPermission = async () => {
     } else {
       console.log('You cannot use Geolocation');
       return false;
-    }} catch (err) {
-      return false;
     }
-  };
+  } catch (err) {
+    return false;
+  }
+};

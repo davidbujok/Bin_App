@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Bin_app_client";
+    return "BinAppclient";
   }
 
   /**
@@ -23,6 +23,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
+	console.log("banana");
     return new DefaultReactActivityDelegate(
         this,
         getMainComponentName(),

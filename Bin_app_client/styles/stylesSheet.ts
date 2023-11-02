@@ -1,8 +1,4 @@
-import {
-  StatusBar,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import {StatusBar, StyleSheet, Platform} from 'react-native';
 type Color = {
   blue: '#1c6fc4';
   red: '#f14135';
@@ -18,8 +14,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  streetName : {
-    fontWeight: "bold",
+  streetName: {
+    fontWeight: 'bold',
     fontSize: 25,
   },
   button: {
@@ -51,26 +47,24 @@ export const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     borderRadius: 10,
-    marginTop:40,
-    
+    marginTop: 40,
   },
   buttonTextColor: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize:15,
-    textAlign: "center"
-
+    fontSize: 15,
+    textAlign: 'center',
   },
-  streetsList:{
-    display:'flex',
+  streetsList: {
+    display: 'flex',
     padding: 30,
-    justifyContent:'center',
-    gap:5,
+    justifyContent: 'center',
+    gap: 5,
   },
   dateText: {
     fontSize: 20,
-    color: "#291D29"
-  }
+    color: '#291D29',
+  },
 });
 
 export const navbar = StyleSheet.create({
@@ -118,7 +112,7 @@ export const search = StyleSheet.create({
 export const main = StyleSheet.create({
   container: {
     display: 'flex',
-    flex: 1
+    flex: 1,
   },
 });
 
@@ -154,16 +148,15 @@ export const heroText = StyleSheet.create({
     fontSize: 90,
   },
   mid: {
-    fontWeight: "400",
+    fontWeight: '400',
   },
   bold: {
-    fontWeight: "900",
+    fontWeight: '900',
   },
   light: {
-    fontWeight: "200",
+    fontWeight: '200',
   },
-
-})
+});
 export const colourPaletteBackground = StyleSheet.create({
   blue: {
     backgroundColor: '#1c6fc4',

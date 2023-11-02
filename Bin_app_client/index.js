@@ -2,16 +2,16 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
-import App from './App';
+import {AppRegistry, Platform} from 'react-native';
+import Bin_App_client from './App';
 import {name as appName} from './app.json';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 
-PushNotification.configure({
-  onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
-  },
-  requestPermissions: Platform.OS === 'ios',
-});
+AppRegistry.registerComponent('BinAppclient', () => Bin_App_client); //trying to fig ios error
 
-AppRegistry.registerComponent(appName, () => App);
+// PushNotification.configure({
+//   onNotification: function (notification) {
+//     console.log('NOTIFICATION:', notification);
+//   },
+//   requestPermissions: Platform.OS === 'ios',
+// });
