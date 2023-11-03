@@ -173,6 +173,7 @@ function App(): JSX.Element {
     const gardenCalendarId = AllCalendarIds.garden_id;
     let daysForThatStreet = calendarMeanings[recyclingCalendarId];
     //eg {"waste": "6", "recycling": "13","glass": "13"},
+
     if (foodCalendarId) {
       daysForThatStreet = {
         ...daysForThatStreet,
@@ -186,6 +187,7 @@ function App(): JSX.Element {
         garden: calendarMeanings[gardenCalendarId]['garden'],
       };
     }
+
     //eg {"waste": "6", "recycling": "13","glass": "13","food":6, "garden": 2},
 
     const iDatesByDay: {[key: string]: IDate} = {};

@@ -56,15 +56,18 @@ const Carousel = ({dates, streetName}) => {
       for (let fortnight = 0; fortnight < fortnights; fortnight++) {
         //  here create a new idate so you can add it
         // 14 * fortnight + weeksSkipped * 7
-        // if it's food, create two of them one 7 daye later
+        // if it's food, create two of them one 7 days later
         const newDate = createNewIDateXDaysLater(
           iDateToClone,
           14 * fortnight + weeksSkipped * 7,
         );
         result.push(newDate);
-        if (iDateToClone.binType == 'food') {
+        // console.log("This is binType :",iDateToClone.binType)
+        if (iDateToClone.binType.includes('food')) {
+          const cloneOfClone = {...iDateToClone}
+          cloneOfClone.binType = 'food'
           const newDateFood = createNewIDateXDaysLater(
-            iDateToClone,
+            cloneOfClone,
             14 * fortnight + weeksSkipped * 7 + 7,
           );
           result.push(newDateFood);
@@ -106,7 +109,7 @@ const Carousel = ({dates, streetName}) => {
     return (
       <>
         <Text style={{fontSize: 34, fontWeight: '600', color: '#291D29'}}>
-          Recycling Box
+          {binTypes}
         </Text>
         <View style={{flexDirection: 'row', gap: -40, paddingTop: 25}}>
           {binNameToImage(binNames[0])}

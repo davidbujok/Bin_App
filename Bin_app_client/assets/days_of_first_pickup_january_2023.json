@@ -80,24 +80,12 @@
 		"food": "3"
 	},
 	"wednesday": {
-		"waste": "null",
-		"recycling": "null",
-		"glass": "null",
-		"garden": "null",
 		"food": "4"
 	},
 	"thursday": {
-		"waste": "null",
-		"recycling": "null",
-		"glass": "null",
-		"garden": "null",
 		"food": "5"
 	},
 	"friday": {
-		"waste": "null",
-		"recycling": "null",
-		"glass": "null",
-		"garden": "null",
 		"food": "6"
 	},
 	"None": {
