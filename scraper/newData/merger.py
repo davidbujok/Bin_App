@@ -150,7 +150,7 @@ print("Roads without food collection",len(road_without_food))
 import json
 
 # ---- START ------ Make our Dict into a JSON file
-with open('merged_with_recycling.json','w') as jsonfile:
+with open('all_data_file.json','w') as jsonfile:
     json.dump(all_data_dict,jsonfile)
 
 jsonfile.close()
