@@ -140,6 +140,7 @@ function App(): JSX.Element {
     streetName = 'do we need this?',
     whichFortnight = 0,
   ) => {
+   
     const dayOfYear = january23Day + 14 * whichFortnight;
     const dateObject = dateFromDay(2023, dayOfYear);
     const idOfPinPickup = dateObject.getTime(); //epoch time is the unique id
@@ -168,16 +169,19 @@ function App(): JSX.Element {
     //    {"food_id": "Thursday", "garden_id": "wednesday-1", "recycling_id": "thursday-1"}
     //  for now let's just grab recycling
     const recyclingCalendarId = AllCalendarIds.recycling_id;
-    const gardenCalendarId = AllCalendarIds.garden_id;
+
+     // need this to somehow provide a date for food each 7 days instead of 14
     const foodCalendarId = AllCalendarIds.food_id
+
+    // console.log("Food: ",foodCalendarId)
     // console.log('streetName');
-    // console.log(streetName);
-    // console.log(recyclingCalendarIds);
+    // // console.log(streetName);
+    // console.log("All Call Ids: ",AllCalendarIds)
+    // console.log("recycling id",recyclingCalendarId);
     //  {"food_id": "Thursday", "garden_id": "wednesday-2", "recycling_id": "thursday-1"}
-    // console.log(recyclingCalendarId);
+    // console.log('Rec Cal ID',recyclingCalendarId);
     // "thursday-1"
     const daysForThatStreet = calendarMeanings[recyclingCalendarId];
-    // console.log('daysForThatStreet');
     //eg {"waste": "6", "recycling": "13","glass": "13"},
     // console.log(daysForThatStreet);
     const iDatesByDay: {[key: string]: IDate} = {};
@@ -197,7 +201,7 @@ function App(): JSX.Element {
             fortnight,
           );
           if (dayNumber in iDatesByDay) {
-            console.log('new!', newIDate.binType, iDatesByDay);
+            console.log('new!', newIDate.binType, ' I DATE :',iDatesByDay);
             iDatesByDay[`${dayNumber}`].binType = `${
               iDatesByDay[`${dayNumber}`].binType
             } ${newIDate.binType}`;
@@ -206,8 +210,11 @@ function App(): JSX.Element {
           }
         }
       });
+
       setDates(Object.values(iDatesByDay));
     }
+
+
     setPage(3);
     setAddress({});
     setLocation(false);
