@@ -96,3 +96,13 @@ bundle install
 npm start
 
 <!-- and then when asked, choose 'i' -->
+
+# fastlane notes:
+
+from ios folder:
+
+fastlane ios beta who:pawel
+
+# appstore specific adventures:
+
+app icon sizes were made with this website: https://makeappicon.com/
