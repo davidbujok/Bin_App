@@ -17,6 +17,8 @@ const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
 const waste = require('../static/images/general.png');
 const garden = require('../static/images/garden.png');
+const food = require('../static/images/garden.png');
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -55,11 +57,12 @@ const Carousel = ({dates, streetName}) => {
         newDate.dateObject.setDate(
           iDateToClone.dateObject.getDate() + 14 * fortnight + weeksSkipped * 7,
         );
-        newDate.id = newDate.dateObject.getTime();
+        //                                Plus fortnight to be unique
+        newDate.id = newDate.dateObject.getTime()+fortnight;
         result.push(newDate);
       }
     });
-    result.forEach(item => item.id+1)
+
     result.sort((date1, date2) => date1.id - date2.id); //sort by date (id)
     return result;
   };
@@ -75,6 +78,7 @@ const Carousel = ({dates, streetName}) => {
       waste: waste,
       garden: garden,
       box: waste,
+      food: food
     };
     return <Image style={image.imageSize} source={resources[binName]}></Image>;
   };

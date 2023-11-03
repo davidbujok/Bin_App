@@ -105,6 +105,13 @@
 		"glass": "null",
 		"garden": "null",
 		"food": "6"
+	},
+	"None":{
+		"waste": "null",
+		"recycling": "null",
+		"glass": "null",
+		"garden": "null",
+		"food": "null"
 	}
 	
 }

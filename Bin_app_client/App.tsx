@@ -33,7 +33,7 @@ function App(): JSX.Element {
   Geocoder.init(api);
 
   useEffect(() => {
-    const allStreetsLoaded = require('./assets/merged_with_recycling.json');
+    const allStreetsLoaded = require('./assets/all_data_file.json');
     setAllStreetsJson(allStreetsLoaded);
   }, []);
 
