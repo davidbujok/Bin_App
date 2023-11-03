@@ -23,6 +23,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Push a new beta build to TestFlight
 
+### ios reset_certificates
+
+```sh
+[bundle exec] fastlane ios reset_certificates
+```
+
+
+
+### ios get_profile_and_username
+
+```sh
+[bundle exec] fastlane ios get_profile_and_username
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
@@ -30,24 +46,3 @@ This README.md is auto-generated and will be re-generated every time [_fastlane_
 More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
 
 The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
-
-
-## Fastlane notes:
-
-
-### TO cleanup pods
-pod cache clean --all
-
-### if pods return ' can't find gem cocoapods (>= 0.a) with executable pod'
-sudo gem uninstall cocoapods
-sudo gem install -n /usr/local/bin cocoapods
-
-
-# and this worked insted of usual pod install (in main folder):
-bundle install
-
-
-brew install openssl@1.1
-brew uninstall --ignore-dependencies openssl@3
-rvm install 3.2.2
-brew install --ignore-dependencies openssl@3

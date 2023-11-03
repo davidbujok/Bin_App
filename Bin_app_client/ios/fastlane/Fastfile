@@ -1,10 +1,41 @@
 default_platform(:ios)
 
-platform :ios do
+platform :ios do |options|
   desc "Push a new beta build to TestFlight"
-  lane :beta do
+  
+  lane :beta do |options|
     increment_build_number(xcodeproj: "Bin_App_client.xcodeproj")
+	user_info = get_profile_and_username(options)
+    puts user_info
+    cert(username: user_info[:username],  team_id: "PSW4RX7MQS")
+    # sigh(username: user_info[:username],  team_id: "PSW4RX7MQS")
+    match(type: "appstore", profile_name: user_info[:profile], username: user_info[:username],  team_id: "PSW4RX7MQS", git_url: 'git@github.com:codestorytelling/certificates_binday.git', git_branch: user_info[:branch_for_certificates])
     build_app(scheme: "Bin_App_client")
     upload_to_testflight
+  end
+
+  lane :reset_certificates do |options|
+	user_info = get_profile_and_username(options)
+    match(type: "appstore", profile_name: user_info[:profile], username: user_info[:username],  team_id: "PSW4RX7MQS", git_url: 'git@github.com:codestorytelling/certificates_binday.git', git_branch: user_info[:branch_for_certificates])
+#     match(type: "appstore", profile_name: user_info[:profile], username: user_info[:username],  team_id: "3L54KNRCM5", git_url: 'git@github.com:foundationforpositivementalhealth/feel-good-keys.git', git_branch: user_info[:branch_for_certificates])
+    #  match_nuke(type: "appstore", profile_name: user_info[:profile], username: user_info[:username],  team_id: "PSW4RX7MQS", git_url: 'git@github.com:codestorytelling/certificates_binday.git', git_branch: user_info[:branch_for_certificates])
+   end
+
+  lane :get_profile_and_username do |options|
+    puts "options"
+    puts options
+    # who_are_you ||= prompt(text: 'Who are you? (M for Marta or P for Pawel):')
+    if options[:who] == 'pawel'
+      branch_for_certificates = "pawel"
+      profile = "match AppStore com.codestorytelling.binday"
+      username = "ripegooseberry@gmail.com"
+    else
+      profile = "Unknown profile, did you specify who:marta or who:pawel ? See README.md"
+      username = "unknown"
+    end
+
+    result = {'profile':profile, 'username':username, 'branch_for_certificates': branch_for_certificates}
+	puts result
+	result
   end
 end
