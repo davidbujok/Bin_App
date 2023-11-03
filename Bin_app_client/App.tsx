@@ -11,11 +11,11 @@ import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search} from './styles/stylesSheet';
-import {api} from './api-keys/api-keys.json';
-import HomeContainer from './containers/HomeContainer';
-import SearchingContainer from './containers/SearchingContainer';
-import BaseContainer from './containers/BaseContainer';
-import Carousel from './containers/SwipeableContainer';
+import {api} from './api-keys/api-keys.js';
+import HomeContainer from './Containers/HomeContainer';
+import SearchingContainer from './Containers/SearchingContainer';
+import BaseContainer from './Containers/BaseContainer';
+import Carousel from './Containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 
 function App(): JSX.Element {
@@ -164,10 +164,12 @@ function App(): JSX.Element {
   const handleFetchByStreet = (streetName: string) => {
     // TODO: here add garden waste
     //eg tuesday-1
-    const recyclingCalendarIds = allStreetsJson[streetName];
+    const AllCalendarIds = allStreetsJson[streetName];
     //    {"food_id": "Thursday", "garden_id": "wednesday-1", "recycling_id": "thursday-1"}
     //  for now let's just grab recycling
-    const recyclingCalendarId = recyclingCalendarIds.recycling_id;
+    const recyclingCalendarId = AllCalendarIds.recycling_id;
+    const gardenCalendarId = AllCalendarIds.garden_id;
+    const foodCalendarId = AllCalendarIds.food_id
     // console.log('streetName');
     // console.log(streetName);
     // console.log(recyclingCalendarIds);

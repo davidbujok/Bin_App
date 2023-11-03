@@ -59,6 +59,7 @@ const Carousel = ({dates, streetName}) => {
         result.push(newDate);
       }
     });
+    result.forEach(item => item.id+1)
     result.sort((date1, date2) => date1.id - date2.id); //sort by date (id)
     return result;
   };
