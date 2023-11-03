@@ -72,5 +72,5 @@ Bin_app_client/ios/cache/
 Bin_app_client/ios/Pods/
 Bin_app_client/ios/gems/
 Bin_app_client/ios/specification/
-# Bin_app_client/ios/Podfile.lock/
-# Bin_app_client/ios/bin/
+Bin_app_client/ios/Podfile.lock/
+Bin_app_client/ios/bin/
