@@ -105,7 +105,7 @@ for currentNameOfStreet in all_data_dict:
         index = np.where(foodWasteNames == currentNameOfStreet)[0][0]
         food_waste_id = foodWasteId[index]
         # getting the street key , creating new key "food_id" and assing the index item of street
-        all_data_dict[currentNameOfStreet]["food_id"] = foodWasteId[index].strip()
+        all_data_dict[currentNameOfStreet]["food_id"] = foodWasteId[index].strip().lower()
         test_counter +=1
     else:
         # Otherwise assign None
@@ -138,7 +138,7 @@ for foodWasteStreet in foodWasteNames:
         all_data_dict[streetFoodClear] = {
             "recycling_id" : "None",
             "garden_id": "None",
-            "food_id" : calendar_id_food.strip()
+            "food_id" : calendar_id_food.strip().lower()
         }
     l+=1
 
