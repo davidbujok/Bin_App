@@ -57,7 +57,7 @@
 		"waste": "5",
 		"recycling": "12",
 		"glass": "12",
-		"garden" : "19"
+		"garden": "19"
 	},
 	"wednesday-1": {
 		"waste": "11",
@@ -72,17 +72,11 @@
 		"garden": "null"
 	},
 	"monday": {
-		"waste": "null",
 		"recycling": "2",
 		"glass": "9",
-		"garden": "null",
 		"food": "2"
 	},
 	"tuesday": {
-		"waste": "null",
-		"recycling": "null",
-		"glass": "null",
-		"garden": "null",
 		"food": "3"
 	},
 	"wednesday": {
@@ -106,12 +100,11 @@
 		"garden": "null",
 		"food": "6"
 	},
-	"None":{
+	"None": {
 		"waste": "null",
 		"recycling": "null",
 		"glass": "null",
 		"garden": "null",
 		"food": "null"
 	}
-	
 }

@@ -38,7 +38,7 @@ function BaseContainer({
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
       <View style={main.container}>
         <View style={navbar.container}>
           <View style={{flexDirection: 'column', gap: 5}}>
