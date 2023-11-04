@@ -45,10 +45,12 @@ const Carousel = ({dates, streetName}) => {
     const todayDaySinceStartOf2023 = daySinceStartOf2023();
     let weeksSkipped = Math.floor(todayDaySinceStartOf2023 / 7);
 
-    if (iDates[0].dateObject.getDay() < todayDaySinceStartOf2023 % 7) {
+    // if(iDates[0].binType.includes('garden') == false){
+      if (iDates[0].dateObject.getDay() < todayDaySinceStartOf2023 % 7) {
       // this week we missed it, skip another week. eg today is Wednesday (2)
       weeksSkipped += 1;
     }
+   
 
     // 1,      15,      29
     // 1 (+8), 15 (+22),29
