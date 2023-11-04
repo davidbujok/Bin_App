@@ -17,6 +17,7 @@ const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
 const waste = require('../static/images/general.png');
 const garden = require('../static/images/garden.png');
+const food = require('../static/images/food_ph.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -48,19 +49,42 @@ const Carousel = ({dates, streetName}) => {
       // this week we missed it, skip another week. eg today is Wednesday (2)
       weeksSkipped += 1;
     }
+
+    // 1,      15,      29
+    // 1 (+8), 15 (+22),29
     iDates.forEach(iDateToClone => {
       for (let fortnight = 0; fortnight < fortnights; fortnight++) {
-        const newDate = {...iDateToClone};
-        newDate.dateObject = new Date(Number(iDateToClone.dateObject));
-        newDate.dateObject.setDate(
-          iDateToClone.dateObject.getDate() + 14 * fortnight + weeksSkipped * 7,
+        //  here create a new idate so you can add it
+        // 14 * fortnight + weeksSkipped * 7
+        // if it's food, create two of them one 7 days later
+        const newDate = createNewIDateXDaysLater(
+          iDateToClone,
+          14 * fortnight + weeksSkipped * 7,
         );
-        newDate.id = newDate.dateObject.getTime();
         result.push(newDate);
+        // console.log("This is binType :",iDateToClone.binType)
+        if (iDateToClone.binType.includes('food')) {
+          const cloneOfClone = {...iDateToClone}
+          cloneOfClone.binType = 'food'
+          const newDateFood = createNewIDateXDaysLater(
+            cloneOfClone,
+            14 * fortnight + weeksSkipped * 7 + 7,
+          );
+          result.push(newDateFood);
+        }
       }
     });
+
     result.sort((date1, date2) => date1.id - date2.id); //sort by date (id)
     return result;
+  };
+
+  const createNewIDateXDaysLater = (iDate, thisManyDaysLater) => {
+    const newDate = {...iDate};
+    newDate.dateObject = new Date(Number(iDate.dateObject)); //clone the date
+    newDate.dateObject.setDate(iDate.dateObject.getDate() + thisManyDaysLater);
+    newDate.id = newDate.dateObject.getTime() + thisManyDaysLater;
+    return newDate;
   };
 
   const renderSwitch = (binType: string) => {
@@ -74,6 +98,7 @@ const Carousel = ({dates, streetName}) => {
       waste: waste,
       garden: garden,
       box: waste,
+      food: food,
     };
     return <Image style={image.imageSize} source={resources[binName]}></Image>;
   };
@@ -84,7 +109,7 @@ const Carousel = ({dates, streetName}) => {
     return (
       <>
         <Text style={{fontSize: 34, fontWeight: '600', color: '#291D29'}}>
-          Recycling Box
+          {binTypes}
         </Text>
         <View style={{flexDirection: 'row', gap: -40, paddingTop: 25}}>
           {binNameToImage(binNames[0])}

@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import checkApplicationPermission from '../containers/NotificationPermission';
+import checkApplicationPermission from '../Containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {

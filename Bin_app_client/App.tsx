@@ -11,11 +11,11 @@ import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search} from './styles/stylesSheet';
-import {api} from './api-keys/api-keys.json';
-import HomeContainer from './containers/HomeContainer';
-import SearchingContainer from './containers/SearchingContainer';
-import BaseContainer from './containers/BaseContainer';
-import Carousel from './containers/SwipeableContainer';
+import {api} from './api-keys/api-keys.js';
+import HomeContainer from './Containers/HomeContainer';
+import SearchingContainer from './Containers/SearchingContainer';
+import BaseContainer from './Containers/BaseContainer';
+import Carousel from './Containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 
 function App(): JSX.Element {
@@ -33,7 +33,7 @@ function App(): JSX.Element {
   Geocoder.init(api);
 
   useEffect(() => {
-    const allStreetsLoaded = require('./assets/merged_with_recycling.json');
+    const allStreetsLoaded = require('./assets/all_data_file.json');
     setAllStreetsJson(allStreetsLoaded);
   }, []);
 
@@ -164,20 +164,32 @@ function App(): JSX.Element {
   const handleFetchByStreet = (streetName: string) => {
     // TODO: here add garden waste
     //eg tuesday-1
-    const recyclingCalendarIds = allStreetsJson[streetName];
+    const AllCalendarIds = allStreetsJson[streetName];
     //    {"food_id": "Thursday", "garden_id": "wednesday-1", "recycling_id": "thursday-1"}
     //  for now let's just grab recycling
-    const recyclingCalendarId = recyclingCalendarIds.recycling_id;
-    // console.log('streetName');
-    // console.log(streetName);
-    // console.log(recyclingCalendarIds);
-    //  {"food_id": "Thursday", "garden_id": "wednesday-2", "recycling_id": "thursday-1"}
-    // console.log(recyclingCalendarId);
-    // "thursday-1"
-    const daysForThatStreet = calendarMeanings[recyclingCalendarId];
-    // console.log('daysForThatStreet');
+    const recyclingCalendarId = AllCalendarIds.recycling_id;
+    // need this to somehow provide a date for food each 7 days instead of 14
+    const foodCalendarId = AllCalendarIds.food_id;
+    const gardenCalendarId = AllCalendarIds.garden_id;
+    let daysForThatStreet = calendarMeanings[recyclingCalendarId];
     //eg {"waste": "6", "recycling": "13","glass": "13"},
-    // console.log(daysForThatStreet);
+
+    if (foodCalendarId) {
+      daysForThatStreet = {
+        ...daysForThatStreet,
+        ...calendarMeanings[foodCalendarId],
+      };
+    }
+    //eg {"waste": "6", "recycling": "13","glass": "13","food":6},
+    if (gardenCalendarId) {
+      daysForThatStreet = {
+        ...daysForThatStreet,
+        garden: calendarMeanings[gardenCalendarId]['garden'],
+      };
+    }
+
+    //eg {"waste": "6", "recycling": "13","glass": "13","food":6, "garden": 2},
+
     const iDatesByDay: {[key: string]: IDate} = {};
     const fortnight = 0; //in case we'll do the firtnighting here
     // ['waste', 'recycling', 'glass'] is Object.keys(daysForThatStreet)
@@ -195,7 +207,7 @@ function App(): JSX.Element {
             fortnight,
           );
           if (dayNumber in iDatesByDay) {
-            console.log('new!', newIDate.binType, iDatesByDay);
+            console.log('new!', newIDate.binType, ' I DATE :', iDatesByDay);
             iDatesByDay[`${dayNumber}`].binType = `${
               iDatesByDay[`${dayNumber}`].binType
             } ${newIDate.binType}`;
@@ -204,8 +216,10 @@ function App(): JSX.Element {
           }
         }
       });
+
       setDates(Object.values(iDatesByDay));
     }
+
     setPage(3);
     setAddress({});
     setLocation(false);
