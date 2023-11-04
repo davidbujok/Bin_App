@@ -33,7 +33,7 @@ function App(): JSX.Element {
   Geocoder.init(api);
 
   useEffect(() => {
-    const allStreetsLoaded = require('./assets/all_data_file.json');
+    const allStreetsLoaded = require('./assets/all_data_file_without_none.json');
     setAllStreetsJson(allStreetsLoaded);
   }, []);
 
@@ -173,6 +173,7 @@ function App(): JSX.Element {
     const gardenCalendarId = AllCalendarIds.garden_id;
     let daysForThatStreet = calendarMeanings[recyclingCalendarId];
     //eg {"waste": "6", "recycling": "13","glass": "13"},
+    console.log(daysForThatStreet)
 
     if (foodCalendarId) {
       daysForThatStreet = {
@@ -181,12 +182,16 @@ function App(): JSX.Element {
       };
     }
     //eg {"waste": "6", "recycling": "13","glass": "13","food":6},
+    console.log("AFTER FOOD  : ",daysForThatStreet)
+
     if (gardenCalendarId) {
       daysForThatStreet = {
         ...daysForThatStreet,
         garden: calendarMeanings[gardenCalendarId]['garden'],
       };
+      console.log("AFTER GARDEN  : ",daysForThatStreet)
     }
+
 
     //eg {"waste": "6", "recycling": "13","glass": "13","food":6, "garden": 2},
 
@@ -213,6 +218,7 @@ function App(): JSX.Element {
             } ${newIDate.binType}`;
           } else {
             iDatesByDay[`${dayNumber}`] = newIDate;
+            console.log(iDatesByDay)
           }
         }
       });
