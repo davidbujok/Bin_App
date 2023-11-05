@@ -1,4 +1,4 @@
-package com.bin_app_client;
+package com.codestorytelling.binday;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -103,6 +103,15 @@ from ios folder:
 
 fastlane ios beta who:pawel
 
+from android folder:
+
+fastlane android beta
+
 # appstore specific adventures:
 
 app icon sizes were made with this website: https://makeappicon.com/
+
+this was the tutorial for android: https://docs.fastlane.tools/getting-started/android/setup/#collect-your-google-credentials
+
+before releasing properly, there was a need to release once by hand with
+npx react-native build-android --mode=release
