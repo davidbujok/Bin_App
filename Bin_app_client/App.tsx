@@ -19,6 +19,7 @@ import BaseContainer from './Containers/BaseContainer';
 import Carousel from './Containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 import PageType from './Helpers/PageType';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<String>>();
@@ -38,12 +39,18 @@ function App(): JSX.Element {
   useEffect(() => {
     const allStreetsLoaded = require('./assets/all_data_file_without_none.json');
     setAllStreetsJson(allStreetsLoaded);
-  }, []);
-
-  useEffect(() => {
     const allCalendarMeaningsLoaded = require('./assets/days_of_first_pickup_january_2023.json');
     setCalendarMeanings(allCalendarMeaningsLoaded);
   }, []);
+
+  useEffect(() => {
+    if (
+      Object.keys(allStreetsJson).length > 0 &&
+      Object.keys(calendarMeanings).length > 0
+    ) {
+      loadPreviousStreetIfWeKnowIt();
+    }
+  }, [allStreetsJson, calendarMeanings]);
 
   useEffect(() => {
     PushNotification.createChannel(
@@ -78,6 +85,18 @@ function App(): JSX.Element {
         .catch(error => console.warn(error));
     }
   }, [location]);
+
+  const loadPreviousStreetIfWeKnowIt = async () => {
+    const fetchStreetFromBefore = async () => {
+      const streetFromBefore = await getStreetFromBefore();
+      handleFetchByStreet(streetFromBefore);
+    };
+
+    // call the function
+    fetchStreetFromBefore()
+      // make sure to catch any error
+      .catch(console.error);
+  };
 
   useEffect(() => {
     if (address != undefined && newFormat != undefined) {
@@ -218,6 +237,8 @@ function App(): JSX.Element {
         }
       });
 
+      rememberStreetForLater(streetName);
+
       setDates(Object.values(iDatesByDay));
     }
 
@@ -227,6 +248,28 @@ function App(): JSX.Element {
     setNewFormat(undefined);
     Keyboard.dismiss();
   }; // End of handleFetch By Street
+
+  const rememberStreetForLater = async (streetName: string) => {
+    try {
+      await AsyncStorage.setItem('streetName', streetName);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const getStreetFromBefore = async () => {
+    try {
+      const value = await AsyncStorage.getItem('streetName');
+      if (value !== null) {
+        return value;
+      } else {
+        return '';
+      }
+    } catch (e) {
+      return '';
+      // error reading value
+    }
+  };
 
   useEffect(() => {
     if (input && input.length > 1 && allStreetsJson) {
@@ -238,7 +281,7 @@ function App(): JSX.Element {
       //   console.log(justRelevantStreets);
       //   console.log(Object.keys(allStreetsJson)[0] === 'abbey street');
 
-      let tenRelevantStreets = justRelevantStreets.slice(0,10)
+      let tenRelevantStreets = justRelevantStreets.slice(0, 10);
       setStreets(tenRelevantStreets);
       setPage(PageType.Searching);
     } else {

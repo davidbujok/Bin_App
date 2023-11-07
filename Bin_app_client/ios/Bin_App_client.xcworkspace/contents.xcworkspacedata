@@ -10,7 +10,4 @@
    <FileRef
       location = "group:Bin_App_client.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Bin_app_client.xcodeproj">
-   </FileRef>
 </Workspace>
