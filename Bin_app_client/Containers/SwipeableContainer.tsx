@@ -12,6 +12,7 @@ import {styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
+import { capitaliseFirstLetter } from '../Helpers/StringFunctions';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -36,6 +37,19 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     return Math.floor(diffInDays);
   };
+
+  const removeDuplicates = (results) => {
+      for (let date: number = 0 ; date < results.length -1; date++ ) {
+      if (results[date].dateObject.getTime() === results[date+1].dateObject.getTime()) {
+        results[date].binType += " " + results[date+1].binType
+        // console.log('Duplicate found')
+        results.splice(date+1, 1);
+    }
+      // console.log("What number", date)
+      // console.log("What number", results.length)
+  }
+    return results
+  }
 
   const pagesForNextMonths = (iDates: Array<IDate>, fortnights = 4) => {
     const result: Array<IDate> = [];
@@ -62,7 +76,20 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           iDateToClone,
           14 * fortnight + weeksSkipped * 7,
         );
-        result.push(newDate);
+        if (daySinceStartOf2023() > 304 && newDate.binType.includes("garden")) {
+          if (newDate.binType === "garden") {
+            continue
+          }
+          else if (newDate.binType.includes("garden")) {
+            const cloneOfClone = {...newDate}
+            const currentBinTypes = cloneOfClone.binType;
+            const updateCurrentBinTypes = currentBinTypes.replace("garden", "");
+            cloneOfClone.binType = updateCurrentBinTypes.trim();
+            result.push(cloneOfClone)
+          }
+        } else {
+          result.push(newDate);
+        }
         // console.log("This is binType :",iDateToClone.binType)
         if (iDateToClone.binType.includes('food')) {
           const cloneOfClone = {...iDateToClone};
@@ -75,9 +102,11 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         }
       }
     });
-
     result.sort((date1, date2) => date1.id - date2.id); //sort by date (id)
-    return result;
+    // return result
+    return removeDuplicates(result);
+
+
   };
 
   const createNewIDateXDaysLater = (iDate, thisManyDaysLater) => {
@@ -101,20 +130,35 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
       box: waste,
       food: food,
     };
-    return <Image style={image.imageSize} source={resources[binName]}></Image>;
+    return <Image resizeMode='contain' style={image.imageSize} source={resources[binName]}></Image>;
+  };
+  const binTypeToTile = (binTypes) => {
+    let binNames = binTypes.split(' ');
+    binNames = capitaliseFirstLetter(binNames);
+    if (binNames.length === 3) {
+      return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`
+    }
+    if (binNames.length === 2) {
+      return `${binNames[0]} & ${binNames[1]}`
+    }
+    if (binNames.length === 1) {
+      return `${binNames[0]}`
+    }
   };
 
   const imagesForWasteType = (binTypes: string) => {
     const binNames = binTypes.split(' ');
     binNames.sort();
+    const binTitle = binTypeToTile(binTypes)
     return (
       <>
         <Text style={{fontSize: 34, fontWeight: '600', color: '#291D29'}}>
-          {binTypes}
+          {binTitle}
         </Text>
         <View style={{flexDirection: 'row', gap: -40, paddingTop: 25}}>
           {binNameToImage(binNames[0])}
           {binNames.length > 1 ? binNameToImage(binNames[1]) : null}
+          {binNames.length > 2 ? binNameToImage(binNames[2]) : null}
         </View>
       </>
     );
@@ -131,6 +175,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
 
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
+    const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ')
     return (
       <View
         key={pickupInfo.id}
@@ -138,7 +183,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           width: SCREEN_WIDTH,
           alignItems: 'center',
         }}>
-        <Text style={styles.streetName}>{pickupInfo.name.toUpperCase()}</Text>
+        <Text style={styles.streetName}>{title}</Text>
         <Text style={{fontSize: 24, fontWeight: '400'}}>Collection on</Text>
         <Text style={{fontSize: 30, fontWeight: '500', color: '#291D29'}}>
           {dateAsString(pickupInfo.dateObject)}{' '}
@@ -158,7 +203,17 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
       style={{paddingTop: 20}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
-      {pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))}
+      <View>
+        <DateTimePicker
+          open={open}
+          setOpen={setOpen}
+          calendarDate={calendarDate}
+        />
+      </View>
+      {pagesForNextMonths(dates).length > 0 
+        ? pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
+        : <Text> No bins </Text>}
+
     </ScrollView>
   );
 };

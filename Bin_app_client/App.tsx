@@ -6,10 +6,6 @@ import {
   PermissionsAndroid,
   Keyboard,
   Text,
-  Alert,
-  Modal,
-  View,
-  Pressable,
 } from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
@@ -180,8 +176,6 @@ function App(): JSX.Element {
     const gardenCalendarId = AllCalendarIds.garden_id;
     let daysForThatStreet = calendarMeanings[recyclingCalendarId];
     //eg {"waste": "6", "recycling": "13","glass": "13"},
-    console.log(daysForThatStreet);
-
     if (foodCalendarId) {
       daysForThatStreet = {
         ...daysForThatStreet,
@@ -189,17 +183,12 @@ function App(): JSX.Element {
       };
     }
     //eg {"waste": "6", "recycling": "13","glass": "13","food":6},
-    console.log('AFTER FOOD  : ', daysForThatStreet);
-
     if (gardenCalendarId) {
       daysForThatStreet = {
         ...daysForThatStreet,
         garden: calendarMeanings[gardenCalendarId]['garden'],
       };
-      console.log('AFTER GARDEN  : ', daysForThatStreet);
     }
-
-    //eg {"waste": "6", "recycling": "13","glass": "13","food":6, "garden": 2},
 
     const iDatesByDay: {[key: string]: IDate} = {};
     const fortnight = 0; //in case we'll do the firtnighting here
@@ -249,10 +238,11 @@ function App(): JSX.Element {
       //   console.log(justRelevantStreets);
       //   console.log(Object.keys(allStreetsJson)[0] === 'abbey street');
 
-      setStreets(justRelevantStreets);
+      let tenRelevantStreets = justRelevantStreets.slice(0,10)
+      setStreets(tenRelevantStreets);
       setPage(PageType.Searching);
     } else {
-      console.log('no results for', input);
+      // console.log('no results for', input);
       setPage(PageType.Home);
     }
   }, [input, allStreetsJson]);

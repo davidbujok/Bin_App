@@ -1,4 +1,8 @@
-import {StatusBar, StyleSheet, Platform} from 'react-native';
+import {StatusBar, StyleSheet, Platform,Dimensions} from 'react-native';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 type Color = {
   blue: '#1c6fc4';
   red: '#f14135';
@@ -218,3 +222,14 @@ export const buttonStyle = StyleSheet.create({
     height: 20,
   },
 });
+
+export const logo = StyleSheet.create({
+  logoSize: {
+    fontSize: SCREEN_HEIGHT * 0.055,
+    color:'black',
+    // marginRight:-SCREEN_HEIGHT* 0.02,
+    // marginLeft: - SCREEN_HEIGHT * 0.05
+  },
+});
+
+// {fontSize:43,color:'black',marginRight:-80, marginLeft:-30}

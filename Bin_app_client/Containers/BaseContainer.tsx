@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Dimensions,
   Keyboard,
   Pressable,
   Text,
@@ -9,11 +10,13 @@ import {
   Alert,
   Modal,
 } from 'react-native';
+import PushNotification from 'react-native-push-notification';
 import {
   styles,
   colourPalette,
   colourPaletteBackground,
   main,
+  logo,
 } from '../styles/stylesSheet';
 import PageType from './../Helpers/PageType';
 import RemindersScreen from '../Components/RemindersScreen';
@@ -49,6 +52,9 @@ function BaseContainer({
     <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
       <View style={main.container}>
         <View style={navbar.container}>
+          <Text style={logo.logoSize}>
+          ♻️
+          </Text>
           {/* <View style={{flexDirection: 'column', gap: 5}}>
             <View
               style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>

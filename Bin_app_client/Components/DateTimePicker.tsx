@@ -26,7 +26,8 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
         open={open}
         date={previousDay}
         // date={iDate === null ? previousDay : iDate.date}
-        onConfirm={dateReminder => {
+        onConfirm={
+          dateReminder => {
           setOpen(false);
           dateReminder.setHours(dateReminder.getHours());
           datePicked(dateReminder);
