@@ -30,6 +30,7 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //   console.log('hour :', hour);
   //   console.log('minutes :', minute);
 
+  console.log(date.date)
   if (Platform.OS === 'android') {
     PushNotification.localNotification({
       channelId: 'Date-Notification',

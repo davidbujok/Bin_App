@@ -80,10 +80,11 @@ const RemindersScreen = ({dates, streetName}) => {
             ? new Date(notifications[0].date).toLocaleString()
             : 'not setup';
         setNextNotificationTime(nextNotificationTime);
-        setSwitch(true);
+        // setSwitch(true);
+        setIsReminderEnabled(true)
       } else {
         setNextNotificationTime('');
-        setSwitch(false);
+        setIsReminderEnabled(false)
       }
     });
   }, []);
@@ -130,7 +131,7 @@ const RemindersScreen = ({dates, streetName}) => {
           datePicked={reminderTime => {
             setIsReminderEnabled(true);
             setNextNotificationTime(new Date(reminderTime).toLocaleString());
-            // handleNotification(calendarDate, reminderTime);
+            handleNotification(calendarDate, new Date(reminderTime));
           }}
         />
       </View>
