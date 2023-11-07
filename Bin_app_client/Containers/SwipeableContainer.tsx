@@ -18,7 +18,7 @@ const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
 const waste = require('../static/images/general.png');
 const garden = require('../static/images/garden.png');
-const food = require('../static/images/food_ph.png');
+const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
