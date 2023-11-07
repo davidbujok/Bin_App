@@ -1,6 +1,8 @@
 import PushNotification from 'react-native-push-notification';
 import checkApplicationPermission from '../Containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Platform} from 'react-native';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {
   console.log(
@@ -21,30 +23,66 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //Actual Variable (Need hour - minute variable)
   const setNotification = new Date(year, month, day, hour, minute);
 
-  PushNotification.localNotification({
-    channelId: 'Date-Notification',
-    title: 'Reminder Set',
-    message: `Congratulations, you have set up a reminder for your bin on ${date.date} `,
-  });
+  console.log('SET NOTIFICATION FOR :', setNotification, date);
+  //   console.log('year :', year);
+  //   console.log('month: ', month);
+  //   console.log('day :', day);
+  //   console.log('hour :', hour);
+  //   console.log('minutes :', minute);
 
-  console.log('SET NOTIFICATION FOR :', setNotification);
-  console.log('year :', year);
-  console.log('month: ', month);
-  console.log('day :', day);
-  console.log('hour :', hour);
-  console.log('minutes :', minute);
+  if (Platform.OS === 'android') {
+    PushNotification.localNotification({
+      channelId: 'Date-Notification',
+      title: 'Reminder Set',
+      message: `Congratulations, you have set up a reminder for your bin on ${date.date} `,
+    });
+    PushNotification.localNotificationSchedule({
+      channelId: 'Date-Notification',
+      title: `Don't forget to put your bin out`,
+      message: `Your ${date.binType} collection is on ${date.date}`,
+      date: setNotification,
+      allowWhileIdle: true,
+    });
+    PushNotification.getScheduledLocalNotifications(notifications => {
+      console.log('android setup notification', notifications);
+    });
+  } else if (Platform.OS == 'ios') {
+    PushNotificationIOS.addNotificationRequest({
+      id: 'Date-Notification',
+      title: `Reminder Set`,
+      body: `Your ${date.binType} collection is on ${date.date}`,
+      fireDate: new Date(Date.now() + 1 * 1000), // Schedule in 1 secs
+    });
+    PushNotificationIOS.addNotificationRequest({
+      id: 'Date-Notification',
+      title: `Don't forget to put your bin out`,
+      body: `Your ${date.binType} collection is on ${date.date}`,
+      fireDate: setNotification,
+    });
+    PushNotificationIOS.getPendingNotificationRequests(Localarray => {
+      console.log('ios setup notification', Localarray);
+    });
+  }
+};
 
-  // Presentation Date Time
-  // Need month - 1 because Date month starts from 0 , minutes shouldn't have 0 in front
-  // const notificationDate = new Date(year,month-1,19,9,52)
-  // const notificationDate = new Date(Date.now()+30 * 1000)
-  // console.log("Notification set for: ", notificationDate)
+export const getCurrentNotifications = async callback => {
+  if (Platform.OS === 'android') {
+    PushNotification.getScheduledLocalNotifications(notifications => {
+      console.log('android setup notification', notifications);
+      callback(notifications);
+    });
+  } else if (Platform.OS == 'ios') {
+    PushNotificationIOS.getPendingNotificationRequests(notifications => {
+      console.log('ios setup notification', notifications);
+      callback(notifications);
+    });
+  }
+};
 
-  PushNotification.localNotificationSchedule({
-    channelId: 'Date-Notification',
-    title: `Don't forget to put your bin out`,
-    message: `Your ${date.binType} collection is on ${date.date}`,
-    date: setNotification,
-    allowWhileIdle: true,
-  });
+export const cancelNotifications = () => {
+  if (Platform.OS === 'android') {
+    PushNotification.cancelAllLocalNotifications();
+  } else if (Platform.OS == 'ios') {
+    PushNotificationIOS.removeAllPendingNotificationRequests();
+  }
 };

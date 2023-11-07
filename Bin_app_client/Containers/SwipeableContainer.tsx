@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {styles} from '../styles/stylesSheet';
-// import {handleNotification} from '../Components/NotificationFunctionality';
+import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
 
@@ -21,7 +21,7 @@ const food = require('../static/images/food_ph.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const Carousel = ({dates, streetName}) => {
+const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
   const [open, setOpen] = useState(false);
 
   const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
@@ -46,11 +46,10 @@ const Carousel = ({dates, streetName}) => {
     let weeksSkipped = Math.floor(todayDaySinceStartOf2023 / 7);
 
     // if(iDates[0].binType.includes('garden') == false){
-      if (iDates[0].dateObject.getDay() < todayDaySinceStartOf2023 % 7) {
+    if (iDates[0].dateObject.getDay() < todayDaySinceStartOf2023 % 7) {
       // this week we missed it, skip another week. eg today is Wednesday (2)
       weeksSkipped += 1;
     }
-   
 
     // 1,      15,      29
     // 1 (+8), 15 (+22),29
@@ -66,8 +65,8 @@ const Carousel = ({dates, streetName}) => {
         result.push(newDate);
         // console.log("This is binType :",iDateToClone.binType)
         if (iDateToClone.binType.includes('food')) {
-          const cloneOfClone = {...iDateToClone}
-          cloneOfClone.binType = 'food'
+          const cloneOfClone = {...iDateToClone};
+          cloneOfClone.binType = 'food';
           const newDateFood = createNewIDateXDaysLater(
             cloneOfClone,
             14 * fortnight + weeksSkipped * 7 + 7,
@@ -147,7 +146,7 @@ const Carousel = ({dates, streetName}) => {
         {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
           style={styles.smallButton}
-          onPress={() => handlePickedDateNotification(pickupInfo)}>
+          onPress={() => setModalRemindersVisible(true)}>
           <Text style={styles.buttonTextColor}>Add Reminder</Text>
         </TouchableOpacity>
       </View>
@@ -159,13 +158,6 @@ const Carousel = ({dates, streetName}) => {
       style={{paddingTop: 20}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
-      <View>
-        <DateTimePicker
-          open={open}
-          setOpen={setOpen}
-          calendarDate={calendarDate}
-        />
-      </View>
       {pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))}
     </ScrollView>
   );

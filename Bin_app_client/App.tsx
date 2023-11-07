@@ -6,17 +6,23 @@ import {
   PermissionsAndroid,
   Keyboard,
   Text,
+  Alert,
+  Modal,
+  View,
+  Pressable,
 } from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
-import {heroText, navbar, search} from './styles/stylesSheet';
+import {heroText, navbar, search, styles} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys.js';
 import HomeContainer from './Containers/HomeContainer';
 import SearchingContainer from './Containers/SearchingContainer';
+import RemindersScreen from './Components/RemindersScreen';
 import BaseContainer from './Containers/BaseContainer';
 import Carousel from './Containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
+import PageType from './Helpers/PageType';
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<String>>();
@@ -24,11 +30,12 @@ function App(): JSX.Element {
   const [input, setInput] = useState<string>();
   const [location, setLocation] = useState<GeoPosition | Boolean>(false);
   const [address, setAddress] = useState({});
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<PageType>(PageType.Home);
   const [newFormat, setNewFormat] = useState<string | undefined>();
   const [streetName, setStreetName] = useState<string>();
   const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
+  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
 
   Geocoder.init(api);
 
@@ -225,8 +232,8 @@ function App(): JSX.Element {
       setDates(Object.values(iDatesByDay));
     }
 
-    setPage(3);
-    setAddress({});
+    setPage(PageType.Results);
+    // setAddress({});
     setLocation(false);
     setNewFormat(undefined);
     Keyboard.dismiss();
@@ -243,20 +250,20 @@ function App(): JSX.Element {
       //   console.log(Object.keys(allStreetsJson)[0] === 'abbey street');
 
       setStreets(justRelevantStreets);
-      setPage(2);
+      setPage(PageType.Searching);
     } else {
       console.log('no results for', input);
-      setPage(1);
+      setPage(PageType.Home);
     }
   }, [input, allStreetsJson]);
 
   const doNothing = () => {};
 
-  const renderSwitch = (page: number) => {
+  const renderSwitch = (page: PageType) => {
     switch (page) {
-      case 1:
+      case PageType.Home:
         return <HomeContainer heroText={heroText} />;
-      case 2:
+      case PageType.Searching:
         return (
           <SearchingContainer
             streets={streets}
@@ -264,10 +271,14 @@ function App(): JSX.Element {
             setStreetName={setStreetName}
           />
         );
-      case 3:
+      case PageType.Results:
         return (
           <>
-            <Carousel dates={dates} streetName={streetName} />
+            <Carousel
+              dates={dates}
+              streetName={streetName}
+              setModalRemindersVisible={setModalRemindersVisible}
+            />
           </>
         );
     }
@@ -276,7 +287,6 @@ function App(): JSX.Element {
   return (
     <>
       <SafeAreaView style={{flex: 1}}>
-        <Text>Banana 2</Text>
         <BaseContainer
           setAddress={setAddress}
           setLocation={setLocation}
@@ -290,6 +300,10 @@ function App(): JSX.Element {
           setPage={setPage}
           page={page}
           setDates={setDates}
+          dates={dates}
+          address={address}
+          modalRemindersVisible={modalRemindersVisible}
+          setModalRemindersVisible={setModalRemindersVisible}
         />
       </SafeAreaView>
     </>

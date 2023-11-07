@@ -1,3 +1,4 @@
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 const checkApplicationPermission = async () => {
@@ -7,6 +8,8 @@ const checkApplicationPermission = async () => {
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
     } catch (error) {}
+  } else if (Platform.OS == 'ios') {
+    PushNotificationIOS.requestPermissions();
   }
 };
 

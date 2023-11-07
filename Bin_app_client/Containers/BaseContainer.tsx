@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Keyboard,
   Pressable,
@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
+  Modal,
 } from 'react-native';
 import {
   styles,
@@ -13,6 +15,8 @@ import {
   colourPaletteBackground,
   main,
 } from '../styles/stylesSheet';
+import PageType from './../Helpers/PageType';
+import RemindersScreen from '../Components/RemindersScreen';
 
 function BaseContainer({
   navbar,
@@ -27,13 +31,17 @@ function BaseContainer({
   setAddress,
   setLocation,
   setNewFormat,
+  dates,
+  address,
+  modalRemindersVisible,
+  setModalRemindersVisible,
 }) {
   const clearInputs = () => {
     setAddress({});
     setLocation(false);
     setNewFormat(undefined);
     setInput(null);
-    setPage(1);
+    setPage(PageType.Home);
     Keyboard.dismiss();
   };
 
@@ -41,7 +49,7 @@ function BaseContainer({
     <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
       <View style={main.container}>
         <View style={navbar.container}>
-          <View style={{flexDirection: 'column', gap: 5}}>
+          {/* <View style={{flexDirection: 'column', gap: 5}}>
             <View
               style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
             <View
@@ -50,7 +58,7 @@ function BaseContainer({
               style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
             <View
               style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-          </View>
+          </View> */}
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={{flexDirection: 'row'}}
@@ -60,6 +68,12 @@ function BaseContainer({
               <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
               <Text style={[navbar.logo, colourPalette.black]}>in</Text>
             </TouchableOpacity>
+            <Pressable
+              onPress={() => {
+                setModalRemindersVisible(true);
+              }}>
+              <Text style={styles.icon}>⏰</Text>
+            </Pressable>
           </View>
         </View>
         <View style={{display: 'flex', alignSelf: 'center', marginTop: -20}}>
@@ -67,8 +81,8 @@ function BaseContainer({
             <Pressable>
               <Text
                 onPress={() => {
-                  setPage(1);
-                  setInput('');
+                  setPage(PageType.Home);
+                  //   setInput('');
                   setDates(null);
                 }}></Text>
             </Pressable>
@@ -101,6 +115,25 @@ function BaseContainer({
         <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
         <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalRemindersVisible}
+        onRequestClose={() => {
+          setModalRemindersVisible(!modalRemindersVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Pressable
+              onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
+              <Text style={styles.modalCloseX}>Close</Text>
+            </Pressable>
+            <RemindersScreen
+              dates={dates}
+              streetName={address}></RemindersScreen>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

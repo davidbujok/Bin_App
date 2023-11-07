@@ -65,6 +65,43 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: '#291D29',
   },
+  rowContainer: {
+    flexDirection: 'row',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    // alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  modalCloseX: {
+    marginBottom: 15,
+    textAlign: 'right',
+    alignSelf: 'flex-end',
+  },
 });
 
 export const navbar = StyleSheet.create({
