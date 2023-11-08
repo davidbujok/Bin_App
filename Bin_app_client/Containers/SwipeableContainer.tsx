@@ -134,7 +134,16 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
   };
   const binTypeToTile = (binTypes) => {
     let binNames = binTypes.split(' ');
+    // binNames.sort().reverse()
     binNames = capitaliseFirstLetter(binNames);
+
+    if(binNames.length > 3){
+      binNames.sort().reverse().pop()
+    }    
+
+    // if (binNames.length === 4) {
+    //   return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`
+    // }
     if (binNames.length === 3) {
       return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`
     }
@@ -148,7 +157,9 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
 
   const imagesForWasteType = (binTypes: string) => {
     const binNames = binTypes.split(' ');
-    binNames.sort();
+    if(binNames.length > 3){
+      binNames.sort().reverse().pop()
+    }
     const binTitle = binTypeToTile(binTypes)
     return (
       <>
@@ -159,6 +170,8 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           {binNameToImage(binNames[0])}
           {binNames.length > 1 ? binNameToImage(binNames[1]) : null}
           {binNames.length > 2 ? binNameToImage(binNames[2]) : null}
+          {binNames.length > 3 ? binNameToImage(binNames[3]) : null}
+
         </View>
       </>
     );
