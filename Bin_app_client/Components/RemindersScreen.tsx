@@ -120,11 +120,12 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
       </Text>
     
       <View style={[styles.rowContainer, {display: 'flex',alignContent: 'center', justifyContent:'center'}]}>
-        <Pressable
+        <TouchableOpacity
+          style={styles.smallButton}
           onPress={() => {
             setOpen(true);
           }}>
-          <Text style={[styles.streetName, styles.smallButton, styles.buttonTextColor] }>
+          <Text style={[styles.buttonTextColor] }>
            Add Reminder
           </Text>
                 {/* // notifcationsList.map((notification) => { */}
@@ -138,7 +139,7 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
 
               // }) */}
               
-        </Pressable>
+        </TouchableOpacity>
         {/* {console.log(notifcationsList)} */}
       </View>
 
