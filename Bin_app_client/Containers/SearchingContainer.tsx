@@ -66,7 +66,7 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
               <Text
                 style={{fontSize: 21, fontWeight: '600', color: '#291D29', textAlign: 'left', minWidth:  SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),
                 maxWidth : SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),}}
-                key={index}
+                key={index +500}
                 onPress={() => {
                   handleFetchByStreet(street.toLowerCase()), setStreetName(street);
                 }}>
