@@ -12,11 +12,11 @@ import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search, styles} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys.js';
-import HomeContainer from './Containers/HomeContainer';
-import SearchingContainer from './Containers/SearchingContainer';
+import HomeContainer from './containers/HomeContainer';
+import SearchingContainer from './containers/SearchingContainer';
 import RemindersScreen from './Components/RemindersScreen';
-import BaseContainer from './Containers/BaseContainer';
-import Carousel from './Containers/SwipeableContainer';
+import BaseContainer from './containers/BaseContainer';
+import Carousel from './containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 import PageType from './Helpers/PageType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -319,7 +319,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
         <BaseContainer
           setAddress={setAddress}
           setLocation={setLocation}

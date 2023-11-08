@@ -1,8 +1,13 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Dimensions} from 'react-native';
 import {styles} from '../styles/stylesSheet';
 // import {IStreet} from '../styles/interfaces';
 import { capitaliseFirstLetter } from '../Helpers/StringFunctions';
+
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 
 function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
   return (
@@ -33,7 +38,8 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
 
                 return(<View>
                 <Text
-                  style={{fontSize: 21, fontWeight: '600', color: '#291D29'}}
+                  style={{fontSize: 21, fontWeight: '600', color: '#291D29', textAlign: 'left',minWidth:  SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),
+                  maxWidth : SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),}}
                   key={index+1}
                   onPress={() => {
                     handleFetchByStreet(street.toLowerCase()), setStreetName(street);
@@ -41,7 +47,8 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
                   {firstPart}
                 </Text>
                 <Text
-                  style={{fontSize: 15, fontWeight: '400', color: '#291D29'}}
+                  style={{fontSize: 15, fontWeight: '400', color: '#291D29', textAlign: 'left',minWidth:  SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),
+                  maxWidth : SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),}}
                   key={index+200}
                   onPress={() => {
                     handleFetchByStreet(street.toLowerCase()), setStreetName(street);
@@ -57,7 +64,8 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
             
             return (
               <Text
-                style={{fontSize: 21, fontWeight: '600', color: '#291D29'}}
+                style={{fontSize: 21, fontWeight: '600', color: '#291D29', textAlign: 'left', minWidth:  SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),
+                maxWidth : SCREEN_WIDTH - (SCREEN_WIDTH * (0.25)),}}
                 key={index}
                 onPress={() => {
                   handleFetchByStreet(street.toLowerCase()), setStreetName(street);

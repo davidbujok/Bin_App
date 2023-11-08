@@ -22,15 +22,17 @@ import {
   getCurrentNotifications,
   handleNotification,
 } from './NotificationFunctionality';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const RemindersScreen = ({dates, streetName}) => {
+const RemindersScreen = ({dates, streetName, setHasReminders}) => {
   const [open, setOpen] = useState(false);
   const [calendarDate, setCalendarDate] = useState<IDate>(
     dates && dates.length > 0 ? dates[0] : null,
   );
   const [nextNotificationTime, setNextNotificationTime] = useState<String>('');
+  const [notifcationsList, setNotificationsList] = useState<Array<Date> | null>([])
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
 
   useEffect(() => {
@@ -58,6 +60,7 @@ const RemindersScreen = ({dates, streetName}) => {
       //cancel reminders
       setNextNotificationTime('');
       cancelNotifications();
+      setHasReminders(false)
     }
 
     setIsReminderEnabled(newValue);
@@ -75,11 +78,14 @@ const RemindersScreen = ({dates, streetName}) => {
       // const notificationsStrings = notifications.
       console.log('notifications', notifications);
       if (notifications.length > 0) {
+        setNotificationsList(notifications)
         const nextNotificationTime =
           notifications.length > 0
-            ? new Date(notifications[0].date).toLocaleString()
+            // ? new Date(notifications[0].date).toLocaleString()
+            ? notifications
             : 'not setup';
-        setNextNotificationTime(nextNotificationTime);
+        // setNextNotificationTime(nextNotificationTime);
+        
         // setSwitch(true);
         setIsReminderEnabled(true)
       } else {
@@ -91,10 +97,6 @@ const RemindersScreen = ({dates, streetName}) => {
 
   return (
     <View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.streetName}>Reminder Settings</Text>
-        <Text style={styles.icon}>⏰</Text>
-      </View>
       {/* <View style={styles.rowContainer}>
         <Text style={styles.streetName}>{'Street:' + streetName}</Text>
       </View> */}
@@ -102,25 +104,42 @@ const RemindersScreen = ({dates, streetName}) => {
       <View style={styles.rowContainer}>
         <Text style={styles.streetName}>Enable Reminders:</Text>
         <Switch
-          trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={isReminderEnabled ? '#f5dd4b' : '#f4f3f4'}
+          trackColor={{false: '#767577', true: "#1c6fc4"}}
+          thumbColor={isReminderEnabled ? "#6aa62e" : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={isReminderEnabled}
         />
       </View>
-      <View style={styles.rowContainer}>
+       
+        <Text style={{textAlign:'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
+        {notifcationsList && notifcationsList.length > 0 ?<>
+        Reminders Set: {notifcationsList.length}
+        </>
+      : <>No reminders set</>}
+      </Text>
+    
+      <View style={[styles.rowContainer, {display: 'flex',alignContent: 'center', justifyContent:'center'}]}>
         <Pressable
           onPress={() => {
             setOpen(true);
           }}>
-          <Text style={styles.streetName}>Change reminder Time:</Text>
-          <Text style={styles.streetName}>
-            {nextNotificationTime && nextNotificationTime !== ''
-              ? nextNotificationTime
-              : 'no reminder set'}
+          <Text style={[styles.streetName, styles.smallButton, styles.buttonTextColor] }>
+           Add Reminder
           </Text>
+                {/* // notifcationsList.map((notification) => { */}
+                
+                {/* // <Text>{notification.date.getDate() && notification.length }</Text>
+                // // console.log(Object.getOwnPropertyNames(notification) + "LOG NOTIFICATION" );
+                // // console.log('====================================');
+                // console.log(notification.date.toString() + "notifcation.date");
+                // // console.log('====================================');
+                // // // console.log(notification.getDate() )
+
+              // }) */}
+              
         </Pressable>
+        {/* {console.log(notifcationsList)} */}
       </View>
 
       <View>

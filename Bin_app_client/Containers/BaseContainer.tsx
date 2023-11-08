@@ -20,6 +20,11 @@ import {
 } from '../styles/stylesSheet';
 import PageType from './../Helpers/PageType';
 import RemindersScreen from '../Components/RemindersScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Platform} from 'react-native';
+
+
 
 function BaseContainer({
   navbar,
@@ -47,6 +52,25 @@ function BaseContainer({
     setPage(PageType.Home);
     Keyboard.dismiss();
   };
+  const [hasReminders, setHasReminders] = useState(false);
+
+  const SCREEN_WIDTH = Dimensions.get('window').width;
+  const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+
+  if (Platform.OS ==='android'){
+    PushNotification.getScheduledLocalNotifications((notifications) => {
+      if(notifications.length > 0){
+        setHasReminders(true)
+      }
+    });
+  } else if(Platform.OS === 'ios'){
+    PushNotificationIOS.getPendingNotificationRequests((notifications) => {
+      if(notifications.length > 0){
+        setHasReminders(true)
+      }
+    })
+  }
 
   return (
     <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
@@ -74,15 +98,9 @@ function BaseContainer({
               <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
               <Text style={[navbar.logo, colourPalette.black]}>in</Text>
             </TouchableOpacity>
-            <Pressable
-              onPress={() => {
-                setModalRemindersVisible(true);
-              }}>
-              <Text style={styles.icon}>⏰</Text>
-            </Pressable>
           </View>
         </View>
-        <View style={{display: 'flex', alignSelf: 'center', marginTop: -20}}>
+        <View style={{display: 'flex', alignSelf: 'center', marginTop: - SCREEN_WIDTH * 0.04 }}>
           <View style={search.container}>
             <Pressable>
               <Text
@@ -93,16 +111,29 @@ function BaseContainer({
                 }}></Text>
             </Pressable>
             <TextInput
-              placeholder="search street name"
+              placeholderTextColor={"#000000"}
+              placeholder="Enter street name"
               onChangeText={setInput}
               value={input}
               style={search.input}
             />
-            <Pressable style={[styles.button]} onPress={getLocation}>
+            
+            {/* <Pressable style={[styles.button]} onPress={getLocation}>
               <Text style={styles.icon}>📍</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
           <View>{renderSwitch(page)}</View>
+          {page == PageType.Home && hasReminders == true && 
+          <View style={[main.container, {display:'flex', alignItems: 'center'}]}>
+          <TouchableOpacity style={[styles.smallButton, {backgroundColor: '#6aa62e'}]}
+              onPress={() => {
+                setModalRemindersVisible(true);
+              }}>
+                
+              <Text style={styles.buttonTextColor}>Reminders</Text>
+            </TouchableOpacity>
+            </View>
+          }   
         </View>
       </View>
       <View
@@ -136,7 +167,10 @@ function BaseContainer({
             </Pressable>
             <RemindersScreen
               dates={dates}
-              streetName={address}></RemindersScreen>
+              streetName={address}
+              setHasReminders={setHasReminders}
+
+              ></RemindersScreen>
           </View>
         </View>
       </Modal>

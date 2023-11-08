@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import checkApplicationPermission from '../Containers/NotificationPermission';
+import checkApplicationPermission from '../containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
@@ -30,17 +30,22 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //   console.log('hour :', hour);
   //   console.log('minutes :', minute);
 
+
   console.log(date.date)
+  console.log(setNotification + "SET NOTIFICATIONS --------------------")
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  const dateToDisplay = `${weekday[setNotification.getDay()]} ${setNotification.getDate()}-${setNotification.getMonth()}-${setNotification.getFullYear()}`
   if (Platform.OS === 'android') {
     PushNotification.localNotification({
       channelId: 'Date-Notification',
-      title: 'Reminder Set',
-      message: `Congratulations, you have set up a reminder for your bin on ${date.date} `,
+      title: 'Which Bin',
+      message: `Congratulations, you have set up a reminder for your bin on ${dateToDisplay} `,
     });
     PushNotification.localNotificationSchedule({
       channelId: 'Date-Notification',
-      title: `Don't forget to put your bin out`,
-      message: `Your ${date.binType} collection is on ${date.date}`,
+      title: `Which Bin`,
+      message: `Your ${date.binType} collection is on ${dateToDisplay}`,
       date: setNotification,
       allowWhileIdle: true,
     });
@@ -50,14 +55,14 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   } else if (Platform.OS == 'ios') {
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
-      title: `Reminder Set`,
-      body: `Your ${date.binType} collection is on ${date.date}`,
+      title: `Which Bin`,
+      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
       fireDate: new Date(Date.now() + 1 * 1000), // Schedule in 1 secs
     });
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
-      title: `Don't forget to put your bin out`,
-      body: `Your ${date.binType} collection is on ${date.date}`,
+      title: `Which Bin`,
+      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
       fireDate: setNotification,
     });
     PushNotificationIOS.getPendingNotificationRequests(Localarray => {

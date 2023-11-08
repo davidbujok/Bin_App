@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {styles} from '../styles/stylesSheet';
+import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
@@ -152,10 +152,10 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
     const binTitle = binTypeToTile(binTypes)
     return (
       <>
-        <Text style={{fontSize: 34, fontWeight: '600', color: '#291D29'}}>
+        <Text style={{fontSize: SCREEN_WIDTH * 0.075, fontWeight: '600', color: '#291D29', paddingTop: SCREEN_HEIGHT * 0.06}}>
           {binTitle}
         </Text>
-        <View style={{flexDirection: 'row', gap: -40, paddingTop: 25}}>
+        <View style={{flexDirection: 'row', gap: - SCREEN_WIDTH * 0.075}}>
           {binNameToImage(binNames[0])}
           {binNames.length > 1 ? binNameToImage(binNames[1]) : null}
           {binNames.length > 2 ? binNameToImage(binNames[2]) : null}
@@ -182,10 +182,11 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         style={{
           width: SCREEN_WIDTH,
           alignItems: 'center',
+          paddingTop: SCREEN_HEIGHT * 0.03
         }}>
         <Text style={styles.streetName}>{title}</Text>
-        <Text style={{fontSize: 24, fontWeight: '400'}}>Collection on</Text>
-        <Text style={{fontSize: 30, fontWeight: '500', color: '#291D29'}}>
+        <Text style={{fontSize: SCREEN_WIDTH * 0.07, fontWeight: '400', marginTop: SCREEN_HEIGHT * 0.05}}>Next collection is:</Text>
+        <Text style={{fontSize: SCREEN_WIDTH * 0.08, fontWeight: '500', color: '#291D29'}}>
           {dateAsString(pickupInfo.dateObject)}{' '}
         </Text>
         {renderSwitch(pickupInfo.binType)}
@@ -212,8 +213,11 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
       </View>
       {pagesForNextMonths(dates).length > 0 
         ? pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
-        : <Text> No bins </Text>}
-
+        : 
+        <View style={main.container}>
+        <Text style={{fontSize: SCREEN_WIDTH * 0.08, maxWidth: SCREEN_WIDTH * 0.65}}>Garden bins are not collected from November to January for {streetName.replace(/\s0\s/, ' ')}</Text>
+        </View>
+      }
     </ScrollView>
   );
 };

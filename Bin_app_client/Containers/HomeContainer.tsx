@@ -1,12 +1,12 @@
 import React from 'react';
 import {Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {colourPalette} from '../styles/stylesSheet';
+import {colourPalette, main} from '../styles/stylesSheet';
 
 function HomeContainer({heroText}) {
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{alignSelf: 'center', paddingTop: 40}}>
+        <View style={main.baseText}>
           <Text style={[heroText.hero, heroText.mid, colourPalette.green]}>
             Save
           </Text>
