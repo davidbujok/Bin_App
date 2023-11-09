@@ -97,6 +97,16 @@ npm start
 
 <!-- and then when asked, choose 'i' -->
 
+# Update version number (just before releasing)
+
+for android: android/app/build.gradle change versionCode and versionName
+for ios: ios/Bin_App_client/info.plist change CFBundleShortVersionString
+
+        versionCode 10010
+        versionName "1.0.10"
+
+    	use format abcde which means "a.bc.de"
+
 # fastlane notes:
 
 from ios folder:
