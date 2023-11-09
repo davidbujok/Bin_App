@@ -1,0 +1,16 @@
+When is my bin picked up?
+Calendar with curb-side bins pickup dates for Edinburgh. With reminders!
+
+App which shows you reminders about dates for your curb-side recycling and bins are picked up.
+
+This student-made mobile app will make sure you don’t forget when your packaging, glass, garden, food and landfill bins are picked up.
+
+About the Project Team:
+This project was created by a group of CodeClan students (David Bujok, George Tegos, Lewis Ferguson) and their instructor (Pawel Orzechowski).
+
+Most of us are looking for jobs in software development, so contact us if you would like to talk about this project or any other opportunities or initiatives.
+
+About the Data:
+Data is taken from publically accessible websites of Edinburgh city council. Council is doing amazing work with promoting and enabling recycling, and we wanted to add a little bit of our expertise to make it even easier.
+
+We also combined the datasets for various types of bins (packaging, glass, garden, food and landfill) into one calendar, for ease of use. As new streets are built, and data changes, we’ll do our best to update the app.

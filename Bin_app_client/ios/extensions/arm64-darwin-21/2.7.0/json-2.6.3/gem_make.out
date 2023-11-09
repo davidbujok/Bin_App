@@ -1,0 +1,13 @@
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/json-2.6.3/ext/json
+/Users/pawel/.rbenv/versions/2.7.5/bin/ruby -I /Users/pawel/.rbenv/versions/2.7.5/lib/ruby/2.7.0 -r ./siteconf20231030-15376-ikdpub.rb extconf.rb
+creating Makefile
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/json-2.6.3/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/json-2.6.3/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/json-2.6.3/ext/json
+make "DESTDIR=" install

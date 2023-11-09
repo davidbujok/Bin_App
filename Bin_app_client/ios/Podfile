@@ -1,3 +1,5 @@
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -25,7 +27,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Bin_app_client' do
+target 'Bin_App_client' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -45,7 +47,7 @@ target 'Bin_app_client' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'Bin_app_clientTests' do
+  target 'Bin_App_clientTests' do
     inherit! :complete
     # Pods for testing
   end

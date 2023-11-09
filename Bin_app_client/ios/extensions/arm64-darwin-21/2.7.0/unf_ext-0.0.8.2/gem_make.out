@@ -1,0 +1,16 @@
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/unf_ext-0.0.8.2/ext/unf_ext
+/Users/pawel/.rbenv/versions/2.7.5/bin/ruby -I /Users/pawel/.rbenv/versions/2.7.5/lib/ruby/2.7.0 -r ./siteconf20231030-15376-6lq3zt.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/unf_ext-0.0.8.2/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/unf_ext-0.0.8.2/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+linking shared-object unf_ext.bundle
+
+current directory: /Users/pawel/Development/Bin_App/Bin_app_client/ios/gems/unf_ext-0.0.8.2/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20231030-15376-11k9tpc

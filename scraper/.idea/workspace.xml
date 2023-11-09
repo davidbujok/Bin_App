@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d085b256-9ad2-470b-b9ce-31ccbf1f391d" name="Changes" comment="">
+
+    <list default="true" id="e7a1608b-0cfe-4aeb-8ed2-0b4613675a2c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/garden_bins_matching.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/garden_bins_matching.tsv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/reader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +20,8 @@
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 2
 }]]></component>
-  <component name="ProjectId" id="2XLJfa14vnl7jux1ADLVaQGZ7kF" />
+
+  <component name="ProjectId" id="2XLLfptagorKk9TVcDGIg3LVbOq" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,19 +30,57 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "missing/streets",
-    "last_opened_file_path": "/Users/user/final_project/Bin_App/scraper"
+
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "merger",
+    "last_opened_file_path": "/Users/lewis/ALL_NOTES/capstone_project/Bin_App/scraper",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="reader" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="scraper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reader.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d085b256-9ad2-470b-b9ce-31ccbf1f391d" name="Changes" comment="" />
-      <created>1698402531168</created>
+      <changelist id="e7a1608b-0cfe-4aeb-8ed2-0b4613675a2c" name="Changes" comment="" />
+      <created>1698403519473</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1698402531168</updated>
+      <updated>1698403519473</updated>
+      <workItem from="1698403520494" duration="6480000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/scraper$reader.coverage" NAME="reader Coverage Results" MODIFIED="1698416179904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
