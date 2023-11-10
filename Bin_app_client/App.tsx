@@ -226,13 +226,13 @@ function App(): JSX.Element {
             fortnight,
           );
           if (dayNumber in iDatesByDay) {
-            console.log('new!', newIDate.binType, ' I DATE :', iDatesByDay);
+            // console.log('new!', newIDate.binType, ' I DATE :', iDatesByDay);
             iDatesByDay[`${dayNumber}`].binType = `${
               iDatesByDay[`${dayNumber}`].binType
             } ${newIDate.binType}`;
           } else {
             iDatesByDay[`${dayNumber}`] = newIDate;
-            console.log(iDatesByDay);
+            // console.log(iDatesByDay);
           }
         }
       });
