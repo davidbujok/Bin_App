@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 import {handleNotification} from './NotificationFunctionality';
 
-export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
+export default ({open, setOpen, calendarDate: iDate, datePicked,setUpdateNotifications,updateNotifications}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [date, setDate] = useState<Date>(new Date());
   let previousDay: Date;
