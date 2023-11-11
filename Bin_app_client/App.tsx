@@ -29,7 +29,7 @@ function App(): JSX.Element {
   const [address, setAddress] = useState({});
   const [page, setPage] = useState<PageType>(PageType.Home);
   const [newFormat, setNewFormat] = useState<string | undefined>();
-  const [streetName, setStreetName] = useState<string>();
+  const [streetName, setStreetName] = useState<string>('');
   const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
@@ -89,7 +89,9 @@ function App(): JSX.Element {
   const loadPreviousStreetIfWeKnowIt = async () => {
     const fetchStreetFromBefore = async () => {
       const streetFromBefore = await getStreetFromBefore();
-      handleFetchByStreet(streetFromBefore);
+      if (streetFromBefore !== '') {
+        handleFetchByStreet(streetFromBefore);
+      }
     };
 
     // call the function
@@ -226,13 +228,13 @@ function App(): JSX.Element {
             fortnight,
           );
           if (dayNumber in iDatesByDay) {
-            console.log('new!', newIDate.binType, ' I DATE :', iDatesByDay);
+            // console.log('new!', newIDate.binType, ' I DATE :', iDatesByDay);
             iDatesByDay[`${dayNumber}`].binType = `${
               iDatesByDay[`${dayNumber}`].binType
             } ${newIDate.binType}`;
           } else {
             iDatesByDay[`${dayNumber}`] = newIDate;
-            console.log(iDatesByDay);
+            // console.log(iDatesByDay);
           }
         }
       });

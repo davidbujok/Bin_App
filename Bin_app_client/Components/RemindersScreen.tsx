@@ -22,7 +22,8 @@ import {
   getCurrentNotifications,
   handleNotification,
 } from './NotificationFunctionality';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import PageType from '../Helpers/PageType';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -32,35 +33,38 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
     dates && dates.length > 0 ? dates[0] : null,
   );
   const [nextNotificationTime, setNextNotificationTime] = useState<String>('');
-  const [notifcationsList, setNotificationsList] = useState<Array<Date> | null>([])
+  const [notificationsList, setNotificationsList] =
+    useState<Array<Date> | null>([]);
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
+  const [updateNotifications, setUpdateNotifications] =
+    useState<Boolean>(false);
 
   useEffect(() => {
     const newIDate = dates && dates.length > 0 ? dates[0] : null;
-    console.log('setCalendarDate', newIDate);
+    // console.log('setCalendarDate', newIDate);
     setCalendarDate(newIDate);
   }, [dates]);
 
   const toggleSwitch = () => {
-    console.log('toggleSwitch', dates, nextNotificationTime);
+    // console.log('toggleSwitch', dates, nextNotificationTime);
     const newValue = !isReminderEnabled;
     setSwitch(newValue);
   };
 
   const setSwitch = newValue => {
-    console.log('setSwitch', newValue, nextNotificationTime, '!');
+    // console.log('setSwitch', newValue, nextNotificationTime, '!');
 
     if (newValue) {
       //re-set reminder
       if (nextNotificationTime === '') {
         setOpen(true);
-        console.log('setOpen(true)');
+        // console.log('setOpen(true)');
       }
     } else {
       //cancel reminders
       setNextNotificationTime('');
       cancelNotifications();
-      setHasReminders(false)
+      setHasReminders(false);
     }
 
     setIsReminderEnabled(newValue);
@@ -72,28 +76,38 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
   //     setCalendarDate(calendarDateObject);
   //     setOpen(true);
   //   };
+  // ===========================================================================
+  // THIS HAS TO RUN ON EVERY REMINDERS UPDATE
 
   useEffect(() => {
-    getCurrentNotifications(notifications => {
-      // const notificationsStrings = notifications.
-      console.log('notifications', notifications);
-      if (notifications.length > 0) {
-        setNotificationsList(notifications)
-        const nextNotificationTime =
-          notifications.length > 0
-            // ? new Date(notifications[0].date).toLocaleString()
-            ? notifications
-            : 'not setup';
-        // setNextNotificationTime(nextNotificationTime);
-        
-        // setSwitch(true);
-        setIsReminderEnabled(true)
-      } else {
-        setNextNotificationTime('');
-        setIsReminderEnabled(false)
-      }
-    });
-  }, []);
+    const fetchData = async () => {
+      await getCurrentNotifications(notifications => {
+        // const notificationsStrings = notifications.
+        console.log('notifications', notifications);
+        if (notifications.length > 0) {
+          // setNotificationsList(notifications)
+          const nextNotificationTime =
+            notifications.length > 0
+              ? // ? new Date(notifications[0].date).toLocaleString()
+                notifications
+              : 'not setup';
+          // setNextNotificationTime(nextNotificationTime);
+
+          setNotificationsList(nextNotificationTime);
+
+          // setSwitch(true);
+          setIsReminderEnabled(true);
+        } else {
+          setNextNotificationTime('');
+          setIsReminderEnabled(false);
+          setNotificationsList([]);
+        }
+      });
+    };
+    fetchData();
+    // End of getCurrentNotifications
+  }, [updateNotifications]);
+  // ===========================================================================
 
   return (
     <View>
@@ -104,33 +118,40 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
       <View style={styles.rowContainer}>
         <Text style={styles.streetName}>Enable Reminders:</Text>
         <Switch
-          trackColor={{false: '#767577', true: "#1c6fc4"}}
-          thumbColor={isReminderEnabled ? "#6aa62e" : '#f4f3f4'}
+          trackColor={{false: '#767577', true: '#1c6fc4'}}
+          thumbColor={isReminderEnabled ? '#6aa62e' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={isReminderEnabled}
+          onChange={() => {
+            setUpdateNotifications(!updateNotifications);
+          }}
         />
       </View>
-       
-        <Text style={{textAlign:'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-        {notifcationsList && notifcationsList.length > 0 ?<>
-        Reminders Set: {notifcationsList.length}
-        </>
-      : <>No reminders set</>}
-      </Text>
-    
-      <View style={[styles.rowContainer, {display: 'flex',alignContent: 'center', justifyContent:'center'}]}>
+      {notificationsList && notificationsList.length > 0 ? (
+        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
+          Reminders Set: {notificationsList.length}
+        </Text>
+      ) : (
+        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
+          No Reminders
+        </Text>
+      )}
+
+      <View
+        style={[
+          styles.rowContainer,
+          {display: 'flex', alignContent: 'center', justifyContent: 'center'},
+        ]}>
         <TouchableOpacity
           style={styles.smallButton}
           onPress={() => {
             setOpen(true);
           }}>
-          <Text style={[styles.buttonTextColor] }>
-           Add Reminder
-          </Text>
-                {/* // notifcationsList.map((notification) => { */}
-                
-                {/* // <Text>{notification.date.getDate() && notification.length }</Text>
+          <Text style={[styles.buttonTextColor]}>Add Reminder</Text>
+          {/* // notifcationsList.map((notification) => { */}
+
+          {/* // <Text>{notification.date.getDate() && notification.length }</Text>
                 // // console.log(Object.getOwnPropertyNames(notification) + "LOG NOTIFICATION" );
                 // // console.log('====================================');
                 // console.log(notification.date.toString() + "notifcation.date");
@@ -138,9 +159,7 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
                 // // // console.log(notification.getDate() )
 
               // }) */}
-              
         </TouchableOpacity>
-        {/* {console.log(notifcationsList)} */}
       </View>
 
       <View>
@@ -148,10 +167,13 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
           open={open}
           setOpen={setOpen}
           calendarDate={calendarDate}
-          datePicked={reminderTime => {
+          datePicked={async reminderTime => {
             setIsReminderEnabled(true);
-            setNextNotificationTime(new Date(reminderTime).toLocaleString());
-            handleNotification(calendarDate, new Date(reminderTime));
+            await setNextNotificationTime(
+              new Date(reminderTime).toLocaleString(),
+            );
+            await handleNotification(calendarDate, new Date(reminderTime));
+            await setUpdateNotifications(!updateNotifications);
           }}
         />
       </View>

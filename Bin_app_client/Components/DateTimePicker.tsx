@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
-import {handleNotification} from './NotificationFunctionality';
 
 export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,6 +17,7 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   }
   //   TODO: trying to remove the date crash
   previousDay = new Date(Date.now());
+
 
   return (
     <>

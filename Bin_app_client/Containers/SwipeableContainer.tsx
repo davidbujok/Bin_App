@@ -239,13 +239,13 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
       style={{paddingTop: 20}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
-      <View>
+      {/* <View>
         <DateTimePicker
           open={open}
           setOpen={setOpen}
           calendarDate={calendarDate}
         />
-      </View>
+      </View> */}
       {pagesForNextMonths(dates).length > 0 ? (
         pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
       ) : (

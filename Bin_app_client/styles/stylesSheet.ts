@@ -196,19 +196,19 @@ export const colourPalette = StyleSheet.create({
 
 export const heroText = StyleSheet.create({
   hero: {
-    fontSize: SCREEN_WIDTH * 0.18,
+    fontSize: SCREEN_WIDTH * 0.12,
     marginBottom: -(SCREEN_WIDTH / 2) * 0.001,
     padding: 0,
     includeFontPadding: false,
   },
   joinText: {
-    fontSize: SCREEN_WIDTH * 0.1,
+    fontSize: SCREEN_WIDTH * 0.08,
     // marginTop: 25,
     alignSelf: 'center',
     includeFontPadding: false,
   },
   letter: {
-    fontSize: SCREEN_WIDTH * 0.22,
+    fontSize: SCREEN_WIDTH * 0.12,
     includeFontPadding: false,
   },
   mid: {

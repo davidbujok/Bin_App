@@ -66,7 +66,7 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
       fireDate: setNotification,
     });
     PushNotificationIOS.getPendingNotificationRequests(Localarray => {
-      console.log('ios setup notification', Localarray);
+      // console.log('ios setup notification', Localarray);
     });
   }
 };
@@ -74,12 +74,12 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
 export const getCurrentNotifications = async callback => {
   if (Platform.OS === 'android') {
     PushNotification.getScheduledLocalNotifications(notifications => {
-      console.log('android setup notification', notifications);
+      // console.log('android setup notification', notifications);
       callback(notifications);
     });
   } else if (Platform.OS == 'ios') {
     PushNotificationIOS.getPendingNotificationRequests(notifications => {
-      console.log('ios setup notification', notifications);
+      // console.log('ios setup notification', notifications);
       callback(notifications);
     });
   }

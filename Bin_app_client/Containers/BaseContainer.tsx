@@ -56,35 +56,27 @@ function BaseContainer({
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-  if (Platform.OS === 'android') {
-    PushNotification.getScheduledLocalNotifications(notifications => {
-      if (notifications.length > 0) {
-        setHasReminders(true);
-      }
-    });
-  } else if (Platform.OS === 'ios') {
-    PushNotificationIOS.getPendingNotificationRequests(notifications => {
-      if (notifications.length > 0) {
-        setHasReminders(true);
-      }
-    });
-  }
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PushNotification.getScheduledLocalNotifications(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    } else if (Platform.OS === 'ios') {
+      PushNotificationIOS.getPendingNotificationRequests(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    }
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
       <View style={main.container}>
         <View style={navbar.container}>
           <Text style={logo.logoSize}>♻️</Text>
-          {/* <View style={{flexDirection: 'column', gap: 5}}>
-            <View
-              style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
-            <View
-              style={[navbar.logoBlocks, colourPaletteBackground.green]}></View>
-            <View
-              style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
-            <View
-              style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-          </View> */}
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={{flexDirection: 'row'}}
@@ -107,7 +99,6 @@ function BaseContainer({
               <Text
                 onPress={() => {
                   setPage(PageType.Home);
-                  //   setInput('');
                   setDates(null);
                 }}></Text>
             </Pressable>
@@ -118,10 +109,6 @@ function BaseContainer({
               value={input}
               style={search.input}
             />
-
-            {/* <Pressable style={[styles.button]} onPress={getLocation}>
-              <Text style={styles.icon}>📍</Text>
-            </Pressable> */}
           </View>
           <View>{renderSwitch(page)}</View>
           {page == PageType.Home && hasReminders == true && (
@@ -154,13 +141,16 @@ function BaseContainer({
         <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
         <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
       </View>
-      <Text
-        style={{color: 'black', padding: 10}}
-        onPress={() =>
-          Linking.openURL('http://www.binday.info/privacy-policy/')
-        }>
-        Privacy Policy
-      </Text>
+      <View style={{padding: 10, alignSelf: 'flex-start'}}>
+        <Text
+          style={{color: 'black', padding: 10}}
+          onPress={() =>
+            Linking.openURL('http://www.binday.info/privacy-policy/')
+          }>
+          Privacy Policy
+        </Text>
+      </View>
+
       <Modal
         animationType="slide"
         transparent={true}
