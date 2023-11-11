@@ -117,6 +117,15 @@ from android folder:
 
 fastlane android beta
 
+### in one block:
+
+cd ios
+fastlane ios beta who:pawel
+cd ..
+cd android
+fastlane android beta
+cd ..
+
 # appstore specific adventures:
 
 app icon sizes were made with this website: https://makeappicon.com/

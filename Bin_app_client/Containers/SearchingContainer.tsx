@@ -30,10 +30,10 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
                 }
 
                 // console.log("firstPart :", firstPart);
-                // console.log("secondPart :", secondPart);
+                // console.log("secondPart :", secart);
 
                 return (
-                  <View>
+                  <View key={street + `${index}`}>
                     <Text
                       style={{
                         fontSize: 21,
