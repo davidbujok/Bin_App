@@ -12,7 +12,7 @@ import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
-import {capitaliseFirstLetter} from '../Helpers/StringFunctions';
+import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -85,7 +85,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           } else if (newDate.binType.includes('garden')) {
             const cloneOfClone = {...newDate};
             const currentBinTypes = cloneOfClone.binType;
-            const updateCurrentBinTypes = currentBinTypes.replace('garden', '');
+            const updateCurrentBinTypes = clearEmptyCharacters(currentBinTypes.replace('garden', ''));
             cloneOfClone.binType = updateCurrentBinTypes.trim();
             result.push(cloneOfClone);
           }
@@ -198,6 +198,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
 
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
+    
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View

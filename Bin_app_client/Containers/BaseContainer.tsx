@@ -42,6 +42,8 @@ function BaseContainer({
   address,
   modalRemindersVisible,
   setModalRemindersVisible,
+  hasReminders,
+  setHasReminders,
 }) {
   const clearInputs = () => {
     setAddress({});
@@ -51,7 +53,6 @@ function BaseContainer({
     setPage(PageType.Home);
     Keyboard.dismiss();
   };
-  const [hasReminders, setHasReminders] = useState(false);
 
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -124,22 +125,6 @@ function BaseContainer({
             </View>
           )}
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          gap: 3,
-          paddingTop: 35,
-        }}>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.green]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.green]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
       </View>
       <View style={{padding: 10, alignSelf: 'flex-start'}}>
         <Text
