@@ -43,7 +43,7 @@ function BaseContainer({
   modalRemindersVisible,
   setModalRemindersVisible,
   hasReminders,
-  setHasReminders
+  setHasReminders,
 }) {
   const clearInputs = () => {
     setAddress({});
@@ -125,22 +125,6 @@ function BaseContainer({
             </View>
           )}
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          gap: 3,
-          paddingTop: 35,
-        }}>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.green]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.blue]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.green]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.red]}></View>
-        <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
       </View>
       <View style={{padding: 10, alignSelf: 'flex-start'}}>
         <Text
