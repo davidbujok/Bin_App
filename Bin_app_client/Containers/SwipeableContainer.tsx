@@ -12,7 +12,7 @@ import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
-import {capitaliseFirstLetter} from '../Helpers/StringFunctions';
+import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -198,6 +198,9 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
 
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
+    
+    const binType = clearEmptyCharacters(pickupInfo.binType) 
+
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View
@@ -224,7 +227,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           }}>
           {dateAsString(pickupInfo.dateObject)}{' '}
         </Text>
-        {renderSwitch(pickupInfo.binType)}
+        {renderSwitch(binType)}
         <TouchableOpacity
           style={styles.smallButton}
           onPress={() => setModalRemindersVisible(true)}>

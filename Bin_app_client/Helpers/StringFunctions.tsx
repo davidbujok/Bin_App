@@ -11,3 +11,7 @@ export  const capitaliseFirstLetter = (array: string[]) => {
     })
     return capitaliseLetter
   } 
+
+export const clearEmptyCharacters = (word:string) =>{
+    return word.split(" ").filter(item => item.length>0).join(" ")
+}
