@@ -83,7 +83,6 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
     const fetchData = async () => {
       await getCurrentNotifications(notifications => {
         // const notificationsStrings = notifications.
-        console.log('notifications', notifications);
         if (notifications.length > 0) {
           // setNotificationsList(notifications)
           const nextNotificationTime =
@@ -92,11 +91,11 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
                 notifications
               : 'not setup';
           // setNextNotificationTime(nextNotificationTime);
-
           setNotificationsList(nextNotificationTime);
+          setIsReminderEnabled(true);          
+          setHasReminders(true)
 
           // setSwitch(true);
-          setIsReminderEnabled(true);
         } else {
           setNextNotificationTime('');
           setIsReminderEnabled(false);

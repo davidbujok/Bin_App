@@ -33,6 +33,8 @@ function App(): JSX.Element {
   const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
+  const [hasReminders, setHasReminders] = useState(false);
+
 
   Geocoder.init(api);
 
@@ -339,6 +341,8 @@ function App(): JSX.Element {
           address={address}
           modalRemindersVisible={modalRemindersVisible}
           setModalRemindersVisible={setModalRemindersVisible}
+          hasReminders={hasReminders}
+          setHasReminders={setHasReminders}
         />
       </SafeAreaView>
     </>

@@ -42,6 +42,8 @@ function BaseContainer({
   address,
   modalRemindersVisible,
   setModalRemindersVisible,
+  hasReminders,
+  setHasReminders
 }) {
   const clearInputs = () => {
     setAddress({});
@@ -51,7 +53,6 @@ function BaseContainer({
     setPage(PageType.Home);
     Keyboard.dismiss();
   };
-  const [hasReminders, setHasReminders] = useState(false);
 
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const SCREEN_HEIGHT = Dimensions.get('window').height;
