@@ -85,7 +85,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           } else if (newDate.binType.includes('garden')) {
             const cloneOfClone = {...newDate};
             const currentBinTypes = cloneOfClone.binType;
-            const updateCurrentBinTypes = currentBinTypes.replace('garden', '');
+            const updateCurrentBinTypes = clearEmptyCharacters(currentBinTypes.replace('garden', ''));
             cloneOfClone.binType = updateCurrentBinTypes.trim();
             result.push(cloneOfClone);
           }
@@ -199,8 +199,6 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
     
-    const binType = clearEmptyCharacters(pickupInfo.binType) 
-
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View
@@ -227,7 +225,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           }}>
           {dateAsString(pickupInfo.dateObject)}{' '}
         </Text>
-        {renderSwitch(binType)}
+        {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
           style={styles.smallButton}
           onPress={() => setModalRemindersVisible(true)}>
