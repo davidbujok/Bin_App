@@ -27,7 +27,6 @@ function HomeRemindersScreen() {
   const [updateNotifications, setUpdateNotifications] =
     useState<Boolean>(false);
 
-  console.log(notificationsList[0]);
   // ===========================================================================
   // THIS HAS TO RUN ON EVERY REMINDERS UPDATE
 

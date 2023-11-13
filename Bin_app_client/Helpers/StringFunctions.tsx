@@ -45,3 +45,20 @@ export const binTypeToTile = (binTypes: string) => {
     return `${binNames[0]}`;
   }
 };
+
+export const dateToString = (date: Date) => {
+  const dayOfWeek = date.getDay();
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return {
+    minute: minute,
+    hour: hour,
+    day: day,
+    dayOfWeek: dayOfWeek,
+    month: month,
+    year: year,
+  };
+};

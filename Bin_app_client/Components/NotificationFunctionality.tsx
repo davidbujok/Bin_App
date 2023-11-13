@@ -4,6 +4,7 @@ import {IDate} from '../styles/interfaces';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import {binTypeToTile} from '../Helpers/StringFunctions';
+import {months, weekday} from '../Helpers/ConstantVariables';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {
   console.log(
@@ -33,29 +34,7 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
 
   console.log(date.date);
   console.log(setNotification + 'SET NOTIFICATIONS --------------------');
-  const weekday = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dev',
-  ];
+
   const dateToDisplay = `${
     weekday[setNotification.getDay()]
   }, ${setNotification.getDate()} ${

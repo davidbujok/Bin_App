@@ -277,8 +277,8 @@ const Carousel = ({
               <Text style={styles.modalCloseX}>Close</Text>
             </Pressable>
             <RemindersScreen
-              dates={pickupDayInfo}
-              streetName={address}
+              date={pickupDayInfo}
+              datesList={pagesForNextMonths(dates)}
               setHasReminders={setHasReminders}></RemindersScreen>
           </View>
         </View>
