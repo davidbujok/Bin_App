@@ -24,6 +24,7 @@ import RemindersScreen from '../Components/RemindersScreen';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
+import HomeRemindersScreen from '../Components/HomeRemindersScreen';
 
 function BaseContainer({
   navbar,
@@ -116,6 +117,9 @@ function BaseContainer({
         <View style={[navbar.logoBlocks, colourPaletteBackground.brown]}></View>
       </View>
       <View style={{padding: 10, alignSelf: 'flex-start'}}>
+        <Pressable onPress={() => setModalRemindersVisible(true)}>
+          <Text>Click me</Text>
+        </Pressable>
         <Text
           style={{color: 'black', padding: 10}}
           onPress={() =>
@@ -138,7 +142,7 @@ function BaseContainer({
               onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
               <Text style={styles.modalCloseX}>Close</Text>
             </Pressable>
-            {/* bring something */}
+            <HomeRemindersScreen></HomeRemindersScreen>
           </View>
         </View>
       </Modal>
