@@ -106,5 +106,10 @@ export const cancelNotifications = () => {
 };
 
 export const deleteReminderById = (id: string) => {
-  PushNotification.cancelLocalNotification(id);
+  if (Platform.OS === 'android') {
+    PushNotification.cancelLocalNotification(id);
+  } else {
+    // Is that a thing ?? [id] Test it
+    PushNotificationIOS.removePendingNotificationRequests([id]);
+  }
 };
