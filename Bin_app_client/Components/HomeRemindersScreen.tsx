@@ -15,8 +15,10 @@ import {
 import {styles} from '../styles/stylesSheet';
 import {
   cancelNotifications,
+  deleteReminderById,
   getCurrentNotifications,
 } from './NotificationFunctionality';
+import {homeReminderModalMessage} from '../Helpers/StringFunctions';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -48,10 +50,45 @@ function HomeRemindersScreen() {
 
   return (
     <View>
-      {/* <View style={styles.rowContainer}>
-          <Text style={styles.streetName}>{'Street:' + streetName}</Text>
-        </View> */}
-
+      {notificationsList && notificationsList.length > 0 ? (
+        <View style={{display: 'flex', gap: 6}}>
+          {notificationsList.map((reminder: any) => {
+            const message = homeReminderModalMessage(reminder.message);
+            return (
+              <>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      padding: 5,
+                      flexGrow: 9,
+                    }}>
+                    {message}
+                  </Text>
+                  <Pressable
+                    style={{alignSelf: 'center'}}
+                    onPress={async () => {
+                      await deleteReminderById(reminder.id);
+                      await setUpdateNotifications(!updateNotifications);
+                    }}>
+                    <Image
+                      //   style={{}}
+                      source={require('../static/images/delete.png')}></Image>
+                  </Pressable>
+                </View>
+              </>
+            );
+          })}
+        </View>
+      ) : (
+        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
+          No Reminders
+        </Text>
+      )}
       <View style={styles.rowContainer}>
         <TouchableOpacity
           style={[styles.smallButton, {backgroundColor: 'red'}]}
@@ -59,18 +96,9 @@ function HomeRemindersScreen() {
             await cancelNotifications();
             await setUpdateNotifications(!updateNotifications);
           }}>
-          <Text style={[styles.buttonTextColor]}>Delete Reminders</Text>
+          <Text style={[styles.buttonTextColor]}>Delete All</Text>
         </TouchableOpacity>
       </View>
-      {notificationsList && notificationsList.length > 0 ? (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          Reminders Set: {notificationsList.length}
-        </Text>
-      ) : (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          No Reminders
-        </Text>
-      )}
 
       <View
         style={[
