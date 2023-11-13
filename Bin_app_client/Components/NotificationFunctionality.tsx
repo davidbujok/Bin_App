@@ -30,12 +30,36 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //   console.log('hour :', hour);
   //   console.log('minutes :', minute);
 
-
-  console.log(date.date)
-  console.log(setNotification + "SET NOTIFICATIONS --------------------")
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-  const dateToDisplay = `${weekday[setNotification.getDay()]} ${setNotification.getDate()}-${setNotification.getMonth()}-${setNotification.getFullYear()}`
+  console.log(date.date);
+  console.log(setNotification + 'SET NOTIFICATIONS --------------------');
+  const weekday = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dev',
+  ];
+  const dateToDisplay = `${
+    weekday[setNotification.getDay()]
+  }, ${setNotification.getDate()} ${
+    months[setNotification.getMonth()]
+  } ${setNotification.getFullYear()}`;
   if (Platform.OS === 'android') {
     PushNotification.localNotification({
       channelId: 'Date-Notification',
