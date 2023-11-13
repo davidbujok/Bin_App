@@ -104,3 +104,7 @@ export const cancelNotifications = () => {
     PushNotificationIOS.removeAllPendingNotificationRequests();
   }
 };
+
+export const deleteReminderById = (id: string) => {
+  PushNotification.cancelLocalNotification(id);
+};

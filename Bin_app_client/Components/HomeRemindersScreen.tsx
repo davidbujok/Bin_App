@@ -15,6 +15,7 @@ import {
 import {styles} from '../styles/stylesSheet';
 import {
   cancelNotifications,
+  deleteReminderById,
   getCurrentNotifications,
 } from './NotificationFunctionality';
 
@@ -53,21 +54,37 @@ function HomeRemindersScreen() {
         </View> */}
       {/* {new Date(reminder.date).toString()} */}
 
-      <View style={styles.rowContainer}>
-        <TouchableOpacity
-          style={[styles.smallButton, {backgroundColor: 'red'}]}
-          onPress={async () => {
-            await cancelNotifications();
-            await setUpdateNotifications(!updateNotifications);
-          }}>
-          <Text style={[styles.buttonTextColor]}>Delete Reminders</Text>
-        </TouchableOpacity>
-      </View>
-
       {notificationsList && notificationsList.length > 0 ? (
-        <View>
+        <View style={{display: 'flex', gap: 6}}>
           {notificationsList.map((reminder: any) => {
-            return <Text>{reminder.message}</Text>;
+            return (
+              <>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      padding: 5,
+                      flexGrow: 9,
+                    }}>
+                    {reminder.message}
+                  </Text>
+                  <Pressable
+                    style={{alignSelf: 'center'}}
+                    onPress={async () => {
+                      await deleteReminderById(reminder.id);
+                      await setUpdateNotifications(!updateNotifications);
+                    }}>
+                    <Image
+                      //   style={{}}
+                      source={require('../static/images/delete.png')}></Image>
+                  </Pressable>
+                </View>
+              </>
+            );
           })}
         </View>
       ) : (
@@ -75,6 +92,16 @@ function HomeRemindersScreen() {
           No Reminders
         </Text>
       )}
+      <View style={styles.rowContainer}>
+        <TouchableOpacity
+          style={[styles.smallButton, {backgroundColor: 'red'}]}
+          onPress={async () => {
+            await cancelNotifications();
+            await setUpdateNotifications(!updateNotifications);
+          }}>
+          <Text style={[styles.buttonTextColor]}>Delete All</Text>
+        </TouchableOpacity>
+      </View>
 
       <View
         style={[
