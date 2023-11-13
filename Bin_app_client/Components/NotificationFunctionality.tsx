@@ -26,11 +26,6 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   const setNotification = new Date(year, month, day, hour, minute);
 
   console.log('SET NOTIFICATION FOR :', setNotification, date);
-  //   console.log('year :', year);
-  //   console.log('month: ', month);
-  //   console.log('day :', day);
-  //   console.log('hour :', hour);
-  //   console.log('minutes :', minute);
 
   console.log(date.date);
   console.log(setNotification + 'SET NOTIFICATIONS --------------------');

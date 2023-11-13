@@ -62,3 +62,16 @@ export const dateToString = (date: Date) => {
     year: year,
   };
 };
+
+export const homeReminderModalMessage = (message: string) => {
+  let messageReplaced = message.replace(/collection is on/, '');
+  messageReplaced = messageReplaced.replace(/Your/, '');
+
+  messageReplaced = clearEmptyCharacters(messageReplaced);
+  let splitMessage = messageReplaced.split(' ');
+  let front = splitMessage.splice(-4).join(' ');
+  let back = splitMessage.join(' ');
+
+  messageReplaced = front + '\n' + back;
+  return clearEmptyCharacters(messageReplaced);
+};

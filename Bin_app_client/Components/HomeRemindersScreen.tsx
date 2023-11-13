@@ -18,6 +18,7 @@ import {
   deleteReminderById,
   getCurrentNotifications,
 } from './NotificationFunctionality';
+import {homeReminderModalMessage} from '../Helpers/StringFunctions';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -49,14 +50,10 @@ function HomeRemindersScreen() {
 
   return (
     <View>
-      {/* <View style={styles.rowContainer}>
-          <Text style={styles.streetName}>{'Street:' + streetName}</Text>
-        </View> */}
-      {/* {new Date(reminder.date).toString()} */}
-
       {notificationsList && notificationsList.length > 0 ? (
         <View style={{display: 'flex', gap: 6}}>
           {notificationsList.map((reminder: any) => {
+            const message = homeReminderModalMessage(reminder.message);
             return (
               <>
                 <View
@@ -70,7 +67,7 @@ function HomeRemindersScreen() {
                       padding: 5,
                       flexGrow: 9,
                     }}>
-                    {reminder.message}
+                    {message}
                   </Text>
                   <Pressable
                     style={{alignSelf: 'center'}}
