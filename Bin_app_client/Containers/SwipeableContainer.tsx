@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Dimensions,
@@ -7,12 +7,18 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  Pressable,
+  Platform,
 } from 'react-native';
 import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
 import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
+import RemindersScreen from '../Components/RemindersScreen';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -22,15 +28,36 @@ const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
-  const [open, setOpen] = useState(false);
+const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) => {
+  // const [open, setOpen] = useState(false);
+  // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
+  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
+  const [pickupDayInfo,setPickupDayInfo] = useState<IDate | null>(null)
 
-  const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
 
-  const handlePickedDateNotification = (calendarDateObject: IDate) => {
-    setCalendarDate(calendarDateObject);
-    setOpen(true);
-  };
+
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PushNotification.getScheduledLocalNotifications(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    } else if (Platform.OS === 'ios') {
+      PushNotificationIOS.getPendingNotificationRequests(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    }
+  }, []);
+
+
+  // const handlePickedDateNotification = (calendarDateObject: IDate) => {
+  //   setCalendarDate(calendarDateObject);
+  //   setOpen(true);
+  // };
 
   const daySinceStartOf2023 = () => {
     const diffInMs = new Date().getTime() - new Date('2023-01-01').getTime();
@@ -228,9 +255,18 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
           style={styles.smallButton}
-          onPress={() => setModalRemindersVisible(true)}>
+          onPress={() => {
+            setModalRemindersVisible(true)
+            setPickupDayInfo(pickupInfo)
+          }}>
           <Text style={styles.buttonTextColor}>Add Reminder</Text>
         </TouchableOpacity>
+
+        
+       
+
+
+
       </View>
     );
   };
@@ -247,6 +283,28 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           calendarDate={calendarDate}
         />
       </View> */}
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalRemindersVisible}
+        onRequestClose={() => {
+          setModalRemindersVisible(!modalRemindersVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Pressable
+              onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
+              <Text style={styles.modalCloseX}>Close</Text>
+            </Pressable>
+            <RemindersScreen
+              dates={pickupDayInfo}
+              streetName={address}
+              setHasReminders={setHasReminders}></RemindersScreen>
+          </View>
+        </View>
+      </Modal>
+
+
       {pagesForNextMonths(dates).length > 0 ? (
         pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
       ) : (

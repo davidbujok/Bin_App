@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Switch,
 } from 'react-native';
-import PushNotification from 'react-native-push-notification';
 
 import {styles} from '../styles/stylesSheet';
 // import {handleNotification} from '../Components/NotificationFunctionality';
@@ -22,16 +21,15 @@ import {
   getCurrentNotifications,
   handleNotification,
 } from './NotificationFunctionality';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import PageType from '../Helpers/PageType';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 const RemindersScreen = ({dates, streetName, setHasReminders}) => {
   const [open, setOpen] = useState(false);
-  const [calendarDate, setCalendarDate] = useState<IDate>(
-    dates && dates.length > 0 ? dates[0] : null,
-  );
+  // console.log("DATES Before Const: ",dates)
+
+  const [calendarDate, setCalendarDate] = useState<IDate>(dates);
   const [nextNotificationTime, setNextNotificationTime] = useState<String>('');
   const [notificationsList, setNotificationsList] =
     useState<Array<Date> | null>([]);
@@ -39,11 +37,14 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
   const [updateNotifications, setUpdateNotifications] =
     useState<Boolean>(false);
 
-  useEffect(() => {
-    const newIDate = dates && dates.length > 0 ? dates[0] : null;
-    // console.log('setCalendarDate', newIDate);
-    setCalendarDate(newIDate);
-  }, [dates]);
+    console.log("DATES After const: ",dates)
+
+
+  // useEffect(() => {
+  //   const newIDate = dates && dates.length > 0 ? dates[0] : null;
+  //   // console.log('setCalendarDate', newIDate);
+  //   setCalendarDate(newIDate);
+  // }, [dates]);
 
   const toggleSwitch = () => {
     // console.log('toggleSwitch', dates, nextNotificationTime);
@@ -168,10 +169,13 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
           calendarDate={calendarDate}
           datePicked={async reminderTime => {
             setIsReminderEnabled(true);
+            console.log("Cla day Reminder : ",calendarDate)
+
             await setNextNotificationTime(
               new Date(reminderTime).toLocaleString(),
             );
             await handleNotification(calendarDate, new Date(reminderTime));
+
             await setUpdateNotifications(!updateNotifications);
           }}
         />
