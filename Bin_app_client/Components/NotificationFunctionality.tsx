@@ -3,6 +3,7 @@ import checkApplicationPermission from '../Containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
+import {binTypeToTile} from '../Helpers/StringFunctions';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {
   console.log(
@@ -64,12 +65,16 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     PushNotification.localNotification({
       channelId: 'Date-Notification',
       title: 'Which Bin',
-      message: `Congratulations, you have set up a reminder for your bin on ${dateToDisplay} `,
+      message: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
     });
     PushNotification.localNotificationSchedule({
       channelId: 'Date-Notification',
       title: `Which Bin`,
-      message: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      message: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       date: setNotification,
       allowWhileIdle: true,
     });
@@ -80,13 +85,17 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
       title: `Which Bin`,
-      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      body: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       fireDate: new Date(Date.now() + 1 * 1000), // Schedule in 1 secs
     });
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
       title: `Which Bin`,
-      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      body: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       fireDate: setNotification,
     });
     PushNotificationIOS.getPendingNotificationRequests(Localarray => {

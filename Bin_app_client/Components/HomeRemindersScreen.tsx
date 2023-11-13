@@ -27,6 +27,7 @@ function HomeRemindersScreen() {
   const [updateNotifications, setUpdateNotifications] =
     useState<Boolean>(false);
 
+  console.log(notificationsList[0]);
   // ===========================================================================
   // THIS HAS TO RUN ON EVERY REMINDERS UPDATE
 
@@ -51,6 +52,7 @@ function HomeRemindersScreen() {
       {/* <View style={styles.rowContainer}>
           <Text style={styles.streetName}>{'Street:' + streetName}</Text>
         </View> */}
+      {/* {new Date(reminder.date).toString()} */}
 
       <View style={styles.rowContainer}>
         <TouchableOpacity
@@ -62,10 +64,13 @@ function HomeRemindersScreen() {
           <Text style={[styles.buttonTextColor]}>Delete Reminders</Text>
         </TouchableOpacity>
       </View>
+
       {notificationsList && notificationsList.length > 0 ? (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          Reminders Set: {notificationsList.length}
-        </Text>
+        <View>
+          {notificationsList.map((reminder: any) => {
+            return <Text>{reminder.message}</Text>;
+          })}
+        </View>
       ) : (
         <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
           No Reminders

@@ -15,7 +15,11 @@ import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
-import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
+import {
+  binTypeToTile,
+  capitaliseFirstLetter,
+  clearEmptyCharacters,
+} from '../Helpers/StringFunctions';
 import RemindersScreen from '../Components/RemindersScreen';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -28,14 +32,17 @@ const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) => {
+const Carousel = ({
+  dates,
+  streetName,
+  hasReminders,
+  setHasReminders,
+  address,
+}) => {
   // const [open, setOpen] = useState(false);
   // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
-  const [pickupDayInfo,setPickupDayInfo] = useState<IDate | null>(null)
-
-
-
+  const [pickupDayInfo, setPickupDayInfo] = useState<IDate | null>(null);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -52,7 +59,6 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
       });
     }
   }, []);
-
 
   // const handlePickedDateNotification = (calendarDateObject: IDate) => {
   //   setCalendarDate(calendarDateObject);
@@ -112,7 +118,9 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
           } else if (newDate.binType.includes('garden')) {
             const cloneOfClone = {...newDate};
             const currentBinTypes = cloneOfClone.binType;
-            const updateCurrentBinTypes = clearEmptyCharacters(currentBinTypes.replace('garden', ''));
+            const updateCurrentBinTypes = clearEmptyCharacters(
+              currentBinTypes.replace('garden', ''),
+            );
             cloneOfClone.binType = updateCurrentBinTypes.trim();
             result.push(cloneOfClone);
           }
@@ -164,28 +172,6 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
         source={resources[binName]}></Image>
     );
   };
-  const binTypeToTile = binTypes => {
-    let binNames = binTypes.split(' ');
-    // binNames.sort().reverse()
-    binNames = capitaliseFirstLetter(binNames);
-
-    if (binNames.length > 3) {
-      binNames.sort().reverse().pop();
-    }
-
-    // if (binNames.length === 4) {
-    //   return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`
-    // }
-    if (binNames.length === 3) {
-      return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`;
-    }
-    if (binNames.length === 2) {
-      return `${binNames[0]} & ${binNames[1]}`;
-    }
-    if (binNames.length === 1) {
-      return `${binNames[0]}`;
-    }
-  };
 
   const imagesForWasteType = (binTypes: string) => {
     const binNames = binTypes.split(' ');
@@ -225,7 +211,7 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
 
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
-    
+
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View
@@ -256,17 +242,11 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
         <TouchableOpacity
           style={styles.smallButton}
           onPress={() => {
-            setModalRemindersVisible(true)
-            setPickupDayInfo(pickupInfo)
+            setModalRemindersVisible(true);
+            setPickupDayInfo(pickupInfo);
           }}>
           <Text style={styles.buttonTextColor}>Add Reminder</Text>
         </TouchableOpacity>
-
-        
-       
-
-
-
       </View>
     );
   };
@@ -283,7 +263,7 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
           calendarDate={calendarDate}
         />
       </View> */}
-       <Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalRemindersVisible}
@@ -303,7 +283,6 @@ const Carousel = ({dates, streetName, hasReminders, setHasReminders, address}) =
           </View>
         </View>
       </Modal>
-
 
       {pagesForNextMonths(dates).length > 0 ? (
         pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
