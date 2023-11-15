@@ -92,6 +92,19 @@ export const styles = StyleSheet.create({
   },
 });
 
+
+export const bottomBar = StyleSheet.create({
+  container: {
+    display:'flex',
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    minWidth:'100%',
+    alignItems:'flex-end',
+  }
+
+})
+
 export const navbar = StyleSheet.create({
   container: {
     display: 'flex',

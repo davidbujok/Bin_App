@@ -19,6 +19,7 @@ import {
   colourPaletteBackground,
   main,
   logo,
+  bottomBar,
 } from '../styles/stylesSheet';
 import PageType from '../Helpers/PageType';
 import RemindersScreen from '../Components/RemindersScreen';
@@ -61,7 +62,7 @@ function BaseContainer({
 
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+    <ScrollView style={{flex: 1, backgroundColor: 'white', minHeight:SCREEN_HEIGHT}}>
       <View style={main.container}>
         <View style={navbar.container}>
           <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>♻️</Text>
@@ -98,10 +99,10 @@ function BaseContainer({
               style={search.input}
             />
           </View>
-          <View>{renderSwitch(page)}</View>
+          <View style={{flex:2, marginBottom:'25%'}}>{renderSwitch(page)}</View>
           </View>
       </View>
-      <View style={{padding: 10, alignSelf: 'center'}}>
+      {/* <View style={{padding: 10, alignSelf: 'center'}}>
         <Pressable style={styles.smallButton} onPress={() => setModalRemindersVisible(true)}>
           <Text style={styles.buttonTextColor}>Reminders</Text>
         </Pressable>
@@ -112,6 +113,12 @@ function BaseContainer({
           }>
           Privacy Policy
         </Text>
+      </View> */}
+
+      <View style={bottomBar.container}>
+        <Text>Home</Text>
+        <Text>Reminders</Text>
+        <Text>Info</Text>
       </View>
       
       <Modal
