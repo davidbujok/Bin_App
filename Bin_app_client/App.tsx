@@ -32,7 +32,6 @@ function App(): JSX.Element {
   const [streetName, setStreetName] = useState<string>('');
   const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
-  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [hasReminders, setHasReminders] = useState(false);
 
 
@@ -314,7 +313,9 @@ function App(): JSX.Element {
             <Carousel
               dates={dates}
               streetName={streetName}
-              setModalRemindersVisible={setModalRemindersVisible}
+              hasReminders={hasReminders}
+              setHasReminders={setHasReminders}
+              address={address}
             />
           </>
         );
@@ -339,10 +340,6 @@ function App(): JSX.Element {
           setDates={setDates}
           dates={dates}
           address={address}
-          modalRemindersVisible={modalRemindersVisible}
-          setModalRemindersVisible={setModalRemindersVisible}
-          hasReminders={hasReminders}
-          setHasReminders={setHasReminders}
         />
       </SafeAreaView>
     </>

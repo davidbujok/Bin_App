@@ -6,6 +6,7 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   const [date, setDate] = useState<Date>(new Date());
   let previousDay: Date;
 
+
   if (iDate != null) {
     previousDay = new Date(Number(iDate.dateObject));
     previousDay.setDate(iDate.dateObject.getDate() - 1);
@@ -14,9 +15,10 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   } else {
     // emergency: yesterday
     previousDay = new Date(new Date().setDate(new Date().getDate() - 1));
+
   }
   //   TODO: trying to remove the date crash
-  previousDay = new Date(Date.now());
+  
 
 
   return (
@@ -24,13 +26,13 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
       <DatePicker
         modal
         open={open}
-        date={previousDay}
-        // date={iDate === null ? previousDay : iDate.date}
+        date={iDate && previousDay}
         onConfirm={
           dateReminder => {
           setOpen(false);
           dateReminder.setHours(dateReminder.getHours());
           datePicked(dateReminder);
+          console.log(dateReminder)
         }}
         onCancel={() => {
           setOpen(false);

@@ -24,6 +24,7 @@ import RemindersScreen from '../Components/RemindersScreen';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
+import HomeRemindersScreen from '../Components/HomeRemindersScreen';
 
 function BaseContainer({
   navbar,
@@ -39,11 +40,8 @@ function BaseContainer({
   setLocation,
   setNewFormat,
   dates,
-  address,
-  modalRemindersVisible,
-  setModalRemindersVisible,
-  hasReminders,
-  setHasReminders,
+  address
+
 }) {
   const clearInputs = () => {
     setAddress({});
@@ -57,21 +55,9 @@ function BaseContainer({
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      PushNotification.getScheduledLocalNotifications(notifications => {
-        if (notifications.length > 0) {
-          setHasReminders(true);
-        }
-      });
-    } else if (Platform.OS === 'ios') {
-      PushNotificationIOS.getPendingNotificationRequests(notifications => {
-        if (notifications.length > 0) {
-          setHasReminders(true);
-        }
-      });
-    }
-  }, []);
+  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
+
+
 
   return (
     <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
@@ -112,21 +98,13 @@ function BaseContainer({
             />
           </View>
           <View>{renderSwitch(page)}</View>
-          {page == PageType.Home && hasReminders == true && (
-            <View
-              style={[main.container, {display: 'flex', alignItems: 'center'}]}>
-              <TouchableOpacity
-                style={[styles.smallButton, {backgroundColor: '#6aa62e'}]}
-                onPress={() => {
-                  setModalRemindersVisible(true);
-                }}>
-                <Text style={styles.buttonTextColor}>Reminders</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          
         </View>
       </View>
       <View style={{padding: 10, alignSelf: 'flex-start'}}>
+        <Pressable onPress={() => setModalRemindersVisible(true)}>
+          <Text>Click me</Text>
+        </Pressable>
         <Text
           style={{color: 'black', padding: 10}}
           onPress={() =>
@@ -149,10 +127,7 @@ function BaseContainer({
               onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
               <Text style={styles.modalCloseX}>Close</Text>
             </Pressable>
-            <RemindersScreen
-              dates={dates}
-              streetName={address}
-              setHasReminders={setHasReminders}></RemindersScreen>
+            <HomeRemindersScreen></HomeRemindersScreen>
           </View>
         </View>
       </Modal>
