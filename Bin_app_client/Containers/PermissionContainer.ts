@@ -14,10 +14,10 @@ export const requestLocationPermission = async () => {
     );
     console.log('granted', granted);
     if (granted === 'granted') {
-      console.log('You can use Geolocation');
+      // console.log('You can use Geolocation');
       return true;
     } else {
-      console.log('You cannot use Geolocation');
+      // console.log('You cannot use Geolocation');
       return false;
     }
   } catch (err) {

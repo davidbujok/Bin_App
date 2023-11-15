@@ -19,5 +19,5 @@ export const months = [
   'Sep',
   'Oct',
   'Nov',
-  'Dev',
+  'Dec',
 ];

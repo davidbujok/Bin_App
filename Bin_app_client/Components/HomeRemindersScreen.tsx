@@ -57,6 +57,7 @@ function HomeRemindersScreen() {
             return (
               <>
                 <View
+                  id={reminder.id}
                   style={{
                     display: 'flex',
                     flexDirection: 'row',

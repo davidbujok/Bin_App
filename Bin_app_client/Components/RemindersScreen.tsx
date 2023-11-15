@@ -1,19 +1,13 @@
 import React, {useEffect, useState} from 'react';
-
 import {
   View,
   Dimensions,
   Text,
-  Pressable,
-  Image,
-  StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Switch,
 } from 'react-native';
 
 import {styles} from '../styles/stylesSheet';
-// import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from './DateTimePicker';
 import {
@@ -39,7 +33,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
   const [updateNotifications, setUpdateNotifications] =
     useState<Boolean>(false);
 
-  console.log('DATES After const: ', date);
+  // console.log('DATES After const: ', date);
 
   const toggleSwitch = () => {
     const newValue = !isReminderEnabled;
@@ -52,7 +46,6 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
   useEffect(() => {
     const fetchData = async () => {
       await getCurrentNotifications(notifications => {
-        // const notificationsStrings = notifications.
         if (notifications.length > 0) {
           // setNotificationsList(notifications)
           const nextNotificationTime =
@@ -116,6 +109,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
           styles.rowContainer,
           {display: 'flex', alignContent: 'center', justifyContent: 'center'},
         ]}>
+
         {isReminderEnabled == true ? (
           <Text>Here</Text>
         ) : (
@@ -124,7 +118,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
             onPress={() => {
               setOpen(true);
             }}>
-            <Text style={[styles.buttonTextColor]}>Add Reminder</Text>
+            <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
           </TouchableOpacity>
         )}
       </View>

@@ -1,7 +1,17 @@
-import {StatusBar, StyleSheet, Platform, Dimensions} from 'react-native';
+import {StatusBar, StyleSheet, Platform, Dimensions, useWindowDimensions, PixelRatio} from 'react-native';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+// const windowDimensions = useWindowDimensions();
+const fontScale = PixelRatio.getFontScale()
+
+
+
+const getFontSize = size => size / fontScale
+
+
 
 type Color = {
   blue: '#1c6fc4';
@@ -12,51 +22,21 @@ type Color = {
 };
 
 export const styles = StyleSheet.create({
-  // input: {
-  //   width: 100,
-  //   height: 40,
-  //   borderWidth: 1,
-  //   padding: 10,
-  // },
   streetName: {
     fontWeight: 'bold',
-    fontSize: SCREEN_WIDTH * 0.06,
-    maxWidth: SCREEN_WIDTH * 0.9,
+    fontSize: RFPercentage(3),
+    maxWidth: RFPercentage(40),
+    textAlign:'center'
   },
-  // button: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   alignSelf: 'center',
-  //   maxWidth: 90,
-  //   paddingVertical: 10,
-  //   paddingHorizontal: 15,
-  //   borderRadius: 10,
-  // },
-  // logo: {
-  //   fontSize: 40,
-  //   fontWeight: 'bold',
-  //   color: 'white',
-  //   paddingLeft: SCREEN_WIDTH * 0.05,
-
-  // },
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   paddingLeft: SCREEN_WIDTH * 0.05,
-  //   paddingRight: SCREEN_WIDTH * 0.05,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, // if this device is android, set padding to top otherwise don't, this is because SafeAreaView doesn't work on Android?
-  // },
   smallButton: {
     backgroundColor: '#1c6fc4',
-    width: SCREEN_WIDTH * 0.35,
-    height: SCREEN_HEIGHT * 0.05,
-    padding: SCREEN_WIDTH * 0.01,
+    width: SCREEN_WIDTH * 0.4,
+    height: SCREEN_HEIGHT * 0.06,
+    padding: SCREEN_WIDTH * 0.0,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginTop: SCREEN_HEIGHT * 0.04,
+    marginTop: SCREEN_HEIGHT * 0.05 ,
   },
   buttonTextColor: {
     color: 'white',
@@ -68,7 +48,7 @@ export const styles = StyleSheet.create({
     display: 'flex',
     padding: SCREEN_WIDTH * 0.01,
     justifyContent: 'center',
-    gap: 5,
+    gap: SCREEN_WIDTH * 0.01,
   },
   dateText: {
     fontSize: 20,
@@ -83,14 +63,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    marginTop: SCREEN_HEIGHT * 0.05,
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -113,6 +92,19 @@ export const styles = StyleSheet.create({
   },
 });
 
+
+export const bottomBar = StyleSheet.create({
+  container: {
+    display:'flex',
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    minWidth:'100%',
+    alignItems:'flex-end',
+  }
+
+})
+
 export const navbar = StyleSheet.create({
   container: {
     display: 'flex',
@@ -120,24 +112,11 @@ export const navbar = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: SCREEN_WIDTH * 0.025,
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   logo: {
     fontSize: SCREEN_WIDTH * 0.125,
     fontWeight: '900',
-  },
-  // input: {
-  //   maxWidth: 250,
-  //   borderWidth: 0.8,
-  //   height: 40,
-  //   borderRadius: 10,
-  //   fontSize: 20,
-  // },
-  // logoBlocks: {
-  //   width: 50,
-  //   minHeight: 7,
-  // },
+  }
 });
 
 export const search = StyleSheet.create({
@@ -149,7 +128,6 @@ export const search = StyleSheet.create({
     borderRadius: 10,
     fontSize: SCREEN_WIDTH * 0.04,
     textAlign: 'left',
-    // marginTop: SCREEN_HEIGHT * 0.025
     paddingLeft: SCREEN_WIDTH * 0.035,
     paddingRight: SCREEN_WIDTH * 0.035,
     color: '#000000',
@@ -158,7 +136,7 @@ export const search = StyleSheet.create({
     paddingTop: SCREEN_HEIGHT * 0.06,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 });
 
@@ -166,13 +144,16 @@ export const main = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    margin: SCREEN_WIDTH * 0.025,
+    maxWidth: SCREEN_WIDTH,
+    // minHeight: SCREEN_HEIGHT
   },
   baseText: {
-    marginLeft: SCREEN_WIDTH * 0.025,
-    marginRight: SCREEN_WIDTH * 0.025,
-    marginTop: SCREEN_HEIGHT * 0.05,
+    marginLeft: SCREEN_WIDTH * 0.02,
+    marginRight: SCREEN_WIDTH * 0.02,
+    marginTop: SCREEN_WIDTH * 0.1,
     includeFontPadding: false,
+    maxWidth:  SCREEN_WIDTH,
+    // flexWrap: 'wrap'
   },
 });
 
@@ -196,19 +177,18 @@ export const colourPalette = StyleSheet.create({
 
 export const heroText = StyleSheet.create({
   hero: {
-    fontSize: SCREEN_WIDTH * 0.12,
-    marginBottom: -(SCREEN_WIDTH / 2) * 0.001,
+    fontSize: getFontSize(80) ,
+    marginBottom: RFPercentage(0),
     padding: 0,
     includeFontPadding: false,
   },
   joinText: {
-    fontSize: SCREEN_WIDTH * 0.08,
-    // marginTop: 25,
+    fontSize: getFontSize(50),
     alignSelf: 'center',
     includeFontPadding: false,
   },
   letter: {
-    fontSize: SCREEN_WIDTH * 0.12,
+    fontSize: getFontSize(100),
     includeFontPadding: false,
   },
   mid: {
@@ -250,9 +230,6 @@ export const logo = StyleSheet.create({
   logoSize: {
     fontSize: SCREEN_HEIGHT * 0.055,
     color: 'black',
-    // marginRight:-SCREEN_HEIGHT* 0.04,
-    // marginLeft:  SCREEN_HEIGHT * 0.015
-  },
+  }
 });
 
-// {fontSize:43,color:'black',marginRight:-80, marginLeft:-30}

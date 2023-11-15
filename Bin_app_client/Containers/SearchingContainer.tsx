@@ -3,6 +3,8 @@ import {Text, View, Dimensions} from 'react-native';
 import {styles} from '../styles/stylesSheet';
 // import {IStreet} from '../styles/interfaces';
 import {capitaliseFirstLetter} from '../Helpers/StringFunctions';
+import { RFPercentage } from "react-native-responsive-fontsize";
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -36,12 +38,12 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
                   <View key={street + `${index}`}>
                     <Text
                       style={{
-                        fontSize: 21,
+                        fontSize: RFPercentage(2.5),
                         fontWeight: '600',
                         color: '#291D29',
                         textAlign: 'left',
-                        minWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
-                        maxWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
+                        minWidth: RFPercentage(40),
+                        maxWidth: RFPercentage(40),
                       }}
                       key={index + 1}
                       onPress={() => {
@@ -52,12 +54,12 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 15,
+                        fontSize: RFPercentage(2),
                         fontWeight: '400',
                         color: '#291D29',
                         textAlign: 'left',
-                        minWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
-                        maxWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
+                        minWidth: RFPercentage(40),
+                        maxWidth: RFPercentage(40),
                       }}
                       key={index + 200}
                       onPress={() => {
@@ -74,12 +76,12 @@ function SearchingContainer({streets, handleFetchByStreet, setStreetName}) {
             return (
               <Text
                 style={{
-                  fontSize: 21,
+                  fontSize: RFPercentage(2.55),
                   fontWeight: '600',
                   color: '#291D29',
                   textAlign: 'left',
-                  minWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
-                  maxWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
+                  minWidth: RFPercentage(2),
+                  maxWidth: RFPercentage(40),
                 }}
                 key={index + 500}
                 onPress={() => {

@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import checkApplicationPermission from '../Containers/NotificationPermission';
+import checkApplicationPermission from '../containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
@@ -25,10 +25,10 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //Actual Variable (Need hour - minute variable)
   const setNotification = new Date(year, month, day, hour, minute);
 
-  console.log('SET NOTIFICATION FOR :', setNotification, date);
+  // console.log('SET NOTIFICATION FOR :', setNotification, date);
 
-  console.log(date.date);
-  console.log(setNotification + 'SET NOTIFICATIONS --------------------');
+  // console.log(date.date);
+  // console.log(setNotification + 'SET NOTIFICATIONS --------------------');
 
   const dateToDisplay = `${
     weekday[setNotification.getDay()]

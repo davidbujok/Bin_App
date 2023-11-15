@@ -32,7 +32,7 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
           setOpen(false);
           dateReminder.setHours(dateReminder.getHours());
           datePicked(dateReminder);
-          console.log(dateReminder)
+          // console.log(dateReminder)
         }}
         onCancel={() => {
           setOpen(false);
