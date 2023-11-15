@@ -33,7 +33,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
   const [updateNotifications, setUpdateNotifications] =
     useState<Boolean>(false);
 
-  console.log('DATES After const: ', date);
+  // console.log('DATES After const: ', date);
 
   const toggleSwitch = () => {
     const newValue = !isReminderEnabled;

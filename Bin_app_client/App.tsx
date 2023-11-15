@@ -22,6 +22,7 @@ import Carousel from './containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 import PageType from './Helpers/PageType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import removeGardenOnlyStreets from './Helpers/RemoveGardenOnlyStreets';
 
 
 
@@ -36,7 +37,6 @@ function App(): JSX.Element {
   const [streetName, setStreetName] = useState<string>('');
   const [allStreetsJson, setAllStreetsJson] = useState<Object>({});
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
-  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [hasReminders, setHasReminders] = useState(false);
 
   const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -46,7 +46,8 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const allStreetsLoaded = require('./assets/all_data_file_without_none.json');
-    setAllStreetsJson(allStreetsLoaded);
+    const allStreetsWithoutGardenOnly = removeGardenOnlyStreets(allStreetsLoaded) 
+    setAllStreetsJson(allStreetsWithoutGardenOnly);
     const allCalendarMeaningsLoaded = require('./assets/days_of_first_pickup_january_2023.json');
     setCalendarMeanings(allCalendarMeaningsLoaded);
   }, []);
@@ -320,7 +321,9 @@ function App(): JSX.Element {
             <Carousel
               dates={dates}
               streetName={streetName}
-              setModalRemindersVisible={setModalRemindersVisible}
+              hasReminders={hasReminders}
+              setHasReminders={setHasReminders}
+              address={address}
             />
           </>
         );
@@ -345,10 +348,6 @@ function App(): JSX.Element {
           setDates={setDates}
           dates={dates}
           address={address}
-          modalRemindersVisible={modalRemindersVisible}
-          setModalRemindersVisible={setModalRemindersVisible}
-          hasReminders={hasReminders}
-          setHasReminders={setHasReminders}
         />
       </SafeAreaView>
       

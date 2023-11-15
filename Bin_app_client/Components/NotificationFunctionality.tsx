@@ -14,10 +14,6 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     pickedDate.getMinutes(),
   );
 
-  console.log('====================================');
-  console.log(date.name + " DATE NAME");
-  console.log('====================================');
-
   await checkApplicationPermission();
 
   const year: number = pickedDate.getFullYear();
@@ -29,10 +25,10 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   //Actual Variable (Need hour - minute variable)
   const setNotification = new Date(year, month, day, hour, minute);
 
-  console.log('SET NOTIFICATION FOR :', setNotification, date);
+  // console.log('SET NOTIFICATION FOR :', setNotification, date);
 
-  console.log(date.date);
-  console.log(setNotification + 'SET NOTIFICATIONS --------------------');
+  // console.log(date.date);
+  // console.log(setNotification + 'SET NOTIFICATIONS --------------------');
 
   const dateToDisplay = `${
     weekday[setNotification.getDay()]

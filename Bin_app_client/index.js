@@ -19,7 +19,7 @@ AppRegistry.registerComponent('BinAppclient', () => Bin_App_client); //trying to
 
 PushNotification.configure({
   onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
+    // console.log('NOTIFICATION:', notification);
   },
   requestPermissions: Platform.OS === 'ios',
 });

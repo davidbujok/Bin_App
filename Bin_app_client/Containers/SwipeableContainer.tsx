@@ -69,11 +69,9 @@ const Carousel = ({
 
   const daySinceStartOfYear = () => {
     const year = new Date().getFullYear()
-    console.log(year + " getFullYear");
     
     const diffInMs = new Date().getTime() - new Date(`${year}-01-01`).getTime();
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-    console.log(diffInDays + " diff in days");
 
     return Math.floor(diffInDays);
   };
