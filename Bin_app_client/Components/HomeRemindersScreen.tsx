@@ -90,14 +90,31 @@ function HomeRemindersScreen() {
           No Reminders
         </Text>
       )}
-      <View style={styles.rowContainer}>
+      <View
+        style={[
+          styles.rowContainer,
+          {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          },
+        ]}>
         <TouchableOpacity
-          style={[styles.smallButton, {backgroundColor: 'red'}]}
+          style={[
+            styles.smallButton,
+            {
+              backgroundColor: 'red',
+              borderWidth: 2,
+            },
+          ]}
           onPress={async () => {
             await cancelNotifications();
             await setUpdateNotifications(!updateNotifications);
           }}>
-          <Text style={[styles.buttonTextColor]}>Delete All</Text>
+          <Text style={[styles.buttonTextColor, {color: 'black'}]}>
+            Delete All
+          </Text>
         </TouchableOpacity>
       </View>
 

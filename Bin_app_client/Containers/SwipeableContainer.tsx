@@ -23,8 +23,7 @@ import {
 import RemindersScreen from '../Components/RemindersScreen';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import { RFPercentage } from "react-native-responsive-fontsize";
-
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -68,8 +67,8 @@ const Carousel = ({
   // };
 
   const daySinceStartOfYear = () => {
-    const year = new Date().getFullYear()
-    
+    const year = new Date().getFullYear();
+
     const diffInMs = new Date().getTime() - new Date(`${year}-01-01`).getTime();
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
@@ -117,7 +116,10 @@ const Carousel = ({
           iDateToClone,
           14 * fortnight + weeksSkipped * 7,
         );
-        if ((daySinceStartOfYear() > 304 || daySinceStartOfYear() < 25) && newDate.binType.includes('garden')) {
+        if (
+          (daySinceStartOfYear() > 304 || daySinceStartOfYear() < 25) &&
+          newDate.binType.includes('garden')
+        ) {
           if (newDate.binType === 'garden') {
             continue;
           } else if (newDate.binType.includes('garden')) {
@@ -192,7 +194,7 @@ const Carousel = ({
             fontWeight: '600',
             color: '#291D29',
             paddingTop: SCREEN_HEIGHT * 0.05,
-            textAlign:'center'
+            textAlign: 'center',
           }}>
           {binTitle}
         </Text>
@@ -220,16 +222,13 @@ const Carousel = ({
 
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
-      <View
-        key={pickupInfo.id}
-        style={swipeableStyle.container
-        }>
+      <View key={pickupInfo.id} style={swipeableStyle.container}>
         <Text style={styles.streetName}>{title}</Text>
         <Text
           style={{
             fontSize: RFPercentage(3),
             fontWeight: '400',
-            marginTop: SCREEN_HEIGHT* 0.05,
+            marginTop: SCREEN_HEIGHT * 0.05,
           }}>
           Next collection is:
         </Text>
@@ -241,74 +240,73 @@ const Carousel = ({
             flexWrap: 'wrap',
             marginLeft: SCREEN_WIDTH * 0.05,
             marginRight: SCREEN_WIDTH * 0.05,
-            textAlign:'center'
+            textAlign: 'center',
           }}>
           {dateAsString(pickupInfo.dateObject)}{' '}
         </Text>
         {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
-
           style={swipeableStyle.button}
           onPress={() => {
             setModalRemindersVisible(true);
             setPickupDayInfo(pickupInfo);
           }}>
-          <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
+          <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
+            Add Reminder
+          </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true} >
-    <ScrollView
-      style={{paddingTop: SCREEN_HEIGHT * 0.05}}
-      horizontal
-      snapToInterval={SCREEN_WIDTH}>
-
-      {/* <View>
-        <DateTimePicker
-          open={open}
-          setOpen={setOpen}
-          calendarDate={calendarDate}
-        />
-      </View> */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalRemindersVisible}
-        onRequestClose={() => {
-          setModalRemindersVisible(!modalRemindersVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Pressable
-              onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
-              <Text style={styles.modalCloseX}>Close</Text>
-            </Pressable>
-            <RemindersScreen
-              date={pickupDayInfo}
-              datesList={pagesForNextMonths(dates)}
-              setHasReminders={setHasReminders}></RemindersScreen>
+    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true}>
+      <ScrollView
+        style={{
+          paddingTop: SCREEN_HEIGHT * 0.02,
+        }}
+        horizontal
+        snapToInterval={SCREEN_WIDTH}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalRemindersVisible}
+          onRequestClose={() => {
+            setModalRemindersVisible(!modalRemindersVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable
+                onPress={() =>
+                  setModalRemindersVisible(!modalRemindersVisible)
+                }>
+                <Image
+                  style={styles.modalCloseX}
+                  source={require('../static/images/remove_icon.png')}></Image>
+              </Pressable>
+              <RemindersScreen
+                date={pickupDayInfo}
+                datesList={pagesForNextMonths(dates)}
+                setHasReminders={setHasReminders}></RemindersScreen>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
-      {pagesForNextMonths(dates).length > 0 ? (
-        pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
-      ) : (
-        <View style={swipeableStyle.verticalSwiper}>
-          <Text
-            style={{
-              fontSize: RFPercentage(4),
-              maxWidth: SCREEN_WIDTH * 0.8,
-            }}>
-            Garden bins are not collected from November to January for{' '}
-            {streetName.replace(/\s0\s/, ' ')}
-          </Text>
-        </View>
-      )}
-    </ScrollView>
+        {pagesForNextMonths(dates).length > 0 ? (
+          pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
+        ) : (
+          <View style={swipeableStyle.verticalSwiper}>
+            <Text
+              style={{
+                fontSize: RFPercentage(4),
+                maxWidth: SCREEN_WIDTH * 0.8,
+              }}>
+              Garden bins are not collected from November to January for{' '}
+              {streetName.replace(/\s0\s/, ' ')}
+            </Text>
+          </View>
+        )}
+      </ScrollView>
     </ScrollView>
   );
 };
@@ -322,23 +320,23 @@ const image = StyleSheet.create({
 });
 
 const swipeableStyle = StyleSheet.create({
-  container : {
-    alignItems:'center',
+  container: {
+    alignItems: 'center',
     width: SCREEN_WIDTH, // <<<<<<<<
-   },
-  button : {
+  },
+  button: {
     backgroundColor: '#1c6fc4',
-    borderRadius:10,
+    borderRadius: 10,
     width: SCREEN_WIDTH * 0.4,
     height: SCREEN_HEIGHT * 0.06,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: SCREEN_HEIGHT * 0.02,
-    padding: SCREEN_WIDTH * 0.02
+    padding: SCREEN_WIDTH * 0.02,
   },
   verticalSwiper: {
     display: 'flex',
     flex: 1,
-    maxWidth: SCREEN_WIDTH
-  }
-})
+    maxWidth: SCREEN_WIDTH,
+  },
+});

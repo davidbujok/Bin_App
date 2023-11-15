@@ -1,17 +1,20 @@
-import {StatusBar, StyleSheet, Platform, Dimensions, useWindowDimensions, PixelRatio} from 'react-native';
-import { RFPercentage } from "react-native-responsive-fontsize";
+import {
+  StatusBar,
+  StyleSheet,
+  Platform,
+  Dimensions,
+  useWindowDimensions,
+  PixelRatio,
+} from 'react-native';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 // const windowDimensions = useWindowDimensions();
-const fontScale = PixelRatio.getFontScale()
+const fontScale = PixelRatio.getFontScale();
 
-
-
-const getFontSize = size => size / fontScale
-
-
+const getFontSize = size => size / fontScale;
 
 type Color = {
   blue: '#1c6fc4';
@@ -26,7 +29,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: RFPercentage(3),
     maxWidth: RFPercentage(40),
-    textAlign:'center'
+    textAlign: 'center',
   },
   smallButton: {
     backgroundColor: '#1c6fc4',
@@ -36,7 +39,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginTop: SCREEN_HEIGHT * 0.05 ,
+    marginTop: SCREEN_HEIGHT * 0.05,
   },
   buttonTextColor: {
     color: 'white',
@@ -66,10 +69,11 @@ export const styles = StyleSheet.create({
     marginTop: SCREEN_HEIGHT * 0.05,
   },
   modalView: {
-    margin: 20,
+    margin: 40,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
+    minWidth: SCREEN_WIDTH * 0.8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -86,24 +90,42 @@ export const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   modalCloseX: {
-    marginBottom: 15,
-    textAlign: 'right',
+    marginBottom: 10,
+    padding: 10,
+    // width: SCREEN_WIDTH * 0.06,
+    // height: SCREEN_HEIGHT * 0.03,
+    // textAlign: 'right',
     alignSelf: 'flex-end',
+    // backgroundColor: 'red',
   },
 });
 
-
 export const bottomBar = StyleSheet.create({
   container: {
-    display:'flex',
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'space-evenly',
-    minWidth:'100%',
-    alignItems:'flex-end',
-  }
-
-})
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'red',
+    position: 'absolute',
+    maxHeight: SCREEN_HEIGHT * 0.05,
+    height: SCREEN_HEIGHT * 0.05,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    gap: 10,
+  },
+  option: {
+    borderWidth: 1,
+    fontSize: SCREEN_WIDTH * 0.04,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+});
 
 export const navbar = StyleSheet.create({
   container: {
@@ -116,7 +138,7 @@ export const navbar = StyleSheet.create({
   logo: {
     fontSize: SCREEN_WIDTH * 0.125,
     fontWeight: '900',
-  }
+  },
 });
 
 export const search = StyleSheet.create({
@@ -124,7 +146,7 @@ export const search = StyleSheet.create({
     minWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
     maxWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
     borderWidth: 1,
-    height: SCREEN_HEIGHT * 0.065,
+    height: SCREEN_HEIGHT * 0.075,
     borderRadius: 10,
     fontSize: SCREEN_WIDTH * 0.04,
     textAlign: 'left',
@@ -136,7 +158,7 @@ export const search = StyleSheet.create({
     paddingTop: SCREEN_HEIGHT * 0.06,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 });
 
@@ -152,7 +174,7 @@ export const main = StyleSheet.create({
     marginRight: SCREEN_WIDTH * 0.02,
     marginTop: SCREEN_WIDTH * 0.1,
     includeFontPadding: false,
-    maxWidth:  SCREEN_WIDTH,
+    maxWidth: SCREEN_WIDTH,
     // flexWrap: 'wrap'
   },
 });
@@ -177,7 +199,7 @@ export const colourPalette = StyleSheet.create({
 
 export const heroText = StyleSheet.create({
   hero: {
-    fontSize: getFontSize(80) ,
+    fontSize: getFontSize(80),
     marginBottom: RFPercentage(0),
     padding: 0,
     includeFontPadding: false,
@@ -230,6 +252,5 @@ export const logo = StyleSheet.create({
   logoSize: {
     fontSize: SCREEN_HEIGHT * 0.055,
     color: 'black',
-  }
+  },
 });
-

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {main} from './styles/stylesSheet'
+import {main} from './styles/stylesSheet';
 import {
   SafeAreaView,
   Platform,
@@ -7,24 +7,23 @@ import {
   Keyboard,
   View,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search, styles} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys.js';
-import HomeContainer from './containers/HomeContainer';
-import SearchingContainer from './containers/SearchingContainer';
+import HomeContainer from './Containers/HomeContainer';
+import SearchingContainer from './Containers/SearchingContainer';
 import RemindersScreen from './Components/RemindersScreen';
-import BaseContainer from './containers/BaseContainer';
-import Carousel from './containers/SwipeableContainer';
+import BaseContainer from './Containers/BaseContainer';
+import Carousel from './Containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 import PageType from './Helpers/PageType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import removeGardenOnlyStreets from './Helpers/RemoveGardenOnlyStreets';
-
-
+import Informations from './Components/Informations';
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<String>>();
@@ -39,14 +38,14 @@ function App(): JSX.Element {
   const [calendarMeanings, setCalendarMeanings] = useState<Array<Object>>([]);
   const [hasReminders, setHasReminders] = useState(false);
 
-  const SCREEN_HEIGHT = Dimensions.get('window').height
+  const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-  
   Geocoder.init(api);
 
   useEffect(() => {
     const allStreetsLoaded = require('./assets/all_data_file_without_none.json');
-    const allStreetsWithoutGardenOnly = removeGardenOnlyStreets(allStreetsLoaded) 
+    const allStreetsWithoutGardenOnly =
+      removeGardenOnlyStreets(allStreetsLoaded);
     setAllStreetsJson(allStreetsWithoutGardenOnly);
     const allCalendarMeaningsLoaded = require('./assets/days_of_first_pickup_january_2023.json');
     setCalendarMeanings(allCalendarMeaningsLoaded);
@@ -327,12 +326,18 @@ function App(): JSX.Element {
             />
           </>
         );
+      case PageType.Infos:
+        return (
+          <>
+            <Informations></Informations>
+          </>
+        );
     }
   };
 
   return (
     <>
-      <SafeAreaView style={{flex: 1, backgroundColor: 'white', minHeight:SCREEN_HEIGHT}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <BaseContainer
           setAddress={setAddress}
           setLocation={setLocation}
@@ -350,7 +355,6 @@ function App(): JSX.Element {
           address={address}
         />
       </SafeAreaView>
-      
     </>
   );
 }
