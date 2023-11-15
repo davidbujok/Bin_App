@@ -1,20 +1,13 @@
 import React, {useEffect, useState} from 'react';
-
 import {
   View,
   Dimensions,
   Text,
-  Pressable,
-  Image,
-  StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Switch,
 } from 'react-native';
-import PushNotification from 'react-native-push-notification';
 
 import {styles} from '../styles/stylesSheet';
-// import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from './DateTimePicker';
 import {
@@ -22,8 +15,6 @@ import {
   getCurrentNotifications,
   handleNotification,
 } from './NotificationFunctionality';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import PageType from '../Helpers/PageType';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -41,24 +32,20 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
 
   useEffect(() => {
     const newIDate = dates && dates.length > 0 ? dates[0] : null;
-    // console.log('setCalendarDate', newIDate);
     setCalendarDate(newIDate);
   }, [dates]);
 
   const toggleSwitch = () => {
-    // console.log('toggleSwitch', dates, nextNotificationTime);
     const newValue = !isReminderEnabled;
     setSwitch(newValue);
   };
 
   const setSwitch = newValue => {
-    // console.log('setSwitch', newValue, nextNotificationTime, '!');
 
     if (newValue) {
       //re-set reminder
       if (nextNotificationTime === '') {
         setOpen(true);
-        // console.log('setOpen(true)');
       }
     } else {
       //cancel reminders
@@ -82,7 +69,6 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
   useEffect(() => {
     const fetchData = async () => {
       await getCurrentNotifications(notifications => {
-        // const notificationsStrings = notifications.
         if (notifications.length > 0) {
           // setNotificationsList(notifications)
           const nextNotificationTime =
@@ -147,7 +133,7 @@ const RemindersScreen = ({dates, streetName, setHasReminders}) => {
           onPress={() => {
             setOpen(true);
           }}>
-          <Text style={[styles.buttonTextColor]}>Add Reminder</Text>
+          <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
           {/* // notifcationsList.map((notification) => { */}
 
           {/* // <Text>{notification.date.getDate() && notification.length }</Text>

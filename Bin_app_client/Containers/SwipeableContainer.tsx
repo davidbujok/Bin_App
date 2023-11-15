@@ -13,6 +13,8 @@ import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
 import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
+import { RFPercentage } from "react-native-responsive-fontsize";
+
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -170,14 +172,14 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
       <>
         <Text
           style={{
-            fontSize: SCREEN_WIDTH * 0.075,
+            fontSize: RFPercentage(4),
             fontWeight: '600',
             color: '#291D29',
-            paddingTop: SCREEN_HEIGHT * 0.06,
+            paddingTop: SCREEN_HEIGHT * 0.05,
           }}>
           {binTitle}
         </Text>
-        <View style={{flexDirection: 'row', gap: -SCREEN_WIDTH * 0.075}}>
+        <View style={{flexDirection: 'row', gap: RFPercentage(-9)}}>
           {binNameToImage(binNames[0])}
           {binNames.length > 1 ? binNameToImage(binNames[1]) : null}
           {binNames.length > 2 ? binNameToImage(binNames[2]) : null}
@@ -203,58 +205,53 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
     return (
       <View
         key={pickupInfo.id}
-        style={{
-          width: SCREEN_WIDTH,
-          alignItems: 'center',
-          paddingTop: SCREEN_HEIGHT * 0.03,
-        }}>
+        style={swipeableStyle.container
+        }>
         <Text style={styles.streetName}>{title}</Text>
         <Text
           style={{
-            fontSize: SCREEN_WIDTH * 0.07,
+            fontSize: RFPercentage(3),
             fontWeight: '400',
-            marginTop: SCREEN_HEIGHT * 0.05,
+            marginTop: SCREEN_HEIGHT* 0.05,
           }}>
           Next collection is:
         </Text>
         <Text
           style={{
-            fontSize: SCREEN_WIDTH * 0.08,
-            fontWeight: '500',
+            fontSize: RFPercentage(4),
+            fontWeight: '600',
             color: '#291D29',
+            flexWrap: 'wrap',
+            marginLeft: SCREEN_WIDTH * 0.05,
+            marginRight: SCREEN_WIDTH * 0.05,
+            textAlign:'center'
           }}>
           {dateAsString(pickupInfo.dateObject)}{' '}
         </Text>
         {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
-          style={styles.smallButton}
+          style={swipeableStyle.button}
           onPress={() => setModalRemindersVisible(true)}>
-          <Text style={styles.buttonTextColor}>Add Reminder</Text>
+          <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   return (
+    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true} contentContainerStyle={{paddingBottom:SCREEN_HEIGHT*0.3}}>
     <ScrollView
-      style={{paddingTop: 20}}
+      style={{paddingTop: SCREEN_HEIGHT * 0.05}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
-      {/* <View>
-        <DateTimePicker
-          open={open}
-          setOpen={setOpen}
-          calendarDate={calendarDate}
-        />
-      </View> */}
       {pagesForNextMonths(dates).length > 0 ? (
         pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
       ) : (
-        <View style={main.container}>
+        <View style={swipeableStyle.verticalSwiper}>
           <Text
             style={{
-              fontSize: SCREEN_WIDTH * 0.08,
-              maxWidth: SCREEN_WIDTH * 0.65,
+              fontSize: RFPercentage(4),
+              maxWidth: SCREEN_WIDTH * 0.8,
             }}>
             Garden bins are not collected from November to January for{' '}
             {streetName.replace(/\s0\s/, ' ')}
@@ -262,13 +259,36 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         </View>
       )}
     </ScrollView>
+    </ScrollView>
   );
 };
 export default Carousel;
 
 const image = StyleSheet.create({
   imageSize: {
-    height: SCREEN_HEIGHT * 0.25,
-    width: SCREEN_WIDTH * 0.25,
+    height: SCREEN_HEIGHT * 0.3,
+    width: SCREEN_WIDTH * 0.3,
   },
 });
+
+const swipeableStyle = StyleSheet.create({
+  container : {
+    alignItems:'center',
+    width: SCREEN_WIDTH, // <<<<<<<<
+   },
+  button : {
+    backgroundColor: '#1c6fc4',
+    borderRadius:10,
+    width: SCREEN_WIDTH * 0.4,
+    height: SCREEN_HEIGHT * 0.06,
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop: SCREEN_HEIGHT * 0.02,
+    padding: SCREEN_WIDTH * 0.02
+  },
+  verticalSwiper: {
+    display: 'flex',
+    flex: 1,
+    maxWidth: SCREEN_WIDTH
+  }
+})

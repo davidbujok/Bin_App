@@ -1,25 +1,29 @@
 import React, {useEffect, useState} from 'react';
-
+import {main} from './styles/stylesSheet'
 import {
   SafeAreaView,
   Platform,
   PermissionsAndroid,
   Keyboard,
-  Text,
+  View,
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {IDate} from './styles/interfaces';
 import Geocoder from 'react-native-geocoding';
 import {heroText, navbar, search, styles} from './styles/stylesSheet';
 import {api} from './api-keys/api-keys.js';
-import HomeContainer from './Containers/HomeContainer';
-import SearchingContainer from './Containers/SearchingContainer';
+import HomeContainer from './containers/HomeContainer';
+import SearchingContainer from './containers/SearchingContainer';
 import RemindersScreen from './Components/RemindersScreen';
-import BaseContainer from './Containers/BaseContainer';
-import Carousel from './Containers/SwipeableContainer';
+import BaseContainer from './containers/BaseContainer';
+import Carousel from './containers/SwipeableContainer';
 import PushNotification from 'react-native-push-notification';
 import PageType from './Helpers/PageType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<String>>();
@@ -35,7 +39,9 @@ function App(): JSX.Element {
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [hasReminders, setHasReminders] = useState(false);
 
+  const SCREEN_HEIGHT = Dimensions.get('window').height
 
+  
   Geocoder.init(api);
 
   useEffect(() => {
@@ -323,7 +329,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white', minHeight:SCREEN_HEIGHT}}>
         <BaseContainer
           setAddress={setAddress}
           setLocation={setLocation}
@@ -345,6 +351,7 @@ function App(): JSX.Element {
           setHasReminders={setHasReminders}
         />
       </SafeAreaView>
+      
     </>
   );
 }

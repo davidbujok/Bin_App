@@ -10,6 +10,7 @@ import {
   Alert,
   Modal,
   Linking,
+  ScrollView
 } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {
@@ -19,7 +20,7 @@ import {
   main,
   logo,
 } from '../styles/stylesSheet';
-import PageType from './../Helpers/PageType';
+import PageType from '../Helpers/PageType';
 import RemindersScreen from '../Components/RemindersScreen';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -74,18 +75,18 @@ function BaseContainer({
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
+    <ScrollView style={{flex: 1, backgroundColor: 'lightgrey'}}>
       <View style={main.container}>
         <View style={navbar.container}>
-          <Text style={logo.logoSize}>♻️</Text>
+          <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>♻️</Text>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={{flexDirection: 'row'}}
               onPress={clearInputs}>
-              <Text style={[navbar.logo, colourPalette.green]}>W</Text>
-              <Text style={[navbar.logo, colourPalette.black]}>hich </Text>
-              <Text style={[navbar.logo, colourPalette.blue]}>B</Text>
-              <Text style={[navbar.logo, colourPalette.black]}>in</Text>
+              <Text style={[navbar.logo, colourPalette.green]} maxFontSizeMultiplier={1.3}>W</Text>
+              <Text style={[navbar.logo, colourPalette.black]} maxFontSizeMultiplier={1.3}>hich </Text>
+              <Text style={[navbar.logo, colourPalette.blue]} maxFontSizeMultiplier={1.3}>B</Text>
+              <Text style={[navbar.logo, colourPalette.black]} maxFontSizeMultiplier={1.3}>in</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -135,7 +136,7 @@ function BaseContainer({
           Privacy Policy
         </Text>
       </View>
-
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -156,7 +157,7 @@ function BaseContainer({
           </View>
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   );
 }
 
