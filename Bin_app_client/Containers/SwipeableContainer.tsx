@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Dimensions,
@@ -7,12 +7,22 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  Pressable,
+  Platform,
 } from 'react-native';
 import {main, styles} from '../styles/stylesSheet';
 import {handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
-import {capitaliseFirstLetter, clearEmptyCharacters} from '../Helpers/StringFunctions';
+import {
+  binTypeToTile,
+  capitaliseFirstLetter,
+  clearEmptyCharacters,
+} from '../Helpers/StringFunctions';
+import RemindersScreen from '../Components/RemindersScreen';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { RFPercentage } from "react-native-responsive-fontsize";
 
 
@@ -24,19 +34,47 @@ const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
-  const [open, setOpen] = useState(false);
+const Carousel = ({
+  dates,
+  streetName,
+  hasReminders,
+  setHasReminders,
+  address,
+}) => {
+  // const [open, setOpen] = useState(false);
+  // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
+  const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
+  const [pickupDayInfo, setPickupDayInfo] = useState<IDate | null>(null);
 
-  const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PushNotification.getScheduledLocalNotifications(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    } else if (Platform.OS === 'ios') {
+      PushNotificationIOS.getPendingNotificationRequests(notifications => {
+        if (notifications.length > 0) {
+          setHasReminders(true);
+        }
+      });
+    }
+  }, []);
 
-  const handlePickedDateNotification = (calendarDateObject: IDate) => {
-    setCalendarDate(calendarDateObject);
-    setOpen(true);
-  };
+  // const handlePickedDateNotification = (calendarDateObject: IDate) => {
+  //   setCalendarDate(calendarDateObject);
+  //   setOpen(true);
+  // };
 
-  const daySinceStartOf2023 = () => {
-    const diffInMs = new Date().getTime() - new Date('2023-01-01').getTime();
+  const daySinceStartOfYear = () => {
+    const year = new Date().getFullYear()
+    console.log(year + " getFullYear");
+    
+    const diffInMs = new Date().getTime() - new Date(`${year}-01-01`).getTime();
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    console.log(diffInDays + " diff in days");
+
     return Math.floor(diffInDays);
   };
 
@@ -61,7 +99,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
     if (!iDates) {
       return [];
     }
-    const todayDaySinceStartOf2023 = daySinceStartOf2023();
+    const todayDaySinceStartOf2023 = daySinceStartOfYear();
     let weeksSkipped = Math.floor(todayDaySinceStartOf2023 / 7);
 
     // if(iDates[0].binType.includes('garden') == false){
@@ -81,13 +119,15 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
           iDateToClone,
           14 * fortnight + weeksSkipped * 7,
         );
-        if (daySinceStartOf2023() > 304 && newDate.binType.includes('garden')) {
+        if ((daySinceStartOfYear() > 304 || daySinceStartOfYear() < 25) && newDate.binType.includes('garden')) {
           if (newDate.binType === 'garden') {
             continue;
           } else if (newDate.binType.includes('garden')) {
             const cloneOfClone = {...newDate};
             const currentBinTypes = cloneOfClone.binType;
-            const updateCurrentBinTypes = clearEmptyCharacters(currentBinTypes.replace('garden', ''));
+            const updateCurrentBinTypes = clearEmptyCharacters(
+              currentBinTypes.replace('garden', ''),
+            );
             cloneOfClone.binType = updateCurrentBinTypes.trim();
             result.push(cloneOfClone);
           }
@@ -139,28 +179,6 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         source={resources[binName]}></Image>
     );
   };
-  const binTypeToTile = binTypes => {
-    let binNames = binTypes.split(' ');
-    // binNames.sort().reverse()
-    binNames = capitaliseFirstLetter(binNames);
-
-    if (binNames.length > 3) {
-      binNames.sort().reverse().pop();
-    }
-
-    // if (binNames.length === 4) {
-    //   return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`
-    // }
-    if (binNames.length === 3) {
-      return `${binNames[0]}, ${binNames[1]} & ${binNames[2]}`;
-    }
-    if (binNames.length === 2) {
-      return `${binNames[0]} & ${binNames[1]}`;
-    }
-    if (binNames.length === 1) {
-      return `${binNames[0]}`;
-    }
-  };
 
   const imagesForWasteType = (binTypes: string) => {
     const binNames = binTypes.split(' ');
@@ -176,6 +194,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
             fontWeight: '600',
             color: '#291D29',
             paddingTop: SCREEN_HEIGHT * 0.05,
+            textAlign:'center'
           }}>
           {binTitle}
         </Text>
@@ -200,7 +219,7 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
 
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
-    
+
     const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View
@@ -230,8 +249,12 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
         </Text>
         {renderSwitch(pickupInfo.binType)}
         <TouchableOpacity
+
           style={swipeableStyle.button}
-          onPress={() => setModalRemindersVisible(true)}>
+          onPress={() => {
+            setModalRemindersVisible(true);
+            setPickupDayInfo(pickupInfo);
+          }}>
           <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
         </TouchableOpacity>
       </View>
@@ -239,11 +262,40 @@ const Carousel = ({dates, streetName, setModalRemindersVisible}) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true} contentContainerStyle={{paddingBottom:SCREEN_HEIGHT*0.3}}>
+    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true} >
     <ScrollView
       style={{paddingTop: SCREEN_HEIGHT * 0.05}}
       horizontal
       snapToInterval={SCREEN_WIDTH}>
+
+      {/* <View>
+        <DateTimePicker
+          open={open}
+          setOpen={setOpen}
+          calendarDate={calendarDate}
+        />
+      </View> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalRemindersVisible}
+        onRequestClose={() => {
+          setModalRemindersVisible(!modalRemindersVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Pressable
+              onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
+              <Text style={styles.modalCloseX}>Close</Text>
+            </Pressable>
+            <RemindersScreen
+              date={pickupDayInfo}
+              datesList={pagesForNextMonths(dates)}
+              setHasReminders={setHasReminders}></RemindersScreen>
+          </View>
+        </View>
+      </Modal>
+
       {pagesForNextMonths(dates).length > 0 ? (
         pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
       ) : (

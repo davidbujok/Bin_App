@@ -9,6 +9,10 @@ const fontScale = PixelRatio.getFontScale()
 
 
 
+const getFontSize = size => size / fontScale
+
+
+
 type Color = {
   blue: '#1c6fc4';
   red: '#f14135';
@@ -22,6 +26,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: RFPercentage(3),
     maxWidth: RFPercentage(40),
+    textAlign:'center'
   },
   smallButton: {
     backgroundColor: '#1c6fc4',
@@ -118,7 +123,7 @@ export const search = StyleSheet.create({
     paddingTop: SCREEN_HEIGHT * 0.06,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 });
 
@@ -126,8 +131,6 @@ export const main = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'red',
     maxWidth: SCREEN_WIDTH,
     // minHeight: SCREEN_HEIGHT
   },
@@ -161,18 +164,18 @@ export const colourPalette = StyleSheet.create({
 
 export const heroText = StyleSheet.create({
   hero: {
-    fontSize: RFPercentage(15) ,
+    fontSize: getFontSize(80) ,
     marginBottom: RFPercentage(0),
     padding: 0,
     includeFontPadding: false,
   },
   joinText: {
-    fontSize: 40 * fontScale,
+    fontSize: getFontSize(50),
     alignSelf: 'center',
     includeFontPadding: false,
   },
   letter: {
-    fontSize:40 *fontScale,
+    fontSize: getFontSize(100),
     includeFontPadding: false,
   },
   mid: {

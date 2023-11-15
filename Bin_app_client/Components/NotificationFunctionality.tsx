@@ -3,6 +3,8 @@ import checkApplicationPermission from '../containers/NotificationPermission';
 import {IDate} from '../styles/interfaces';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
+import {binTypeToTile} from '../Helpers/StringFunctions';
+import {months, weekday} from '../Helpers/ConstantVariables';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {
   console.log(
@@ -11,6 +13,10 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     'minutes: ',
     pickedDate.getMinutes(),
   );
+
+  console.log('====================================');
+  console.log(date.name + " DATE NAME");
+  console.log('====================================');
 
   await checkApplicationPermission();
 
@@ -24,28 +30,29 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   const setNotification = new Date(year, month, day, hour, minute);
 
   console.log('SET NOTIFICATION FOR :', setNotification, date);
-  //   console.log('year :', year);
-  //   console.log('month: ', month);
-  //   console.log('day :', day);
-  //   console.log('hour :', hour);
-  //   console.log('minutes :', minute);
 
+  console.log(date.date);
+  console.log(setNotification + 'SET NOTIFICATIONS --------------------');
 
-  console.log(date.date)
-  console.log(setNotification + "SET NOTIFICATIONS --------------------")
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-  const dateToDisplay = `${weekday[setNotification.getDay()]} ${setNotification.getDate()}-${setNotification.getMonth()}-${setNotification.getFullYear()}`
+  const dateToDisplay = `${
+    weekday[setNotification.getDay()]
+  }, ${setNotification.getDate()} ${
+    months[setNotification.getMonth()]
+  } ${setNotification.getFullYear()}`;
   if (Platform.OS === 'android') {
     PushNotification.localNotification({
       channelId: 'Date-Notification',
       title: 'Which Bin',
-      message: `Congratulations, you have set up a reminder for your bin on ${dateToDisplay} `,
+      message: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
     });
     PushNotification.localNotificationSchedule({
       channelId: 'Date-Notification',
       title: `Which Bin`,
-      message: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      message: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       date: setNotification,
       allowWhileIdle: true,
     });
@@ -56,13 +63,17 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
       title: `Which Bin`,
-      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      body: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       fireDate: new Date(Date.now() + 1 * 1000), // Schedule in 1 secs
     });
     PushNotificationIOS.addNotificationRequest({
       id: 'Date-Notification',
       title: `Which Bin`,
-      body: `Your ${date.binType} collection is on ${dateToDisplay}`,
+      body: `Your ${binTypeToTile(
+        date.binType,
+      )} collection is on ${dateToDisplay}`,
       fireDate: setNotification,
     });
     PushNotificationIOS.getPendingNotificationRequests(Localarray => {
@@ -90,5 +101,14 @@ export const cancelNotifications = () => {
     PushNotification.cancelAllLocalNotifications();
   } else if (Platform.OS == 'ios') {
     PushNotificationIOS.removeAllPendingNotificationRequests();
+  }
+};
+
+export const deleteReminderById = (id: string) => {
+  if (Platform.OS === 'android') {
+    PushNotification.cancelLocalNotification(id);
+  } else {
+    // Is that a thing ?? [id] Test it
+    PushNotificationIOS.removePendingNotificationRequests([id]);
   }
 };
