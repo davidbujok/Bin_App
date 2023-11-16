@@ -64,6 +64,7 @@ function HomeRemindersScreen() {
                     justifyContent: 'space-between',
                   }}>
                   <Text
+                    id={reminder.id}
                     style={{
                       padding: 5,
                       flexGrow: 9,
