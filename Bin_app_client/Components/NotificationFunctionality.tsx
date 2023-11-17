@@ -38,7 +38,6 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
   } ${setNotification.getFullYear()}`;
   if (Platform.OS === 'android') {
     PushNotification.localNotification({
-      id: String(Date.now() + 1),
       channelId: 'Date-Notification',
       title: 'Which Bin',
       message: `Your ${binTypeToTile(
@@ -46,7 +45,6 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
       )} collection is on ${dateToDisplay}`,
     });
     PushNotification.localNotificationSchedule({
-      id: String(Date.now()),
       channelId: 'Date-Notification',
       title: `Which Bin`,
       message: `Your ${binTypeToTile(
@@ -105,7 +103,7 @@ export const getCurrentNotifications = async callback => {
 
 export const INotificationFromOSSpecific = notificationOSSpecific => {
   if (Platform.OS === 'android') {
-    return notificationOSSpecific;
+    return {...notificationOSSpecific, id: notificationOSSpecific};
     // it's android no need for changes
   } else if (Platform.OS == 'ios') {
     const newNotification: INotification = {

@@ -8,17 +8,23 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ImageStyle
+  ImageStyle,
 } from 'react-native';
 import {bottomBar} from '../styles/stylesSheet';
 import PageType from '../Helpers/PageType';
 
-function BottomMenu({modalReminderVisible, page, setPage, setModalRemindersVisible, clearInputs}) {
+function BottomMenu({
+  modalReminderVisible,
+  page,
+  setPage,
+  setModalRemindersVisible,
+  clearInputs,
+}) {
   const [keyboardStatus, setKeyboardStatus] = useState<boolean>(false);
 
-  const homeIcon = require('../static/images/home.png')
-  const infoIcon = require('../static/images/info.png')
-  const bellIcon = require('../static/images/bell.png')
+  const homeIcon = require('../static/images/home.png');
+  const infoIcon = require('../static/images/info.png');
+  const bellIcon = require('../static/images/bell.png');
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -43,25 +49,88 @@ function BottomMenu({modalReminderVisible, page, setPage, setModalRemindersVisib
   return (
     <View style={bottomBar.container}>
       <TouchableOpacity
-        style={[bottomBar.option, {backgroundColor: modalReminderVisible ? '#f14135': 'white' }]}
+        style={[
+          bottomBar.option,
+          modalReminderVisible
+            ? bottomBar.menu_active_reminders
+            : bottomBar.menu_inactive,
+        ]}
         onPress={() => setModalRemindersVisible(true)}>
-        <Image resizeMode='contain' source={bellIcon} style={[bottomBar.icons]}></Image>
-        <Text style={bottomBar.text}>Reminders</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[bottomBar.option,{backgroundColor: page == PageType.Home && modalReminderVisible == false ? '#6aa62e': 'white' }]} onPress={() => clearInputs()}>
-        <Image resizeMode='contain' source={homeIcon} style={bottomBar.icons}></Image>
-        <Text style={bottomBar.text}>Home</Text>
+        <Image
+          resizeMode="contain"
+          source={bellIcon}
+          style={[
+            bottomBar.icons,
+            modalReminderVisible
+              ? bottomBar.icons_active
+              : bottomBar.icons_inactive,
+          ]}></Image>
+        <Text
+          style={
+            (bottomBar.text,
+            modalReminderVisible
+              ? bottomBar.text_active
+              : bottomBar.text_inactive)
+          }>
+          Reminders
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[bottomBar.option, {backgroundColor: page == PageType.Infos && modalReminderVisible == false ? '#1c6fc4': 'white' }]}
+        style={[
+          bottomBar.option,
+          page == PageType.Home && modalReminderVisible == false
+            ? bottomBar.menu_active_home
+            : bottomBar.menu_inactive,
+        ]}
+        onPress={() => clearInputs()}>
+        <Image
+          resizeMode="contain"
+          source={homeIcon}
+          style={[
+            bottomBar.icons,
+            page == PageType.Home && modalReminderVisible == false
+              ? bottomBar.icons_active
+              : bottomBar.icons_inactive,
+          ]}></Image>
+        <Text
+          style={
+            (bottomBar.text,
+            page == PageType.Home && modalReminderVisible == false
+              ? bottomBar.text_active
+              : bottomBar.text_inactive)
+          }>
+          Home
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          bottomBar.option,
+          page == PageType.Infos && modalReminderVisible == false
+            ? bottomBar.menu_active_settings
+            : bottomBar.menu_inactive,
+        ]}
         onPress={() => setPage(PageType.Infos)}>
-        <Image resizeMode='contain' source={infoIcon} style={bottomBar.icons}></Image>
-        <Text style={bottomBar.text}>Info</Text>
+        <Image
+          resizeMode="contain"
+          source={infoIcon}
+          style={[
+            bottomBar.icons,
+            page == PageType.Infos && modalReminderVisible == false
+              ? bottomBar.icons_active
+              : bottomBar.icons_inactive,
+          ]}></Image>
+        <Text
+          style={
+            (bottomBar.text,
+            page == PageType.Infos && modalReminderVisible == false
+              ? bottomBar.text_active
+              : bottomBar.text_inactive)
+          }>
+          Info
+        </Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 export default BottomMenu;
-
-

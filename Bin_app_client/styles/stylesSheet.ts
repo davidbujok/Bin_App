@@ -17,12 +17,12 @@ const fontScale = PixelRatio.getFontScale();
 
 const getFontSize = size => size / fontScale;
 
-export type Color = {
-  blue: '#1c6fc4';
-  red: '#f14135';
-  brown: '#9a6d38';
-  green: '#6aa62e';
-  black: '#19231a';
+export const ColorTheme = {
+  blue: '#1c6fc4',
+  red: '#f14135',
+  brown: '#9a6d38',
+  green: '#6aa62e',
+  black: '#19231a',
 };
 
 export const styles = StyleSheet.create({
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: RFPercentage(3.75),
     textAlign: 'center',
-    flexWrap:'wrap',
+    flexWrap: 'wrap',
   },
   smallButton: {
     backgroundColor: '#1c6fc4',
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
     padding: SCREEN_WIDTH * 0.05,
     minWidth: SCREEN_WIDTH * 0.8,
     maxWidth: SCREEN_WIDTH * 0.8,
-    minHeight:SCREEN_HEIGHT * 0.7,
+    minHeight: SCREEN_HEIGHT * 0.7,
     maxHeight: SCREEN_WIDTH * 0.7,
     shadowColor: '#000',
     shadowOffset: {
@@ -95,7 +95,7 @@ export const styles = StyleSheet.create({
   },
   modalCloseX: {
     marginBottom: SCREEN_HEIGHT * 0.015,
-    marginRight: - SCREEN_WIDTH * 0.01,
+    marginRight: -SCREEN_WIDTH * 0.01,
     alignSelf: 'flex-end',
     height: SCREEN_HEIGHT * 0.045,
     width: SCREEN_WIDTH * 0.09,
@@ -109,8 +109,8 @@ export const bottomBar = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: 'white',
-    borderTopColor:'lightgrey',
-    borderTopWidth:1,
+    borderTopColor: 'lightgrey',
+    borderTopWidth: 1,
     position: 'absolute',
     minHeight: SCREEN_HEIGHT * 0.072,
     maxHeight: SCREEN_HEIGHT * 0.072,
@@ -121,8 +121,8 @@ export const bottomBar = StyleSheet.create({
     gap: 10,
   },
   option: {
-    height:'100%',
-    width:'100%',
+    height: '100%',
+    width: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -130,12 +130,36 @@ export const bottomBar = StyleSheet.create({
     textAlignVertical: 'center',
     paddingTop: SCREEN_HEIGHT * 0.005,
   },
-  text : {
+  text: {
     fontSize: RFPercentage(1.5),
   },
   icons: {
     height: SCREEN_HEIGHT * 0.035,
-  }
+  },
+  icons_active: {
+    tintColor: 'white',
+  },
+  text_active: {
+    color: 'white',
+  },
+  icons_inactive: {
+    tintColor: 'black',
+  },
+  text_inactive: {
+    color: 'black',
+  },
+  menu_inactive: {
+    backgroundColor: 'white',
+  },
+  menu_active_reminders: {
+    backgroundColor: ColorTheme.red,
+  },
+  menu_active_home: {
+    backgroundColor: ColorTheme.green,
+  },
+  menu_active_settings: {
+    backgroundColor: ColorTheme.blue,
+  },
 });
 
 export const navbar = StyleSheet.create({
@@ -264,18 +288,17 @@ export const logo = StyleSheet.create({
     fontSize: SCREEN_HEIGHT * 0.055,
     color: 'black',
   },
-})
+});
 
 export const info = StyleSheet.create({
   text: {
     color: 'black',
     padding: 10,
-    textAlign:"left",
-    fontWeight:'600',
-    fontSize: RFPercentage(3)
+    textAlign: 'left',
+    fontWeight: '600',
+    fontSize: RFPercentage(3),
   },
   container: {
-    minWidth: SCREEN_WIDTH * 0.8
-
-  }
+    minWidth: SCREEN_WIDTH * 0.8,
+  },
 });
