@@ -10,7 +10,8 @@ import {
   Alert,
   Modal,
   Linking,
-  ScrollView
+  ScrollView,
+  Image,
 } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {
@@ -27,6 +28,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import HomeRemindersScreen from '../Components/HomeRemindersScreen';
+import BottomMenu from './BottomMenu';
 
 function BaseContainer({
   navbar,
@@ -42,8 +44,7 @@ function BaseContainer({
   setLocation,
   setNewFormat,
   dates,
-  address
-
+  address,
 }) {
   const clearInputs = () => {
     setAddress({});
@@ -59,50 +60,67 @@ function BaseContainer({
 
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
 
-
-
   return (
-    <ScrollView style={{flex: 1, backgroundColor: 'white', minHeight:SCREEN_HEIGHT}}>
-      <View style={main.container}>
-        <View style={navbar.container}>
-          <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>♻️</Text>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              style={{flexDirection: 'row'}}
-              onPress={clearInputs}>
-              <Text style={[navbar.logo, colourPalette.green]} maxFontSizeMultiplier={1.3}>W</Text>
-              <Text style={[navbar.logo, colourPalette.black]} maxFontSizeMultiplier={1.3}>hich </Text>
-              <Text style={[navbar.logo, colourPalette.blue]} maxFontSizeMultiplier={1.3}>B</Text>
-              <Text style={[navbar.logo, colourPalette.black]} maxFontSizeMultiplier={1.3}>in</Text>
-            </TouchableOpacity>
+    <>
+      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+        <View style={[main.container]}>
+          <View style={navbar.container}>
+            <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>
+              ♻️
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                style={{flexDirection: 'row'}}
+                onPress={clearInputs}>
+                <Text
+                  style={[navbar.logo, colourPalette.green]}
+                  maxFontSizeMultiplier={1.3}>
+                  W
+                </Text>
+                <Text
+                  style={[navbar.logo, colourPalette.black]}
+                  maxFontSizeMultiplier={1.3}>
+                  hich{' '}
+                </Text>
+                <Text
+                  style={[navbar.logo, colourPalette.blue]}
+                  maxFontSizeMultiplier={1.3}>
+                  B
+                </Text>
+                <Text
+                  style={[navbar.logo, colourPalette.black]}
+                  maxFontSizeMultiplier={1.3}>
+                  in
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              alignSelf: 'center',
+              marginTop: -SCREEN_WIDTH * 0.04,
+            }}>
+            <View style={search.container}>
+              <Pressable>
+                <Text
+                  onPress={() => {
+                    setPage(PageType.Home);
+                    setDates(null);
+                  }}></Text>
+              </Pressable>
+              <TextInput
+                placeholderTextColor={'#000000'}
+                placeholder="Enter street name"
+                onChangeText={setInput}
+                value={input}
+                style={search.input}
+              />
+            </View>
+            <View style={{flex: 2}}>{renderSwitch(page)}</View>
           </View>
         </View>
-        <View
-          style={{
-            display: 'flex',
-            alignSelf: 'center',
-            marginTop: -SCREEN_WIDTH * 0.04,
-          }}>
-          <View style={search.container}>
-            <Pressable>
-              <Text
-                onPress={() => {
-                  setPage(PageType.Home);
-                  setDates(null);
-                }}></Text>
-            </Pressable>
-            <TextInput
-              placeholderTextColor={'#000000'}
-              placeholder="Enter street name"
-              onChangeText={setInput}
-              value={input}
-              style={search.input}
-            />
-          </View>
-          <View style={{flex:2, marginBottom:'25%'}}>{renderSwitch(page)}</View>
-          </View>
-      </View>
-      {/* <View style={{padding: 10, alignSelf: 'center'}}>
+        {/* <View style={{padding: 10, alignSelf: 'center'}}>
         <Pressable style={styles.smallButton} onPress={() => setModalRemindersVisible(true)}>
           <Text style={styles.buttonTextColor}>Reminders</Text>
         </Pressable>
@@ -115,30 +133,35 @@ function BaseContainer({
         </Text>
       </View> */}
 
-      <View style={bottomBar.container}>
-        <Text>Home</Text>
-        <Text>Reminders</Text>
-        <Text>Info</Text>
-      </View>
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalRemindersVisible}
-        onRequestClose={() => {
-          setModalRemindersVisible(!modalRemindersVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Pressable
-              onPress={() => setModalRemindersVisible(!modalRemindersVisible)}>
-              <Text style={styles.modalCloseX}>Close</Text>
-            </Pressable>
-            <HomeRemindersScreen></HomeRemindersScreen>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalRemindersVisible}
+          onRequestClose={() => {
+            setModalRemindersVisible(!modalRemindersVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable
+                onPress={() =>
+                  setModalRemindersVisible(!modalRemindersVisible)
+                }>
+                {/* <Text style={styles.modalCloseX}>X</Text> */}
+                <Image
+                  style={styles.modalCloseX}
+                  source={require('../static/images/remove_icon.png')}></Image>
+              </Pressable>
+              <HomeRemindersScreen></HomeRemindersScreen>
+            </View>
           </View>
-        </View>
-      </Modal>
-    </ScrollView>
+        </Modal>
+      </ScrollView>
+      <BottomMenu
+        setPage={setPage}
+        setModalRemindersVisible={setModalRemindersVisible}
+        clearInputs={clearInputs}
+      />
+    </>
   );
 }
 
