@@ -1,12 +1,14 @@
 import React from 'react';
-import {Keyboard, Text, TouchableWithoutFeedback, View, ScrollView} from 'react-native';
+import {Keyboard, Text, TouchableWithoutFeedback, View, ScrollView, Dimensions} from 'react-native';
 import {colourPalette, main} from '../styles/stylesSheet';
 
 function HomeContainer({heroText}) {
 
+  const SCREEN_HEIGHT = Dimensions.get('window').height
+
   return (
     
-    <View onTouchStart={() => Keyboard.dismiss()} style={main.baseText}>
+    <View onTouchStart={() => Keyboard.dismiss()} style={[main.baseText]}>
           <Text style={[heroText.hero, heroText.mid, colourPalette.green]} >
             Save
           </Text>
@@ -19,7 +21,7 @@ function HomeContainer({heroText}) {
           <Text style={[heroText.joinText, heroText.mid, colourPalette.blue]} >
             and
           </Text>
-          <View style={{flexDirection: 'row', flexWrap:'wrap'}}>
+          <View style={{flexDirection: 'row', flexWrap:'wrap', maxWidth : '100%', paddingBottom: SCREEN_HEIGHT * 0.08}}>
             <Text style={[heroText.letter, heroText.bold, colourPalette.red]} >
               R
             </Text>

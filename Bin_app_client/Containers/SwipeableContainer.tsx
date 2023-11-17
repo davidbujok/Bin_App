@@ -33,6 +33,7 @@ const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 const Carousel = ({
   dates,
   streetName,
@@ -44,6 +45,7 @@ const Carousel = ({
   // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [pickupDayInfo, setPickupDayInfo] = useState<IDate | null>(null);
+  const title: string = streetName.replace(/\s0\s/, ' ');
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -217,24 +219,14 @@ const Carousel = ({
     });
   };
 
-  const pageForIDate = (pickupInfo: IDate) => {
+  const pageForIDate = (pickupIDate: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
 
-    const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
-      <View key={pickupInfo.id} style={swipeableStyle.container}>
-        <Text style={styles.streetName}>{title}</Text>
+      <View key={pickupIDate.id} style={swipeableStyle.container}>
         <Text
           style={{
-            fontSize: RFPercentage(3),
-            fontWeight: '400',
-            marginTop: SCREEN_HEIGHT * 0.05,
-          }}>
-          Next collection is:
-        </Text>
-        <Text
-          style={{
-            fontSize: RFPercentage(4),
+            fontSize: RFPercentage(3.5),
             fontWeight: '600',
             color: '#291D29',
             flexWrap: 'wrap',
@@ -242,14 +234,14 @@ const Carousel = ({
             marginRight: SCREEN_WIDTH * 0.05,
             textAlign: 'center',
           }}>
-          {dateAsString(pickupInfo.dateObject)}{' '}
+          {dateAsString(pickupIDate.dateObject)}{' '}
         </Text>
-        {renderSwitch(pickupInfo.binType)}
+        {renderSwitch(pickupIDate.binType)}
         <TouchableOpacity
           style={swipeableStyle.button}
           onPress={() => {
             setModalRemindersVisible(true);
-            setPickupDayInfo(pickupInfo);
+            setPickupDayInfo(pickupIDate);
           }}>
           <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
             Add Reminder
@@ -260,10 +252,14 @@ const Carousel = ({
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true}>
+    <ScrollView
+      showsVerticalScrollIndicator
+      nestedScrollEnabled={true}
+      style={{paddingBottom: SCREEN_HEIGHT * 0.1}}>
+      <Text style={styles.streetName}>{title}</Text>
       <ScrollView
         style={{
-          paddingTop: SCREEN_HEIGHT * 0.02,
+          paddingTop: SCREEN_HEIGHT * 0.025,
         }}
         horizontal
         snapToInterval={SCREEN_WIDTH}>
@@ -275,19 +271,24 @@ const Carousel = ({
             setModalRemindersVisible(!modalRemindersVisible);
           }}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <View
+              style={[
+                styles.modalView,
+                {minHeight: SCREEN_HEIGHT * 0.4, maxHeight: SCREEN_WIDTH * 0.4},
+              ]}>
               <Pressable
                 onPress={() =>
                   setModalRemindersVisible(!modalRemindersVisible)
                 }>
                 <Image
                   style={styles.modalCloseX}
-                  source={require('../static/images/remove_icon.png')}></Image>
+                  source={require('../static/images/cancel.png')}></Image>
               </Pressable>
               <RemindersScreen
                 date={pickupDayInfo}
                 datesList={pagesForNextMonths(dates)}
-                setHasReminders={setHasReminders}></RemindersScreen>
+                setHasReminders={setHasReminders}
+                closeParent={setModalRemindersVisible}></RemindersScreen>
             </View>
           </View>
         </Modal>
@@ -323,6 +324,10 @@ const swipeableStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
     width: SCREEN_WIDTH, // <<<<<<<<
+    // minHeight: SCREEN_HEIGHT * 0.55,
+    // maxHeight: SCREEN_HEIGHT * 0.62,
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   button: {
     backgroundColor: '#1c6fc4',

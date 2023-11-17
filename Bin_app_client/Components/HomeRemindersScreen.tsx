@@ -19,6 +19,7 @@ import {
   getCurrentNotifications,
 } from './NotificationFunctionality';
 import {homeReminderModalMessage} from '../Helpers/StringFunctions';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -49,25 +50,28 @@ function HomeRemindersScreen() {
   // ===========================================================================
 
   return (
-    <View>
-      {notificationsList && notificationsList.length > 0 ? (
-        <View style={{display: 'flex', gap: 6}}>
-          {notificationsList.map((reminder: any) => {
-            const message = homeReminderModalMessage(reminder.message);
-            return (
-              <>
+    <>
+      <ScrollView style={{width: '100%'}}>
+        {notificationsList && notificationsList.length > 0 ? (
+          <View style={{display: 'flex', gap: SCREEN_HEIGHT * 0.01}}>
+            {notificationsList.map((reminder: any) => {
+              const message = homeReminderModalMessage(reminder.message);
+              return (
                 <View
-                  id={reminder.id}
+                  key={reminder.id}
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    paddingRight: 10,
+                    borderBottomColor: 'lightgrey',
+                    borderBottomWidth: 1,
                   }}>
                   <Text
-                    id={reminder.id}
                     style={{
-                      padding: 5,
+                      padding: SCREEN_WIDTH * 0.02,
                       flexGrow: 9,
+                      fontSize: RFPercentage(2.5),
                     }}>
                     {message}
                   </Text>
@@ -78,53 +82,54 @@ function HomeRemindersScreen() {
                       await setUpdateNotifications(!updateNotifications);
                     }}>
                     <Image
-                      //   style={{}}
+                      style={{
+                        height: SCREEN_HEIGHT * 0.035,
+                        width: SCREEN_WIDTH * 0.07,
+                      }}
                       source={require('../static/images/delete.png')}></Image>
                   </Pressable>
                 </View>
-              </>
-            );
-          })}
-        </View>
-      ) : (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          No Reminders
-        </Text>
-      )}
-      <View
-        style={[
-          styles.rowContainer,
-          {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          },
-        ]}>
+              );
+            })}
+          </View>
+        ) : (
+          <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
+            No Reminders
+          </Text>
+        )}
+        <View
+          style={[
+            styles.rowContainer,
+            {
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            },
+          ]}></View>
+
+        <View
+          style={[
+            styles.rowContainer,
+            {display: 'flex', alignContent: 'center', justifyContent: 'center'},
+          ]}></View>
+      </ScrollView>
+      <View style={{display: 'flex', alignItems: 'center'}}>
         <TouchableOpacity
           style={[
             styles.smallButton,
             {
               backgroundColor: 'red',
-              borderWidth: 2,
             },
           ]}
           onPress={async () => {
             await cancelNotifications();
             await setUpdateNotifications(!updateNotifications);
           }}>
-          <Text style={[styles.buttonTextColor, {color: 'black'}]}>
-            Delete All
-          </Text>
+          <Text style={styles.buttonTextColor}>Delete All</Text>
         </TouchableOpacity>
       </View>
-
-      <View
-        style={[
-          styles.rowContainer,
-          {display: 'flex', alignContent: 'center', justifyContent: 'center'},
-        ]}></View>
-    </View>
+    </>
   );
 }
 

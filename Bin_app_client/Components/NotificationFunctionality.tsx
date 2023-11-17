@@ -5,6 +5,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import {binTypeToTile} from '../Helpers/StringFunctions';
 import {months, weekday} from '../Helpers/ConstantVariables';
+import {INotification} from '../styles/interfaces';
 
 export const handleNotification = async (date: IDate, pickedDate: Date) => {
   console.log(
@@ -57,7 +58,7 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
     });
   } else if (Platform.OS == 'ios') {
     PushNotificationIOS.addNotificationRequest({
-      id: 'Date-Notification',
+      id: String(Date.now() + 1),
       title: `Which Bin`,
       body: `Your ${binTypeToTile(
         date.binType,
@@ -65,7 +66,7 @@ export const handleNotification = async (date: IDate, pickedDate: Date) => {
       fireDate: new Date(Date.now() + 1 * 1000), // Schedule in 1 secs
     });
     PushNotificationIOS.addNotificationRequest({
-      id: 'Date-Notification',
+      id: String(Date.now()),
       title: `Which Bin`,
       body: `Your ${binTypeToTile(
         date.binType,
@@ -82,13 +83,36 @@ export const getCurrentNotifications = async callback => {
   if (Platform.OS === 'android') {
     PushNotification.getScheduledLocalNotifications(notifications => {
       // console.log('android setup notification', notifications);
-      callback(notifications);
+      callback(
+        notifications.map(osNotification =>
+          INotificationFromOSSpecific(osNotification),
+        ),
+      );
     });
   } else if (Platform.OS == 'ios') {
     PushNotificationIOS.getPendingNotificationRequests(notifications => {
       // console.log('ios setup notification', notifications);
-      callback(notifications);
+      callback(
+        notifications.map(osNotification =>
+          INotificationFromOSSpecific(osNotification),
+        ),
+      );
     });
+  }
+};
+
+export const INotificationFromOSSpecific = notificationOSSpecific => {
+  if (Platform.OS === 'android') {
+    return {...notificationOSSpecific, id: notificationOSSpecific};
+    // it's android no need for changes
+  } else if (Platform.OS == 'ios') {
+    const newNotification: INotification = {
+      id: notificationOSSpecific.id,
+      title: notificationOSSpecific.title,
+      message: notificationOSSpecific.body,
+      date: notificationOSSpecific.fireDate,
+    };
+    return newNotification;
   }
 };
 
@@ -105,6 +129,7 @@ export const deleteReminderById = (id: string) => {
     PushNotification.cancelLocalNotification(id);
   } else {
     // Is that a thing ?? [id] Test it
+    console.log('removePendingNotificationRequests', id);
     PushNotificationIOS.removePendingNotificationRequests([id]);
   }
 };

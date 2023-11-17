@@ -9,7 +9,8 @@ const checkApplicationPermission = async () => {
       );
     } catch (error) {}
   } else if (Platform.OS == 'ios') {
-    PushNotificationIOS.requestPermissions();
+    console.log('    PushNotificationIOS.requestPermissions');
+    await PushNotificationIOS.requestPermissions();
   }
 };
 

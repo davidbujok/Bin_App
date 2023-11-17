@@ -26,8 +26,8 @@ android {
         applicationId "com.codestorytelling.binday"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10020
-        versionName "1.0.20"
+        versionCode 10025
+        versionName "1.0.25"
     }
     signingConfigs {
         debug {

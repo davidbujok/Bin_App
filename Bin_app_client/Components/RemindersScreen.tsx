@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Dimensions,
-  Text,
-  TouchableOpacity,
-  Switch,
-} from 'react-native';
+import {View, Dimensions, Text, TouchableOpacity, Switch} from 'react-native';
 
 import {styles} from '../styles/stylesSheet';
 import {IDate} from '../styles/interfaces';
@@ -21,8 +15,13 @@ import {months, weekday} from '../Helpers/ConstantVariables';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-const RemindersScreen = ({date, datesList, setHasReminders}) => {
-  const [open, setOpen] = useState(false);
+const RemindersScreen = ({
+  date,
+  datesList,
+  setHasReminders,
+  closeParent = bool => {},
+}) => {
+  const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
   // console.log("DATES Before Const: ",dates)
 
   const [calendarDate, setCalendarDate] = useState<IDate>(date);
@@ -74,11 +73,9 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
   } ${lastCollectionObj.day}, ${lastCollectionObj.year}`;
   return (
     <View>
-      {/* <View style={styles.rowContainer}>
-        <Text style={styles.streetName}>{'Street:' + streetName}</Text>
-      </View> */}
+      {/* KEEP ALL CODE BELOW */}
 
-      <View style={styles.rowContainer}>
+      {/* <View style={styles.rowContainer}>
         <Text style={styles.streetName}>
           Repeat until {'\n'}
           {lastCollection}
@@ -93,40 +90,32 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
             setUpdateNotifications(!updateNotifications);
           }}
         />
-      </View>
-      {/* {notificationsList && notificationsList.length > 0 ? (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          Reminders Set: {notificationsList.length}
-        </Text>
-      ) : (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          No Reminders
-        </Text>
-      )} */}
+      </View> */}
 
       <View
         style={[
           styles.rowContainer,
           {display: 'flex', alignContent: 'center', justifyContent: 'center'},
         ]}>
-
         {isReminderEnabled == true ? (
           <Text>Here</Text>
         ) : (
           <TouchableOpacity
             style={styles.smallButton}
             onPress={() => {
-              setOpen(true);
+              setOpenDateTimePicker(true);
             }}>
-            <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
+            <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>
+              Set Time
+            </Text>
           </TouchableOpacity>
         )}
       </View>
 
       <View>
         <DateTimePicker
-          open={open}
-          setOpen={setOpen}
+          open={openDateTimePicker}
+          setOpen={setOpenDateTimePicker}
           calendarDate={calendarDate}
           datePicked={async reminderTime => {
             console.log('Cla day Reminder : ', calendarDate);
@@ -137,6 +126,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
             await handleNotification(calendarDate, new Date(reminderTime));
 
             await setUpdateNotifications(!updateNotifications);
+            closeParent(false);
           }}
         />
       </View>
