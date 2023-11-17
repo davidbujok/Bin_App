@@ -63,7 +63,7 @@ export const dateToString = (date: Date) => {
   };
 };
 
-export const homeReminderModalMessage = (message: string) => {
+export const homeReminderModalMessage = (message: string = '') => {
   let messageReplaced = message.replace(/collection is on/, '');
   messageReplaced = messageReplaced.replace(/Your/, '');
 

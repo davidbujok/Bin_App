@@ -13,3 +13,10 @@ export interface IDate {
   name: string;
   dateObject: Date;
 }
+
+export interface INotification {
+  id: number;
+  title: string;
+  message: string;
+  date: string;
+}
