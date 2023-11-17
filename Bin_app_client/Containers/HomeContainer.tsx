@@ -6,7 +6,7 @@ function HomeContainer({heroText}) {
 
   return (
     
-    <View onTouchStart={() => Keyboard.dismiss()} style={main.baseText}>
+    <View onTouchStart={() => Keyboard.dismiss()} style={[main.baseText]}>
           <Text style={[heroText.hero, heroText.mid, colourPalette.green]} >
             Save
           </Text>
@@ -19,7 +19,7 @@ function HomeContainer({heroText}) {
           <Text style={[heroText.joinText, heroText.mid, colourPalette.blue]} >
             and
           </Text>
-          <View style={{flexDirection: 'row', flexWrap:'wrap'}}>
+          <View style={{flexDirection: 'row', flexWrap:'wrap', maxWidth : '100%'}}>
             <Text style={[heroText.letter, heroText.bold, colourPalette.red]} >
               R
             </Text>

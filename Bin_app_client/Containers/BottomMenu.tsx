@@ -3,15 +3,21 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   Text,
   TouchableOpacity,
   View,
+  Image
 } from 'react-native';
 import {bottomBar} from '../styles/stylesSheet';
 import PageType from '../Helpers/PageType';
 
 function BottomMenu({setPage, setModalRemindersVisible, clearInputs}) {
   const [keyboardStatus, setKeyboardStatus] = useState<boolean>(false);
+
+  const homeIcon = require('../static/images/home.png')
+  const infoIcon = require('../static/images/info.png')
+  const bellIcon = require('../static/images/bell.png')
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -35,25 +41,22 @@ function BottomMenu({setPage, setModalRemindersVisible, clearInputs}) {
 
   return (
     <View style={bottomBar.container}>
-      {/* <KeyboardAvoidingView */}
-      {/* behavior={Platform.OS === 'ios' ? 'padding' : 'height'} */}
-      {/* style={{...bottomBar.container, bottom: keyboardStatus ? '100%' : 0}}> */}
-      <TouchableOpacity style={bottomBar.option} onPress={() => clearInputs()}>
-        <Text>Home</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         style={bottomBar.option}
         onPress={() => setModalRemindersVisible(true)}>
-        {/* DOESNT LIKE LAST CHAR  */}
-        <Text>Reminderss</Text>
+        <Image resizeMode='contain' source={bellIcon} style={bottomBar.icons}></Image>
+        <Text style={bottomBar.text}>Reminders</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={bottomBar.option} onPress={() => clearInputs()}>
+        <Image resizeMode='contain' source={homeIcon} style={bottomBar.icons}></Image>
+        <Text style={bottomBar.text}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={bottomBar.option}
         onPress={() => setPage(PageType.Infos)}>
-        {/* DOESNT LIKE LAST CHAR  */}
-        <Text>Infosr</Text>
+        <Image resizeMode='contain' source={infoIcon} style={bottomBar.icons}></Image>
+        <Text style={bottomBar.text}>Info</Text>
       </TouchableOpacity>
-      {/* </KeyboardAvoidingView> */}
     </View>
   );
 }

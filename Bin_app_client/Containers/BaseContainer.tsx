@@ -29,6 +29,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import HomeRemindersScreen from '../Components/HomeRemindersScreen';
 import BottomMenu from './BottomMenu';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 function BaseContainer({
   navbar,
@@ -109,13 +110,14 @@ function BaseContainer({
                     setDates(null);
                   }}></Text>
               </Pressable>
-              <TextInput
+              {(page == PageType.Home || page == PageType.Searching) &&  <TextInput
                 placeholderTextColor={'#000000'}
                 placeholder="Enter street name"
                 onChangeText={setInput}
                 value={input}
                 style={search.input}
-              />
+              /> }
+             
             </View>
             <View style={{flex: 2}}>{renderSwitch(page)}</View>
           </View>
@@ -143,13 +145,15 @@ function BaseContainer({
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Pressable
+              style={{display:'flex', flexDirection:'row', justifyContent:'space-between', paddingBottom: SCREEN_HEIGHT * 0.02}}
                 onPress={() =>
                   setModalRemindersVisible(!modalRemindersVisible)
                 }>
-                {/* <Text style={styles.modalCloseX}>X</Text> */}
+                <Text style={{textAlign:'center', fontWeight:'800', fontSize:RFPercentage(4), paddingLeft: SCREEN_WIDTH * 0.16}}>
+                  Reminders</Text>
                 <Image
-                  style={styles.modalCloseX}
-                  source={require('../static/images/remove_icon.png')}></Image>
+                  style={[styles.modalCloseX]}
+                  source={require('../static/images/cancel.png')}></Image>
               </Pressable>
               <HomeRemindersScreen></HomeRemindersScreen>
             </View>

@@ -16,7 +16,7 @@ const fontScale = PixelRatio.getFontScale();
 
 const getFontSize = size => size / fontScale;
 
-type Color = {
+export type Color = {
   blue: '#1c6fc4';
   red: '#f14135';
   brown: '#9a6d38';
@@ -27,9 +27,9 @@ type Color = {
 export const styles = StyleSheet.create({
   streetName: {
     fontWeight: 'bold',
-    fontSize: RFPercentage(3),
-    maxWidth: RFPercentage(40),
+    fontSize: RFPercentage(3.75),
     textAlign: 'center',
+    flexWrap:'wrap',
   },
   smallButton: {
     backgroundColor: '#1c6fc4',
@@ -72,8 +72,11 @@ export const styles = StyleSheet.create({
     margin: 40,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: SCREEN_WIDTH * 0.05,
     minWidth: SCREEN_WIDTH * 0.8,
+    maxWidth: SCREEN_WIDTH * 0.8,
+    minHeight:SCREEN_HEIGHT * 0.7,
+    maxHeight: SCREEN_WIDTH * 0.7,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -90,13 +93,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   modalCloseX: {
-    marginBottom: 10,
-    padding: 10,
-    // width: SCREEN_WIDTH * 0.06,
-    // height: SCREEN_HEIGHT * 0.03,
-    // textAlign: 'right',
+    marginBottom: SCREEN_HEIGHT * 0.015,
+    marginRight: - SCREEN_WIDTH * 0.01,
     alignSelf: 'flex-end',
-    // backgroundColor: 'red',
+    height: SCREEN_HEIGHT * 0.045,
+    width: SCREEN_WIDTH * 0.09,
   },
 });
 
@@ -106,10 +107,10 @@ export const bottomBar = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    backgroundColor: 'red',
+    backgroundColor: '#6aa62e',
     position: 'absolute',
-    maxHeight: SCREEN_HEIGHT * 0.05,
-    height: SCREEN_HEIGHT * 0.05,
+    minHeight: SCREEN_HEIGHT * 0.072,
+    maxHeight: SCREEN_HEIGHT * 0.072,
     left: 0,
     right: 0,
     bottom: 0,
@@ -117,14 +118,21 @@ export const bottomBar = StyleSheet.create({
     gap: 10,
   },
   option: {
-    borderWidth: 1,
-    fontSize: SCREEN_WIDTH * 0.04,
+    height:'100%',
+    width:'100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
     textAlignVertical: 'center',
+    paddingTop: SCREEN_HEIGHT * 0.005
   },
+  text : {
+    fontSize: RFPercentage(1),
+  },
+  icons: {
+    height: SCREEN_HEIGHT * 0.035,
+  }
 });
 
 export const navbar = StyleSheet.create({
@@ -210,7 +218,7 @@ export const heroText = StyleSheet.create({
     includeFontPadding: false,
   },
   letter: {
-    fontSize: getFontSize(100),
+    fontSize: RFPercentage(13),
     includeFontPadding: false,
   },
   mid: {
@@ -253,4 +261,18 @@ export const logo = StyleSheet.create({
     fontSize: SCREEN_HEIGHT * 0.055,
     color: 'black',
   },
+})
+
+export const info = StyleSheet.create({
+  text: {
+    color: 'black',
+    padding: 10,
+    textAlign:"left",
+    fontWeight:'600',
+    fontSize: RFPercentage(3)
+  },
+  container: {
+    minWidth: SCREEN_WIDTH * 0.8
+
+  }
 });

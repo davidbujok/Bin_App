@@ -33,6 +33,7 @@ const food = require('../static/images/foodwaste.png');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 const Carousel = ({
   dates,
   streetName,
@@ -44,6 +45,8 @@ const Carousel = ({
   // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [pickupDayInfo, setPickupDayInfo] = useState<IDate | null>(null);
+  const title: string =  streetName.replace(/\s0\s/, ' ')
+
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -220,21 +223,11 @@ const Carousel = ({
   const pageForIDate = (pickupInfo: IDate) => {
     // const dateObject: Date = new Date(pickupInfo.date);
 
-    const title: string = pickupInfo.name.toUpperCase().replace(/\s0\s/, ' ');
     return (
       <View key={pickupInfo.id} style={swipeableStyle.container}>
-        <Text style={styles.streetName}>{title}</Text>
         <Text
           style={{
-            fontSize: RFPercentage(3),
-            fontWeight: '400',
-            marginTop: SCREEN_HEIGHT * 0.05,
-          }}>
-          Next collection is:
-        </Text>
-        <Text
-          style={{
-            fontSize: RFPercentage(4),
+            fontSize: RFPercentage(3.5),
             fontWeight: '600',
             color: '#291D29',
             flexWrap: 'wrap',
@@ -260,10 +253,11 @@ const Carousel = ({
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true}>
+    <ScrollView showsVerticalScrollIndicator nestedScrollEnabled={true} style={{paddingBottom: SCREEN_HEIGHT * 0.1}}>
+      <Text style={styles.streetName}>{title}</Text>
       <ScrollView
         style={{
-          paddingTop: SCREEN_HEIGHT * 0.02,
+          paddingTop: SCREEN_HEIGHT * 0.025,
         }}
         horizontal
         snapToInterval={SCREEN_WIDTH}>
