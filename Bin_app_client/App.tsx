@@ -24,6 +24,7 @@ import PageType from './Helpers/PageType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import removeGardenOnlyStreets from './Helpers/RemoveGardenOnlyStreets';
 import Informations from './Components/Informations';
+import { capitaliseFirstLetter } from './Helpers/StringFunctions';
 
 function App(): JSX.Element {
   const [streets, setStreets] = useState<Array<String>>();
@@ -262,6 +263,8 @@ function App(): JSX.Element {
   const rememberStreetForLater = async (streetName: string) => {
     try {
       await AsyncStorage.setItem('streetName', streetName);
+      const streetCapitalised = capitaliseFirstLetter(streetName.split(" ")).join(" ");
+      setStreetName(streetCapitalised)
     } catch (e) {
       // saving error
     }

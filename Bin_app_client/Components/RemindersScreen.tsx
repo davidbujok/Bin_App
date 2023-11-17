@@ -74,11 +74,9 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
   } ${lastCollectionObj.day}, ${lastCollectionObj.year}`;
   return (
     <View>
-      {/* <View style={styles.rowContainer}>
-        <Text style={styles.streetName}>{'Street:' + streetName}</Text>
-      </View> */}
+      {/* KEEP ALL CODE BELOW */}
 
-      <View style={styles.rowContainer}>
+      {/* <View style={styles.rowContainer}>
         <Text style={styles.streetName}>
           Repeat until {'\n'}
           {lastCollection}
@@ -93,16 +91,8 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
             setUpdateNotifications(!updateNotifications);
           }}
         />
-      </View>
-      {/* {notificationsList && notificationsList.length > 0 ? (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          Reminders Set: {notificationsList.length}
-        </Text>
-      ) : (
-        <Text style={{textAlign: 'center', paddingTop: SCREEN_HEIGHT * 0.01}}>
-          No Reminders
-        </Text>
-      )} */}
+      </View> */}
+    
 
       <View
         style={[
@@ -118,7 +108,7 @@ const RemindersScreen = ({date, datesList, setHasReminders}) => {
             onPress={() => {
               setOpen(true);
             }}>
-            <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>Add Reminder</Text>
+            <Text style={[styles.buttonTextColor]} maxFontSizeMultiplier={1.3}>Set Time</Text>
           </TouchableOpacity>
         )}
       </View>

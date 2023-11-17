@@ -269,14 +269,14 @@ const Carousel = ({
             setModalRemindersVisible(!modalRemindersVisible);
           }}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <View style={[styles.modalView, {minHeight:SCREEN_HEIGHT * 0.4, maxHeight: SCREEN_WIDTH * 0.4,}]}>
               <Pressable
                 onPress={() =>
                   setModalRemindersVisible(!modalRemindersVisible)
                 }>
                 <Image
                   style={styles.modalCloseX}
-                  source={require('../static/images/remove_icon.png')}></Image>
+                  source={require('../static/images/cancel.png')}></Image>
               </Pressable>
               <RemindersScreen
                 date={pickupDayInfo}
@@ -317,6 +317,10 @@ const swipeableStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
     width: SCREEN_WIDTH, // <<<<<<<<
+    // minHeight: SCREEN_HEIGHT * 0.55,
+    // maxHeight: SCREEN_HEIGHT * 0.62,
+    display:'flex',
+    justifyContent:'space-between'
   },
   button: {
     backgroundColor: '#1c6fc4',

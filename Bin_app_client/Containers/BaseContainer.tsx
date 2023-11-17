@@ -149,18 +149,20 @@ function BaseContainer({
                 onPress={() =>
                   setModalRemindersVisible(!modalRemindersVisible)
                 }>
-                <Text style={{textAlign:'center', fontWeight:'800', fontSize:RFPercentage(4), paddingLeft: SCREEN_WIDTH * 0.16}}>
+                <Text style={{textAlign:'center', fontWeight:'800', fontSize:RFPercentage(4)}}>
                   Reminders</Text>
                 <Image
                   style={[styles.modalCloseX]}
                   source={require('../static/images/cancel.png')}></Image>
               </Pressable>
-              <HomeRemindersScreen></HomeRemindersScreen>
+              <HomeRemindersScreen/>
             </View>
           </View>
         </Modal>
       </ScrollView>
       <BottomMenu
+        modalReminderVisible = {modalRemindersVisible}
+        page = {page}
         setPage={setPage}
         setModalRemindersVisible={setModalRemindersVisible}
         clearInputs={clearInputs}

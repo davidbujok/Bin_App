@@ -57,9 +57,9 @@ function HomeRemindersScreen() {
           {notificationsList.map((reminder: any) => {
             const message = homeReminderModalMessage(reminder.message);
             return (
-              <>
+              
                 <View
-                  id={reminder.id}
+                  key={Number(reminder.id)}
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -69,8 +69,7 @@ function HomeRemindersScreen() {
                     borderBottomWidth:1
                   }}>
                   <Text
-                    id={reminder.id}
-                    style={{
+                  style={{
                       padding: SCREEN_WIDTH * 0.02,
                       flexGrow: 9,
                       fontSize: RFPercentage(2.5),
@@ -88,7 +87,7 @@ function HomeRemindersScreen() {
                       source={require('../static/images/delete.png')}></Image>
                   </Pressable>
                 </View>
-              </>
+              
             );
           })}
         </View>

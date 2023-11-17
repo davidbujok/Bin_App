@@ -7,6 +7,7 @@ import {
   PixelRatio,
 } from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import PageType from '../Helpers/PageType';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -107,7 +108,9 @@ export const bottomBar = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    backgroundColor: '#6aa62e',
+    backgroundColor: 'white',
+    borderTopColor:'lightgrey',
+    borderTopWidth:1,
     position: 'absolute',
     minHeight: SCREEN_HEIGHT * 0.072,
     maxHeight: SCREEN_HEIGHT * 0.072,
@@ -125,10 +128,10 @@ export const bottomBar = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     textAlignVertical: 'center',
-    paddingTop: SCREEN_HEIGHT * 0.005
+    paddingTop: SCREEN_HEIGHT * 0.005,
   },
   text : {
-    fontSize: RFPercentage(1),
+    fontSize: RFPercentage(1.5),
   },
   icons: {
     height: SCREEN_HEIGHT * 0.035,

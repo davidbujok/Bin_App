@@ -7,12 +7,13 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image
+  Image,
+  ImageStyle
 } from 'react-native';
 import {bottomBar} from '../styles/stylesSheet';
 import PageType from '../Helpers/PageType';
 
-function BottomMenu({setPage, setModalRemindersVisible, clearInputs}) {
+function BottomMenu({modalReminderVisible, page, setPage, setModalRemindersVisible, clearInputs}) {
   const [keyboardStatus, setKeyboardStatus] = useState<boolean>(false);
 
   const homeIcon = require('../static/images/home.png')
@@ -42,17 +43,17 @@ function BottomMenu({setPage, setModalRemindersVisible, clearInputs}) {
   return (
     <View style={bottomBar.container}>
       <TouchableOpacity
-        style={bottomBar.option}
+        style={[bottomBar.option, {backgroundColor: modalReminderVisible ? '#f14135': 'white' }]}
         onPress={() => setModalRemindersVisible(true)}>
-        <Image resizeMode='contain' source={bellIcon} style={bottomBar.icons}></Image>
+        <Image resizeMode='contain' source={bellIcon} style={[bottomBar.icons]}></Image>
         <Text style={bottomBar.text}>Reminders</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={bottomBar.option} onPress={() => clearInputs()}>
+      <TouchableOpacity style={[bottomBar.option,{backgroundColor: page == PageType.Home && modalReminderVisible == false ? '#6aa62e': 'white' }]} onPress={() => clearInputs()}>
         <Image resizeMode='contain' source={homeIcon} style={bottomBar.icons}></Image>
         <Text style={bottomBar.text}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={bottomBar.option}
+        style={[bottomBar.option, {backgroundColor: page == PageType.Infos && modalReminderVisible == false ? '#1c6fc4': 'white' }]}
         onPress={() => setPage(PageType.Infos)}>
         <Image resizeMode='contain' source={infoIcon} style={bottomBar.icons}></Image>
         <Text style={bottomBar.text}>Info</Text>
@@ -62,3 +63,5 @@ function BottomMenu({setPage, setModalRemindersVisible, clearInputs}) {
 }
 
 export default BottomMenu;
+
+
