@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Swiper from 'react-native-swiper';
 import {
   View,
   Dimensions,
@@ -223,7 +224,11 @@ const Carousel = ({
     // const dateObject: Date = new Date(pickupInfo.date);
 
     return (
-      <View key={pickupIDate.id} style={swipeableStyle.container}>
+    <ScrollView
+      showsVerticalScrollIndicator
+        key={pickupIDate.id}
+        >
+      <View  style={swipeableStyle.container}>
         <Text
           style={{
             fontSize: RFPercentage(3.5),
@@ -237,32 +242,17 @@ const Carousel = ({
           {dateAsString(pickupIDate.dateObject)}{' '}
         </Text>
         {renderSwitch(pickupIDate.binType)}
-        <TouchableOpacity
-          style={swipeableStyle.button}
-          onPress={() => {
-            setModalRemindersVisible(true);
-            setPickupDayInfo(pickupIDate);
-          }}>
-          <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
-            Add Reminder
-          </Text>
-        </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   };
 
+  const sanitisedDates = pagesForNextMonths(dates);
+  const [onSwipeIdate, setOnSwipeIdate] = useState<IDate>(sanitisedDates[0]);
+  console.log('on Swipe', onSwipeIdate)
+
   return (
-    <ScrollView
-      showsVerticalScrollIndicator
-      nestedScrollEnabled={true}
-      style={{paddingBottom: SCREEN_HEIGHT * 0.1}}>
-      <Text style={styles.streetName}>{title}</Text>
-      <ScrollView
-        style={{
-          paddingTop: SCREEN_HEIGHT * 0.025,
-        }}
-        horizontal
-        snapToInterval={SCREEN_WIDTH}>
+    <>
         <Modal
           animationType="slide"
           transparent={true}
@@ -292,9 +282,18 @@ const Carousel = ({
             </View>
           </View>
         </Modal>
-
-        {pagesForNextMonths(dates).length > 0 ? (
-          pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
+     <View> 
+      <Text style={styles.streetName}>{title}</Text>
+        <Swiper showsButtons={ true }
+          style={{maxHeight: SCREEN_HEIGHT * 0.5}}
+          showsPagination={ false }
+          onIndexChanged= {(index) => {
+            setOnSwipeIdate(sanitisedDates[index])
+            console.log(index)
+          }}
+        >
+        {sanitisedDates.length > 0 ? (
+          sanitisedDates.map(iDate => pageForIDate(iDate))
         ) : (
           <View style={swipeableStyle.verticalSwiper}>
             <Text
@@ -307,8 +306,19 @@ const Carousel = ({
             </Text>
           </View>
         )}
-      </ScrollView>
-    </ScrollView>
+      </Swiper>
+      <TouchableOpacity
+        style={[ swipeableStyle.button, {alignSelf: 'center' }]}
+        onPress={() => {
+          setModalRemindersVisible(true);
+          setPickupDayInfo(onSwipeIdate);
+        }}>
+        <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
+          Add Reminder
+        </Text>
+      </TouchableOpacity>
+      </View>
+      </>
   );
 };
 export default Carousel;
