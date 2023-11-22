@@ -58,19 +58,22 @@ function HomeRemindersScreen() {
               const message = homeReminderModalMessage(reminder.message);
               return (
                 <View
-                  key={reminder.id}
+                  key={reminder.message}
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    paddingRight: 10,
+                    // paddingRight: 10,
+                    // maxWidth: '95%',
+                    // minWidth: '95%',
                     borderBottomColor: 'lightgrey',
                     borderBottomWidth: 1,
+                    gap: 9,
                   }}>
                   <Text
                     style={{
-                      padding: SCREEN_WIDTH * 0.02,
                       flexGrow: 9,
+                      paddingBottom: 8,
                       fontSize: RFPercentage(2.5),
                     }}>
                     {message}

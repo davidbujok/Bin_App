@@ -21,7 +21,8 @@ function HomeContainer({heroText}) {
           <Text style={[heroText.joinText, heroText.mid, colourPalette.blue]} >
             and
           </Text>
-          <View style={{flexDirection: 'row', flexWrap:'wrap', maxWidth : '100%', paddingBottom: SCREEN_HEIGHT * 0.08}}>
+          <View style={{ maxWidth : '100%', paddingBottom: SCREEN_HEIGHT * 0.08}}>
+            <Text style={{flexDirection: 'row', display: 'flex'}}>
             <Text style={[heroText.letter, heroText.bold, colourPalette.red]} >
               R
             </Text>
@@ -43,7 +44,9 @@ function HomeContainer({heroText}) {
             <Text style={[heroText.letter, heroText.bold, colourPalette.blue]} >
               e
             </Text>
-          </View>
+            </Text>
+
+        </View>
         </View>
   
   );

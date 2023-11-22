@@ -245,7 +245,7 @@ export const heroText = StyleSheet.create({
     includeFontPadding: false,
   },
   letter: {
-    fontSize: RFPercentage(13),
+    fontSize: RFPercentage(9),
     includeFontPadding: false,
   },
   mid: {
