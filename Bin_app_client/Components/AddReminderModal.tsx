@@ -3,7 +3,7 @@ import { Dimensions, Image, Modal, Pressable, View } from 'react-native';
 import { styles } from '../styles/stylesSheet';
 import RemindersScreen from './RemindersScreen';
 
-const AddReminderModal = ({modalRemindersVisible, setModalRemindersVisible, pickupDayInfo, pagesForNextMonths, setHasReminders, dates}) => {
+const AddReminderModal = ({modalRemindersVisible, setModalRemindersVisible, pickupDayInfo, pagesForNextMonths, setHasReminders, openDateTimePicker, dates, setOpenDateTimePicker}) => {
 
     const SCREEN_WIDTH = Dimensions.get('window').width;
     const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -31,6 +31,8 @@ const AddReminderModal = ({modalRemindersVisible, setModalRemindersVisible, pick
             source={require('../static/images/cancel.png')}></Image>
         </Pressable>
         <RemindersScreen
+          openDateTimePicker = {openDateTimePicker}
+          setOpenDateTimePicker = {setOpenDateTimePicker}
           date={pickupDayInfo}
           datesList={pagesForNextMonths(dates)}
           setHasReminders={setHasReminders}
