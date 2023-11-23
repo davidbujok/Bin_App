@@ -248,8 +248,7 @@ const Carousel = ({
   };
 
   const sanitisedDates = pagesForNextMonths(dates);
-  const [onSwipeIdate, setOnSwipeIdate] = useState<IDate>(sanitisedDates[0]);
-  console.log('on Swipe', onSwipeIdate)
+  const [swiperIndex, setSwiperIndex] = useState(0)
 
   return (
     <>
@@ -287,9 +286,9 @@ const Carousel = ({
         <Swiper showsButtons={ true }
           style={{maxHeight: SCREEN_HEIGHT * 0.5}}
           showsPagination={ false }
+          index={swiperIndex} 
           onIndexChanged= {(index) => {
-            setOnSwipeIdate(sanitisedDates[index])
-            console.log(index)
+            setSwiperIndex(index)
           }}
         >
         {sanitisedDates.length > 0 ? (
@@ -310,8 +309,8 @@ const Carousel = ({
       <TouchableOpacity
         style={[ swipeableStyle.button, {alignSelf: 'center' }]}
         onPress={() => {
+          setPickupDayInfo(sanitisedDates[swiperIndex]);
           setModalRemindersVisible(true);
-          setPickupDayInfo(onSwipeIdate);
         }}>
         <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
           Add Reminder
