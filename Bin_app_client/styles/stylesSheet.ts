@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Platform,
-  Dimensions,
-  PixelRatio,
-} from 'react-native';
+import {StyleSheet, Platform, Dimensions, PixelRatio} from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -88,6 +83,9 @@ export const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: '#2196F3',
   },
+  buttonDelete: {
+    backgroundColor: ColorTheme.red,
+  },
   modalCloseX: {
     marginBottom: SCREEN_HEIGHT * 0.015,
     marginRight: -SCREEN_WIDTH * 0.01,
@@ -114,7 +112,7 @@ export const bottomBar = StyleSheet.create({
     bottom: 0,
     width: '100%',
     gap: 10,
-    marginBottom: Platform.OS == 'ios' ? 15: 0
+    marginBottom: Platform.OS == 'ios' ? 15 : 0,
   },
   option: {
     height: '100%',
@@ -231,7 +229,7 @@ export const colourPalette = StyleSheet.create({
 
 export const heroText = StyleSheet.create({
   hero: {
-    fontSize: getFontSize(80),
+    fontSize: getFontSize(60),
     marginBottom: RFPercentage(0),
     padding: 0,
     includeFontPadding: false,

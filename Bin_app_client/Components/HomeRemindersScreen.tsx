@@ -116,12 +116,7 @@ function HomeRemindersScreen() {
       </ScrollView>
       <View style={{display: 'flex', alignItems: 'center'}}>
         <TouchableOpacity
-          style={[
-            styles.smallButton,
-            {
-              backgroundColor: 'red',
-            },
-          ]}
+          style={[styles.smallButton, styles.buttonDelete]}
           onPress={async () => {
             await cancelNotifications();
             await setUpdateNotifications(!updateNotifications);

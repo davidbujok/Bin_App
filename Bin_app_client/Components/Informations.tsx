@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Linking, Pressable, Text, View} from 'react-native';
 import {info, main, styles} from '../styles/stylesSheet';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {Keyboard} from 'react-native';
+import VersionInfo from 'react-native-version-info';
 
 function Informations() {
-  const version = "1.0.25"
+  const [version, setVersion] = useState<string>('');
+  useEffect(() => {
+    setVersion(`${VersionInfo.appVersion} (${VersionInfo.buildVersion})`);
+  }, []);
+
+  //   const version = '1.0.25';
   return (
     <>
       <View style={info.container}>
@@ -13,7 +20,7 @@ function Informations() {
             fontSize: RFPercentage(2),
             textAlign: 'center',
             fontWeight: '500',
-            paddingBottom: 20
+            paddingBottom: 20,
           }}>
           Version: {version}
         </Text>
