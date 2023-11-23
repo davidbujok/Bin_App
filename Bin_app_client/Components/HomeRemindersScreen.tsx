@@ -63,9 +63,6 @@ function HomeRemindersScreen() {
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    // paddingRight: 10,
-                    // maxWidth: '95%',
-                    // minWidth: '95%',
                     borderBottomColor: 'lightgrey',
                     borderBottomWidth: 1,
                     gap: 9,
@@ -86,7 +83,7 @@ function HomeRemindersScreen() {
                     }}>
                     <Image
                       style={{
-                        height: SCREEN_HEIGHT * 0.035,
+                        height: SCREEN_WIDTH * 0.07,
                         width: SCREEN_WIDTH * 0.07,
                       }}
                       source={require('../static/images/delete.png')}></Image>

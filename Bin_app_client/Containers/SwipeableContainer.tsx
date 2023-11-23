@@ -249,16 +249,8 @@ const Carousel = ({
   };
 
   const sanitisedDates = pagesForNextMonths(dates);
-  // const [swiperIndex, setSwiperIndex] = useState(0)
-
-
-  // const updateSwiperIndex = async (index: number) => {
-  //   const indexOfSwiper = await setSwiperIndex(index)
-  //   return indexOfSwiper
-  // }
-
-  let swiperIndex = 0;
-
+  const [swiperIndex, setSwiperIndex] = useState(0)
+  
   return (
     <>
      <View> 
@@ -266,10 +258,11 @@ const Carousel = ({
         <Swiper showsButtons={ true }
           style={{maxHeight: SCREEN_HEIGHT * 0.5}}
           showsPagination={ false }
-          index={swiperIndex} 
-          onIndexChanged= {(index) => {
-            swiperIndex = index
-          }}  
+          loop = {false}
+          onIndexChanged = {(index) => {
+          setSwiperIndex(index)
+          }}
+          index={0}   
         >
         {sanitisedDates.length > 0 ? (
           sanitisedDates.map(iDate => pageForIDate(iDate))
@@ -319,9 +312,7 @@ const image = StyleSheet.create({
 const swipeableStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
-    width: SCREEN_WIDTH, // <<<<<<<<
-    // minHeight: SCREEN_HEIGHT * 0.55,
-    // maxHeight: SCREEN_HEIGHT * 0.62,
+    width: SCREEN_WIDTH,
     display: 'flex',
     justifyContent: 'space-between',
   },

@@ -1,19 +1,13 @@
 import {
-  StatusBar,
   StyleSheet,
   Platform,
   Dimensions,
-  useWindowDimensions,
   PixelRatio,
 } from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-import PageType from '../Helpers/PageType';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-
-
-// const windowDimensions = useWindowDimensions();
 const fontScale = PixelRatio.getFontScale();
 
 const getFontSize = size => size / fontScale;
@@ -98,7 +92,7 @@ export const styles = StyleSheet.create({
     marginBottom: SCREEN_HEIGHT * 0.015,
     marginRight: -SCREEN_WIDTH * 0.01,
     alignSelf: 'flex-end',
-    height: SCREEN_HEIGHT * 0.045,
+    height: SCREEN_WIDTH * 0.09,
     width: SCREEN_WIDTH * 0.09,
   },
 });
@@ -182,7 +176,8 @@ export const search = StyleSheet.create({
   input: {
     minWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
     maxWidth: SCREEN_WIDTH - SCREEN_WIDTH * 0.25,
-    borderWidth: 1,
+    borderWidth: 1.5,
+    borderColor: 'grey',
     height: SCREEN_HEIGHT * 0.075,
     borderRadius: 10,
     fontSize: SCREEN_WIDTH * 0.04,
@@ -230,7 +225,7 @@ export const colourPalette = StyleSheet.create({
     color: '#6aa62e',
   },
   black: {
-    color: '#291D29',
+    color: '#3b383b',
   },
 });
 

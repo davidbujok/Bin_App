@@ -63,7 +63,7 @@ function BaseContainer({
 
   return (
     <>
-      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white', paddingTop: Platform.OS == 'ios' ? 10 : 0}}>
         <View style={[main.container]}>
           <View style={navbar.container}>
             <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>
@@ -111,7 +111,7 @@ function BaseContainer({
                   }}></Text>
               </Pressable>
               {(page == PageType.Home || page == PageType.Searching) &&  <TextInput
-                placeholderTextColor={'#000000'}
+                placeholderTextColor={'grey'}
                 placeholder="Enter street name"
                 onChangeText={setInput}
                 value={input}
