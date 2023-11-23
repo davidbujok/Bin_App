@@ -63,7 +63,7 @@ function BaseContainer({
 
   return (
     <>
-      <ScrollView style={{flex: 1, backgroundColor: 'white', paddingTop: Platform.OS == 'ios' ? 10 : 0}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white', marginTop: Platform.OS == 'ios' ? 10 : 0}}>
         <View style={[main.container]}>
           <View style={navbar.container}>
             <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>
