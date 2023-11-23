@@ -12,6 +12,7 @@ import PageType from '../Helpers/PageType';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
+
 // const windowDimensions = useWindowDimensions();
 const fontScale = PixelRatio.getFontScale();
 
@@ -119,6 +120,7 @@ export const bottomBar = StyleSheet.create({
     bottom: 0,
     width: '100%',
     gap: 10,
+    marginBottom: Platform.OS == 'ios' ? 15: 0
   },
   option: {
     height: '100%',

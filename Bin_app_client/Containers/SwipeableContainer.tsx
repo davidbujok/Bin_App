@@ -25,6 +25,7 @@ import RemindersScreen from '../Components/RemindersScreen';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import AddReminderModal from '../Components/AddReminderModal';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -248,39 +249,18 @@ const Carousel = ({
   };
 
   const sanitisedDates = pagesForNextMonths(dates);
-  const [swiperIndex, setSwiperIndex] = useState(0)
+  // const [swiperIndex, setSwiperIndex] = useState(0)
+
+
+  // const updateSwiperIndex = async (index: number) => {
+  //   const indexOfSwiper = await setSwiperIndex(index)
+  //   return indexOfSwiper
+  // }
+
+  let swiperIndex = 0;
 
   return (
     <>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalRemindersVisible}
-          onRequestClose={() => {
-            setModalRemindersVisible(!modalRemindersVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View
-              style={[
-                styles.modalView,
-                {minHeight: SCREEN_HEIGHT * 0.4, maxHeight: SCREEN_WIDTH * 0.4},
-              ]}>
-              <Pressable
-                onPress={() =>
-                  setModalRemindersVisible(!modalRemindersVisible)
-                }>
-                <Image
-                  style={styles.modalCloseX}
-                  source={require('../static/images/cancel.png')}></Image>
-              </Pressable>
-              <RemindersScreen
-                date={pickupDayInfo}
-                datesList={pagesForNextMonths(dates)}
-                setHasReminders={setHasReminders}
-                closeParent={setModalRemindersVisible}></RemindersScreen>
-            </View>
-          </View>
-        </Modal>
      <View> 
       <Text style={styles.streetName}>{title}</Text>
         <Swiper showsButtons={ true }
@@ -288,8 +268,8 @@ const Carousel = ({
           showsPagination={ false }
           index={swiperIndex} 
           onIndexChanged= {(index) => {
-            setSwiperIndex(index)
-          }}
+            swiperIndex = index
+          }}  
         >
         {sanitisedDates.length > 0 ? (
           sanitisedDates.map(iDate => pageForIDate(iDate))
@@ -317,6 +297,13 @@ const Carousel = ({
         </Text>
       </TouchableOpacity>
       </View>
+      <AddReminderModal
+      modalRemindersVisible = {modalRemindersVisible}
+      setModalRemindersVisible = {setModalRemindersVisible}
+      pickupDayInfo = {pickupDayInfo}
+      pagesForNextMonths = {pagesForNextMonths}
+      setHasReminders = {setHasReminders}
+      dates = {dates} />
       </>
   );
 };
