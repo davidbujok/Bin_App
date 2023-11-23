@@ -4,9 +4,19 @@ import {info, main, styles} from '../styles/stylesSheet';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 
 function Informations() {
+  const version = "1.0.25"
   return (
     <>
       <View style={info.container}>
+        <Text
+          style={{
+            fontSize: RFPercentage(2),
+            textAlign: 'center',
+            fontWeight: '500',
+            paddingBottom: 20
+          }}>
+          Version: {version}
+        </Text>
         <Text
           style={{
             fontSize: RFPercentage(5),

@@ -58,19 +58,19 @@ function HomeRemindersScreen() {
               const message = homeReminderModalMessage(reminder.message);
               return (
                 <View
-                  key={reminder.id}
+                  key={reminder.message}
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    paddingRight: 10,
                     borderBottomColor: 'lightgrey',
                     borderBottomWidth: 1,
+                    gap: 9,
                   }}>
                   <Text
                     style={{
-                      padding: SCREEN_WIDTH * 0.02,
                       flexGrow: 9,
+                      paddingBottom: 8,
                       fontSize: RFPercentage(2.5),
                     }}>
                     {message}
@@ -83,7 +83,7 @@ function HomeRemindersScreen() {
                     }}>
                     <Image
                       style={{
-                        height: SCREEN_HEIGHT * 0.035,
+                        height: SCREEN_WIDTH * 0.07,
                         width: SCREEN_WIDTH * 0.07,
                       }}
                       source={require('../static/images/delete.png')}></Image>

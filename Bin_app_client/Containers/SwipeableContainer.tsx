@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Swiper from 'react-native-swiper';
 import {
   View,
   Dimensions,
@@ -24,6 +25,7 @@ import RemindersScreen from '../Components/RemindersScreen';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import AddReminderModal from '../Components/AddReminderModal';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -223,7 +225,11 @@ const Carousel = ({
     // const dateObject: Date = new Date(pickupInfo.date);
 
     return (
-      <View key={pickupIDate.id} style={swipeableStyle.container}>
+    <ScrollView
+      showsVerticalScrollIndicator
+        key={pickupIDate.id}
+        >
+      <View  style={swipeableStyle.container}>
         <Text
           style={{
             fontSize: RFPercentage(3.5),
@@ -237,64 +243,29 @@ const Carousel = ({
           {dateAsString(pickupIDate.dateObject)}{' '}
         </Text>
         {renderSwitch(pickupIDate.binType)}
-        <TouchableOpacity
-          style={swipeableStyle.button}
-          onPress={() => {
-            setModalRemindersVisible(true);
-            setPickupDayInfo(pickupIDate);
-          }}>
-          <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
-            Add Reminder
-          </Text>
-        </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   };
 
+  const sanitisedDates = pagesForNextMonths(dates);
+  const [swiperIndex, setSwiperIndex] = useState(0)
+  
   return (
-    <ScrollView
-      showsVerticalScrollIndicator
-      nestedScrollEnabled={true}
-      style={{paddingBottom: SCREEN_HEIGHT * 0.1}}>
+    <>
+     <View> 
       <Text style={styles.streetName}>{title}</Text>
-      <ScrollView
-        style={{
-          paddingTop: SCREEN_HEIGHT * 0.025,
-        }}
-        horizontal
-        snapToInterval={SCREEN_WIDTH}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalRemindersVisible}
-          onRequestClose={() => {
-            setModalRemindersVisible(!modalRemindersVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View
-              style={[
-                styles.modalView,
-                {minHeight: SCREEN_HEIGHT * 0.4, maxHeight: SCREEN_WIDTH * 0.4},
-              ]}>
-              <Pressable
-                onPress={() =>
-                  setModalRemindersVisible(!modalRemindersVisible)
-                }>
-                <Image
-                  style={styles.modalCloseX}
-                  source={require('../static/images/cancel.png')}></Image>
-              </Pressable>
-              <RemindersScreen
-                date={pickupDayInfo}
-                datesList={pagesForNextMonths(dates)}
-                setHasReminders={setHasReminders}
-                closeParent={setModalRemindersVisible}></RemindersScreen>
-            </View>
-          </View>
-        </Modal>
-
-        {pagesForNextMonths(dates).length > 0 ? (
-          pagesForNextMonths(dates).map(iDate => pageForIDate(iDate))
+        <Swiper showsButtons={ true }
+          style={{maxHeight: SCREEN_HEIGHT * 0.5}}
+          showsPagination={ false }
+          loop = {false}
+          onIndexChanged = {(index) => {
+          setSwiperIndex(index)
+          }}
+          index={0}   
+        >
+        {sanitisedDates.length > 0 ? (
+          sanitisedDates.map(iDate => pageForIDate(iDate))
         ) : (
           <View style={swipeableStyle.verticalSwiper}>
             <Text
@@ -307,8 +278,26 @@ const Carousel = ({
             </Text>
           </View>
         )}
-      </ScrollView>
-    </ScrollView>
+      </Swiper>
+      <TouchableOpacity
+        style={[ swipeableStyle.button, {alignSelf: 'center' }]}
+        onPress={() => {
+          setPickupDayInfo(sanitisedDates[swiperIndex]);
+          setModalRemindersVisible(true);
+        }}>
+        <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
+          Add Reminder
+        </Text>
+      </TouchableOpacity>
+      </View>
+      <AddReminderModal
+      modalRemindersVisible = {modalRemindersVisible}
+      setModalRemindersVisible = {setModalRemindersVisible}
+      pickupDayInfo = {pickupDayInfo}
+      pagesForNextMonths = {pagesForNextMonths}
+      setHasReminders = {setHasReminders}
+      dates = {dates} />
+      </>
   );
 };
 export default Carousel;
@@ -323,9 +312,7 @@ const image = StyleSheet.create({
 const swipeableStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
-    width: SCREEN_WIDTH, // <<<<<<<<
-    // minHeight: SCREEN_HEIGHT * 0.55,
-    // maxHeight: SCREEN_HEIGHT * 0.62,
+    width: SCREEN_WIDTH,
     display: 'flex',
     justifyContent: 'space-between',
   },

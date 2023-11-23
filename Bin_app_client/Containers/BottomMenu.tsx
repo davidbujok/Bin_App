@@ -67,10 +67,11 @@ function BottomMenu({
           ]}></Image>
         <Text
           style={
-            (bottomBar.text,
+            ([bottomBar.text,
             modalReminderVisible
               ? bottomBar.text_active
-              : bottomBar.text_inactive)
+              : bottomBar.text_inactive
+            ])
           }>
           Reminders
         </Text>
@@ -94,10 +95,10 @@ function BottomMenu({
           ]}></Image>
         <Text
           style={
-            (bottomBar.text,
+            ([bottomBar.text,
             page == PageType.Home && modalReminderVisible == false
               ? bottomBar.text_active
-              : bottomBar.text_inactive)
+              : bottomBar.text_inactive])
           }>
           Home
         </Text>
@@ -121,10 +122,10 @@ function BottomMenu({
           ]}></Image>
         <Text
           style={
-            (bottomBar.text,
+            ([bottomBar.text,
             page == PageType.Infos && modalReminderVisible == false
               ? bottomBar.text_active
-              : bottomBar.text_inactive)
+              : bottomBar.text_inactive])
           }>
           Info
         </Text>
