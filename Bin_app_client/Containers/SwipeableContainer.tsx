@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import {main, styles} from '../styles/stylesSheet';
-import {handleNotification} from '../Components/NotificationFunctionality';
+import {getCurrentNotifications, handleNotification} from '../Components/NotificationFunctionality';
 import {IDate} from '../styles/interfaces';
 import DateTimePicker from '../Components/DateTimePicker';
 import {
@@ -26,6 +26,7 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import AddReminderModal from '../Components/AddReminderModal';
+import DatePicker from 'react-native-date-picker';
 
 const mixedbin = require('../static/images/mixedbin.png');
 const glass = require('../static/images/bluebin.png');
@@ -43,11 +44,37 @@ const Carousel = ({
   setHasReminders,
   address,
 }) => {
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   // const [calendarDate, setCalendarDate] = useState<IDate | null>(null);
   const [modalRemindersVisible, setModalRemindersVisible] = useState(false);
   const [pickupDayInfo, setPickupDayInfo] = useState<IDate | null>(null);
   const title: string = streetName.replace(/\s0\s/, ' ');
+
+  const [updateNotifications, setUpdateNotifications] = useState<Boolean>(false);
+  const [notificationsList, setNotificationsList] = useState<Array<Date> | null>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getCurrentNotifications(notifications => {
+        if (notifications.length > 0) {
+          // setNotificationsList(notifications)
+          const nextNotificationTime =
+            notifications.length > 0 ? notifications : 'not setup';
+          setNotificationsList(nextNotificationTime);
+          setHasReminders(true);
+
+          // setSwitch(true);
+        } else {
+          // setIsReminderEnabled(false);
+          setNotificationsList([]);
+        }
+      });
+    };
+    fetchData();
+    // End of getCurrentNotifications
+  }, [updateNotifications]);
+
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -250,6 +277,22 @@ const Carousel = ({
 
   const sanitisedDates = pagesForNextMonths(dates);
   const [swiperIndex, setSwiperIndex] = useState(0)
+  const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
+
+  let previousDay: Date;
+
+  if (pickupDayInfo != null) {
+    previousDay = new Date(Number(pickupDayInfo.dateObject));
+    previousDay.setDate(pickupDayInfo.dateObject.getDate() - 1);
+
+    // previousDay = new Date(year, month, day, 21);
+  } else {
+    // emergency: yesterday
+    previousDay = new Date(new Date().setDate(new Date().getDate() - 1));
+
+  }
+
+
   
   return (
     <>
@@ -282,21 +325,35 @@ const Carousel = ({
       <TouchableOpacity
         style={[ swipeableStyle.button, {alignSelf: 'center' }]}
         onPress={() => {
+          setOpenDateTimePicker(true);
           setPickupDayInfo(sanitisedDates[swiperIndex]);
-          setModalRemindersVisible(true);
+          // setModalRemindersVisible(true);
         }}>
         <Text style={styles.buttonTextColor} maxFontSizeMultiplier={1.3}>
           Add Reminder
         </Text>
       </TouchableOpacity>
       </View>
+       <View>
+        <DateTimePicker
+          open={openDateTimePicker}
+          setOpen={setOpenDateTimePicker}
+          calendarDate={sanitisedDates[swiperIndex]}
+          datePicked={async reminderTime => {
+            await handleNotification(sanitisedDates[swiperIndex], new Date(reminderTime));
+            await setUpdateNotifications(!updateNotifications);
+          }}
+        />
+      </View>
       <AddReminderModal
+      setOpenDateTimePicker={setOpenDateTimePicker}
       modalRemindersVisible = {modalRemindersVisible}
       setModalRemindersVisible = {setModalRemindersVisible}
       pickupDayInfo = {pickupDayInfo}
       pagesForNextMonths = {pagesForNextMonths}
       setHasReminders = {setHasReminders}
-      dates = {dates} />
+      dates = {dates}
+      openDateTimePicker = {openDateTimePicker} />
       </>
   );
 };

@@ -19,9 +19,11 @@ const RemindersScreen = ({
   date,
   datesList,
   setHasReminders,
+  openDateTimePicker,
+  setOpenDateTimePicker,
   closeParent = bool => {},
 }) => {
-  const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
+  // const [openDateTimePicker, setOpenDateTimePicker] = useState(false);
   // console.log("DATES Before Const: ",dates)
 
   const [calendarDate, setCalendarDate] = useState<IDate>(date);
@@ -91,7 +93,7 @@ const RemindersScreen = ({
           }}
         />
       </View> */}
-
+{/* 
       <View
         style={[
           styles.rowContainer,
@@ -110,7 +112,7 @@ const RemindersScreen = ({
             </Text>
           </TouchableOpacity>
         )}
-      </View>
+      </View> */}
 
       <View>
         <DateTimePicker
@@ -118,7 +120,6 @@ const RemindersScreen = ({
           setOpen={setOpenDateTimePicker}
           calendarDate={calendarDate}
           datePicked={async reminderTime => {
-            console.log('Cla day Reminder : ', calendarDate);
 
             await setNextNotificationTime(
               new Date(reminderTime).toLocaleString(),
