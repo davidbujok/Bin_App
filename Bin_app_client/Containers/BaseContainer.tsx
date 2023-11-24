@@ -29,7 +29,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import HomeRemindersScreen from '../Components/HomeRemindersScreen';
 import BottomMenu from './BottomMenu';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 function BaseContainer({
   navbar,
@@ -63,7 +63,12 @@ function BaseContainer({
 
   return (
     <>
-      <ScrollView style={{flex: 1, backgroundColor: 'white', marginTop: Platform.OS == 'ios' ? 10 : 0}}>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          marginTop: Platform.OS == 'ios' ? 10 : 0,
+        }}>
         <View style={[main.container]}>
           <View style={navbar.container}>
             <Text style={logo.logoSize} maxFontSizeMultiplier={1.3}>
@@ -110,14 +115,15 @@ function BaseContainer({
                     setDates(null);
                   }}></Text>
               </Pressable>
-              {(page == PageType.Home || page == PageType.Searching) &&  <TextInput
-                placeholderTextColor={'grey'}
-                placeholder="Enter street name"
-                onChangeText={setInput}
-                value={input}
-                style={search.input}
-              /> }
-             
+              {(page == PageType.Home || page == PageType.Searching) && (
+                <TextInput
+                  placeholderTextColor={'grey'}
+                  placeholder="Enter street name"
+                  onChangeText={setInput}
+                  value={input}
+                  style={search.input}
+                />
+              )}
             </View>
             <View style={{flex: 2}}>{renderSwitch(page)}</View>
           </View>
@@ -145,24 +151,35 @@ function BaseContainer({
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Pressable
-              style={{display:'flex', flexDirection:'row', justifyContent:'space-between', paddingBottom: SCREEN_HEIGHT * 0.02}}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingBottom: SCREEN_HEIGHT * 0.02,
+                }}
                 onPress={() =>
                   setModalRemindersVisible(!modalRemindersVisible)
                 }>
-                <Text style={{textAlign:'center', fontWeight:'800', fontSize:RFPercentage(4)}}>
-                  Reminders</Text>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: '800',
+                    fontSize: RFPercentage(4),
+                  }}>
+                  Reminders
+                </Text>
                 <Image
                   style={[styles.modalCloseX]}
-                  source={require('../static/images/cancel.png')}></Image>
+                  source={require('../static/images/cancel_grey.png')}></Image>
               </Pressable>
-              <HomeRemindersScreen/>
+              <HomeRemindersScreen />
             </View>
           </View>
         </Modal>
       </ScrollView>
       <BottomMenu
-        modalReminderVisible = {modalRemindersVisible}
-        page = {page}
+        modalReminderVisible={modalRemindersVisible}
+        page={page}
         setPage={setPage}
         setModalRemindersVisible={setModalRemindersVisible}
         clearInputs={clearInputs}

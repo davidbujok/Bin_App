@@ -6,7 +6,6 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   const [date, setDate] = useState<Date>(new Date());
   let previousDay: Date;
 
-
   if (iDate != null) {
     previousDay = new Date(Number(iDate.dateObject));
     previousDay.setDate(iDate.dateObject.getDate() - 1);
@@ -15,11 +14,8 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
   } else {
     // emergency: yesterday
     previousDay = new Date(new Date().setDate(new Date().getDate() - 1));
-
   }
   //   TODO: trying to remove the date crash
-  
-
 
   return (
     <>
@@ -27,8 +23,8 @@ export default ({open, setOpen, calendarDate: iDate, datePicked}) => {
         modal
         open={open}
         date={iDate && previousDay}
-        onConfirm={
-          dateReminder => {
+        title="Add reminder in the morning or in the evening before"
+        onConfirm={dateReminder => {
           setOpen(false);
           dateReminder.setHours(dateReminder.getHours());
           datePicked(dateReminder);
