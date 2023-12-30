@@ -125,7 +125,7 @@ cd ..
 cd android
 fastlane android beta
 cd ..
-
+ 
 # appstore specific adventures:
 
 app icon sizes were made with this website: https://makeappicon.com/
