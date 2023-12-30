@@ -1,87 +1,240 @@
 {
 	"thursday-1a": {
-		"waste": "12",
-		"recycling": "5",
-		"glass": "12"
+		"waste": {
+			"starts": "12",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "5",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "12",
+			"then_every": "14"
+		}
 	},
 	"friday-2": {
-		"waste": "6",
-		"recycling": "13",
-		"glass": "13",
-		"garden": "6" 
+		"waste": {
+			"starts": "6",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "13",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "13",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "6",
+			"then_every": "14"
+		}
 	},
 	"tuesday-2": {
-		"waste": "3",
-		"recycling": "10",
-		"glass": "10",
-		"garden": "3"
+		"waste": {
+			"starts": "3",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "10",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "10",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "3",
+			"then_every": "14"
+		}
 	},
 	"friday-1": {
-		"waste": "13",
-		"recycling": "6",
-		"glass": "6",
-		"garden": "13"
+		"waste": {
+			"starts": "13",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "6",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "6",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "13",
+			"then_every": "14"
+		}
 	},
 	"wednesday-2": {
-		"waste": "4",
-		"recycling": "11",
-		"glass": "11",
-		"garden": "4"
+		"waste": {
+			"starts": "4",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "11",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "11",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "4",
+			"then_every": "14"
+		}
 	},
 	"thursday-1": {
-		"waste": "12",
-		"recycling": "5",
-		"glass": "5",
-		"garden": "12"
+		"waste": {
+			"starts": "12",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "5",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "5",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "12",
+			"then_every": "14"
+		}
 	},
 	"tuesday-1": {
-		"waste": "10",
-		"recycling": "3",
-		"glass": "3",
-		"garden": "10"
+		"waste": {
+			"starts": "10",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "3",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "3",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "10",
+			"then_every": "14"
+		}
 	},
 	"wednesday-1a": {
-		"waste": "11",
-		"recycling": "4",
-		"glass": "11"
+		"waste": {
+			"starts": "11",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "4",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "11",
+			"then_every": "14"
+		}
 	},
 	"friday-1a": {
-		"waste": "13",
-		"recycling": "6",
-		"glass": "13"
+		"waste": {
+			"starts": "13",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "6",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "13",
+			"then_every": "14"
+		}
 	},
 	"thursday-2": {
-		"waste": "5",
-		"recycling": "12",
-		"glass": "12",
-		"garden": "19"
+		"waste": {
+			"starts": "5",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "12",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "12",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "19",
+			"then_every": "14"
+		}
 	},
 	"wednesday-1": {
-		"waste": "11",
-		"recycling": "4",
-		"glass": "4",
-		"garden": "11"
+		"waste": {
+			"starts": "11",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "4",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "4",
+			"then_every": "14"
+		},
+		"garden": {
+			"starts": "11",
+			"then_every": "14"
+		}
 	},
 	"tuesday-1a": {
-		"waste": "10",
-		"recycling": "3",
-		"glass": "10"
+		"waste": {
+			"starts": "10",
+			"then_every": "14"
+		},
+		"recycling": {
+			"starts": "3",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "10",
+			"then_every": "14"
+		}
 	},
 	"monday": {
-		"recycling": "2",
-		"glass": "9",
-		"food": "2"
+		"recycling": {
+			"starts": "2",
+			"then_every": "14"
+		},
+		"glass": {
+			"starts": "9",
+			"then_every": "14"
+		},
+		"food": {
+			"starts": "2",
+			"then_every": "7"
+		}
 	},
 	"tuesday": {
-		"food": "3"
+		"food": {
+			"starts": "3",
+			"then_every": "7"
+		}
 	},
 	"wednesday": {
-		"food": "4"
+		"food": {
+			"starts": "4",
+			"then_every": "7"
+		}
 	},
 	"thursday": {
-		"food": "5"
+		"food": {
+			"starts": "5",
+			"then_every": "7"
+		}
 	},
 	"friday": {
-		"food": "6"
+		"food": {
+			"starts": "6",
+			"then_every": "7"
+		}
 	}
 }

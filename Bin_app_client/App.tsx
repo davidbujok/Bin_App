@@ -227,6 +227,7 @@ function App(): JSX.Element {
     // TODO: once there is garden waste etc, add it here to firstDates
     if (daysForThatStreet) {
       Object.keys(daysForThatStreet).forEach((binType, binTypeIndex) => {
+        // TODO: continue here
         const dayNumber = parseInt(daysForThatStreet[binType]);
         if (dayNumber) {
           const newIDate = iDateFromData(
