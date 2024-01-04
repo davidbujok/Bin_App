@@ -174,7 +174,7 @@ function App(): JSX.Element {
     whichFortnight = 0,
   ) => {
     const dayOfYear = january23Day + 14 * whichFortnight;
-    const dateObject = dateFromDay(2023, dayOfYear);
+    const dateObject = dateFromDay(2024, dayOfYear);
     const idOfPinPickup = dateObject.getTime(); //epoch time is the unique id
     const dateFormatted = dateObject.toISOString();
     // TODO: change to binTypes['packaging', 'glass'] for simpler parsing in pager
